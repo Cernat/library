@@ -21,7 +21,7 @@ public class BookController {
 
    @RequestMapping(value = "post", method = RequestMethod.POST)
     public String post() {
-       return "Post Method Book 1";
+       return "Post Method Book";
    }
 
    @PutMapping(value = "put")
