@@ -1,4 +1,4 @@
-package com.example.library.Book;
+package org.internship.library.api;
 
 public class Book {
     private Long Id;
