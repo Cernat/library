@@ -31,7 +31,7 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-   @PostMapping()
+   @PostMapping
     public Book createBook(@RequestBody Book bookPayload) {
         return bookService.createBook(bookPayload);
    }
@@ -41,9 +41,9 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-   @PutMapping(value = "put")
-    public Book updateBook(@RequestBody Book bookPayload) {
-        return bookService.updateBook(bookPayload);
+   @PutMapping("/{id}")
+    public Book updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
+        return bookService.updateBook(id, bookPayload);
    }
 
     /**
@@ -51,7 +51,7 @@ public class BookController {
      * @param id the book id
      * @return the book
      */
-   @DeleteMapping(value = "delete/{id}")
+   @DeleteMapping("/{id}")
     public Book deleteBook(@PathVariable String id) {
         return bookService.deleteBook(id);
    }
