@@ -17,9 +17,9 @@ public class BookController {
     BookService bookService;
 
     /**
-     * Receive id of a book
-     * @param id Book requested from the client
-     * @return Book
+     * Retrieves the book specified by the id
+     * @param id the book id
+     * @return the book
      */
     @GetMapping("/{id}")
     public Book getBook(@PathVariable String id) {
@@ -27,9 +27,9 @@ public class BookController {
    }
 
     /**
-     * Receive a book entity to create
-     * @param bookPayload The book's parameters to create
-     * @return Response
+     * Retrieves the book created
+     * @param bookPayload a book object
+     * @return the book
      */
    @PostMapping()
     public Book createBook(@RequestBody Book bookPayload) {
@@ -37,9 +37,9 @@ public class BookController {
    }
 
     /**
-     * Receive a book entity to update
-     * @param bookPayload The book's parameters to update
-     * @return Response
+     * Retrieves the book updated
+     * @param bookPayload a book object
+     * @return the book
      */
    @PutMapping(value = "put")
     public Book updateBook(@RequestBody Book bookPayload) {
@@ -47,9 +47,9 @@ public class BookController {
    }
 
     /**
-     * Receive id of a book
-     * @param id Book requested from the client to delete
-     * @return Response
+     * Delete the book specified by the id
+     * @param id the book id
+     * @return the book
      */
    @DeleteMapping(value = "delete/{id}")
     public Book deleteBook(@PathVariable String id) {

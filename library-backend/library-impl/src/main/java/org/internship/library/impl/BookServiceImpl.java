@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
     /**
      * This method will create book
      * @param book The book to create
-     * @return A response
+     * @return The book created
      */
     @Override
     public Book createBook(Book book) {
@@ -29,8 +29,8 @@ public class BookServiceImpl implements BookService {
 
     /**
      * This method will update book
-     * @param book The book to update with new fields
-     * @return A response
+     * @param book The book to update
+     * @return The book updated
      */
     @Override
     public Book updateBook(Book book) {
@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
     /**
      * This method will delete book
      * @param id The book to delete
-     * @return A response
+     * @return The book deleted
      */
     @Override
     public Book deleteBook(String id) {
