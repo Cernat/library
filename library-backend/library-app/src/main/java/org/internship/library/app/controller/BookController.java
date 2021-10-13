@@ -21,5 +21,20 @@ public class BookController {
     public Book getBook(@PathVariable String id) {
        return bookService.getBook(id);
    }
-   
+
+   @PostMapping(value = "post")
+    public Book createBook(@RequestBody Book payload) {
+        return bookService.createBook(payload);
+   }
+
+   @PutMapping(value = "put/{id}")
+    public Book updateBook(@PathVariable String id) {
+        return bookService.updateBook(id);
+   }
+
+   @DeleteMapping(value = "delete/{id}")
+    public Book deleteBook(@PathVariable String id) {
+        return bookService.deleteBook(id);
+   }
+
 }
