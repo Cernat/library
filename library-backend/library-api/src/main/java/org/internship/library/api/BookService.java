@@ -21,9 +21,10 @@ public interface BookService {
     /**
      * Method without implementation for updating a book
      * @param book the book object
+     * @param id the id of book that it will be updated
      * @return the book
      */
-    Book updateBook(Book book);
+    Book updateBook(String id, Book book);
 
     /**
      * Method without implementation for deleting a book

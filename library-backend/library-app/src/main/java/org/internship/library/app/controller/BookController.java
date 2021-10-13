@@ -5,7 +5,14 @@ import org.internship.library.api.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "book")
@@ -31,7 +38,7 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-   @PostMapping()
+   @PostMapping
     public Book createBook(@RequestBody Book bookPayload) {
         return bookService.createBook(bookPayload);
    }
@@ -41,9 +48,9 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-   @PutMapping(value = "put")
-    public Book updateBook(@RequestBody Book bookPayload) {
-        return bookService.updateBook(bookPayload);
+   @PutMapping("/{id}")
+    public Book updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
+        return bookService.updateBook(id, bookPayload);
    }
 
     /**
@@ -51,7 +58,7 @@ public class BookController {
      * @param id the book id
      * @return the book
      */
-   @DeleteMapping(value = "delete/{id}")
+   @DeleteMapping("/{id}")
     public Book deleteBook(@PathVariable String id) {
         return bookService.deleteBook(id);
    }

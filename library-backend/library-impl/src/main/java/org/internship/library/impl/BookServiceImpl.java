@@ -33,7 +33,9 @@ public class BookServiceImpl implements BookService {
      * @return The book updated
      */
     @Override
-    public Book updateBook(Book book) {
+    public Book updateBook(String id, Book book) {
+        System.out.println(book);
+        System.out.println(id);
         System.out.println("I will update a book here!");
         return null;
     }
