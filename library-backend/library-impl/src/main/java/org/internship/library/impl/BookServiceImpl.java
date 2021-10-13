@@ -5,24 +5,44 @@ import org.internship.library.api.BookService;
 
 public class BookServiceImpl implements BookService {
 
+    /**
+     * This method will return book
+     * @param id The book id
+     * @return The book found at this id
+     */
     @Override
     public Book getBook(String id) {
         System.out.println("I will get a book here!");
         return null;
     }
 
+    /**
+     * This method will create book
+     * @param book The book to create
+     * @return A response
+     */
     @Override
     public Book createBook(Book book) {
         System.out.println("I will create a book here!");
         return null;
     }
 
+    /**
+     * This method will update book
+     * @param book The book to update with new fields
+     * @return A response
+     */
     @Override
-    public Book updateBook(String id) {
+    public Book updateBook(Book book) {
         System.out.println("I will update a book here!");
         return null;
     }
 
+    /**
+     * This method will delete book
+     * @param id The book to delete
+     * @return A response
+     */
     @Override
     public Book deleteBook(String id) {
         System.out.println("I will delete a book here, later! :D");

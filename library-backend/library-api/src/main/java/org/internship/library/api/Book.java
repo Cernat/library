@@ -1,15 +1,18 @@
 package org.internship.library.api;
 
+/**
+ * Book class
+ */
 public class Book {
-    private Long Id;
+    private Long id;
     private String title;
-    private String Author;
+    private String author;
     private Integer numberOfPages;
 
     public Book(Long id, String title, String author, Integer numberOfPages) {
-        Id = id;
+        this.id = id;
         this.title = title;
-        Author = author;
+        this.author = author;
         this.numberOfPages = numberOfPages;
     }
 
@@ -18,16 +21,16 @@ public class Book {
 
     public Book(String title, String author, Integer numberOfPages) {
         this.title = title;
-        Author = author;
+        this.author = author;
         this.numberOfPages = numberOfPages;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -39,11 +42,11 @@ public class Book {
     }
 
     public String getAuthor() {
-        return Author;
+        return author;
     }
 
     public void setAuthor(String author) {
-        Author = author;
+        this.author = author;
     }
 
     public Integer getNumberOfPages() {
@@ -57,9 +60,9 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", title='" + title + '\'' +
-                ", Author='" + Author + '\'' +
+                ", Author='" + author + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 '}';
     }
