@@ -1,22 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
 <beans>
-    <bean id="triangle" class="spring.learning.video.three.Triangle" name="triangle-name">
-        <property name="points">
-            <list>
-                <ref bean="zeroPoint"></ref>
-                <ref bean="point2"></ref>
-                <ref bean="point3"></ref>
-            </list>
-        </property>
+    <bean id="triangle" class="spring.learning.video.three.Triangle" name="triangle-name" autowire="byName">
+
     </bean>
-    <bean id="zeroPoint" class="spring.learning.video.three.Point">
+    <bean id="pointA" class="spring.learning.video.three.Point">
         <property name="x" value="0" />
         <property name="y" value="0" />
     </bean>
-    <bean id="point2" class="spring.learning.video.three.Point">
+    <bean id="pointB" class="spring.learning.video.three.Point">
         <property name="x" value="-20" />
         <property name="y" value="0" />
     </bean>
-    <bean id="point3" class="spring.learning.video.three.Point">
+    <bean id="pointC" class="spring.learning.video.three.Point">
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
