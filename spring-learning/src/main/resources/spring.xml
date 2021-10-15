@@ -9,25 +9,19 @@
                 <ref bean="point2"></ref>
                 <ref bean="point3"></ref>
             </list>
-
         </property>
     </bean>
-
     <bean id="zeroPoint" class="spring.learning.video.three.Point">
         <property name="x" value="0" />
         <property name="y" value="0" />
     </bean>
-
     <bean id="point2" class="spring.learning.video.three.Point">
         <property name="x" value="-20" />
         <property name="y" value="0" />
     </bean>
-
     <bean id="point3" class="spring.learning.video.three.Point">
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
-
     <alias name="triangle" alias="triangle-alias"/>
-
 </beans>
