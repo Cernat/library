@@ -7,7 +7,7 @@ public class Triangle {
     private List<Point> points;
 
     public void draw() {
-        for (Point point : points) {
+        for(Point point : points) {
             System.out.println("Point = (" + point.getX() +", " + point.getY() +")");
         }
     }
