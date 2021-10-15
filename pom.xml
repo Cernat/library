@@ -9,6 +9,7 @@
     <modules>
         <module>library-backend</module>
         <module>library-frontend</module>
+        <module>spring-learning</module>
     </modules>
     <packaging>pom</packaging>
 </project>
