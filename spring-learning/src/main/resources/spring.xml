@@ -3,25 +3,28 @@
 
 <beans>
     <bean id="triangle" class="spring.learning.video.three.Triangle" name="triangle-name">
-        <property name="pointA" ref="zeroPoint">
-<!--            <idref bean="zeroPoint"/>-->
-        </property>
-        <property name="pointB">
-            <bean class="spring.learning.video.three.Point">
-                <property name="x" value="0" />
-                <property name="y" value="-20" />
-            </bean>
-        </property>
-        <property name="pointC">
-            <bean class="spring.learning.video.three.Point">
-                <property name="x" value="20" />
-                <property name="y" value="0" />
-            </bean>
+        <property name="points">
+            <list>
+                <ref bean="zeroPoint"></ref>
+                <ref bean="point2"></ref>
+                <ref bean="point3"></ref>
+            </list>
+
         </property>
     </bean>
 
     <bean id="zeroPoint" class="spring.learning.video.three.Point">
         <property name="x" value="0" />
+        <property name="y" value="0" />
+    </bean>
+
+    <bean id="point2" class="spring.learning.video.three.Point">
+        <property name="x" value="-20" />
+        <property name="y" value="0" />
+    </bean>
+
+    <bean id="point3" class="spring.learning.video.three.Point">
+        <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
 
