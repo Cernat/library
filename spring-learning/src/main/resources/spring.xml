@@ -3,5 +3,6 @@
 
 <beans>
     <bean id="triangle" class="spring.learning.video.three.Triangle">
+        <property name="type" value="Equilateral"></property>
     </bean>
 </beans>
