@@ -7,10 +7,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class DrawingApp {
 
     public static void main(String[] args) {
-//        Triangle triangle = new Triangle();
-//        BeanFactory factory = new XmlBeanFactory(new FileSystemResource("spring-learning/src/main/resources/spring.xml"));
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-        Triangle triangle = (Triangle) context.getBean("triangle1");
+
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        context.registerShutdownHook();
+        Triangle triangle = (Triangle) context.getBean("triangle");
         triangle.draw();
     }
 }
