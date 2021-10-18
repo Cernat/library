@@ -3,7 +3,6 @@
 
 <beans>
     <bean id="triangle" class="spring.learning.video.three.Triangle" name="triangle-name" autowire="byName">
-
     </bean>
     <bean id="pointA" class="spring.learning.video.three.Point">
         <property name="x" value="0" />

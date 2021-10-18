@@ -1,8 +1,13 @@
 package spring.learning.video.three;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+
 import java.util.List;
 
-public class Triangle {
+public class Triangle{
 
     private Point pointA;
     private Point pointB;
@@ -37,5 +42,4 @@ public class Triangle {
         System.out.println("Point B = (" + getPointB().getX() + ", " + getPointB().getY() + ")");
         System.out.println("Point C = (" + getPointC().getX() + ", " + getPointC().getY() + ")");
     }
-
 }
