@@ -17,4 +17,5 @@
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
+    <bean class="spring.learning.video.three.DisplayNameBeanPostProcessor" />
 </beans>
