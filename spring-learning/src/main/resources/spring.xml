@@ -23,4 +23,5 @@
     <bean id="circle" class="spring.learning.video.three.Circle">
         <property name="center" ref="pointA" />
     </bean>
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
 </beans>
