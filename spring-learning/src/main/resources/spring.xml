@@ -3,12 +3,14 @@
 
 
 <beans>
-    <bean id="triangle" class="spring.learning.video.three.Triangle" autowire="byName">
-
+    <bean id="triangle" class="spring.learning.video.three.Triangle">
+        <property name="pointA" ref="pointA" />
+        <property name="pointB" ref="pointB" />
+        <property name="pointC" ref="pointC" />
     </bean>
     <bean id="pointA" class="spring.learning.video.three.Point">
-        <property name="x" value="${pointA.pointX}" />
-        <property name="y" value="${pointA.pointY}" />
+        <property name="x" value="0" />
+        <property name="y" value="0" />
     </bean>
     <bean id="pointB" class="spring.learning.video.three.Point">
         <property name="x" value="-20" />
@@ -18,8 +20,7 @@
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
-    <!--    <bean class="spring.learning.video.three.MyBeanFactoryPP" />-->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="pointsconfig.properties" />
+    <bean id="circle" class="spring.learning.video.three.Circle">
+        <property name="center" ref="pointA" />
     </bean>
 </beans>
