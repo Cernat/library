@@ -2,12 +2,13 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 
-<beans default-init-method="myInit" default-destroy-method="cleanUp">
+<beans>
     <bean id="triangle" class="spring.learning.video.three.Triangle" autowire="byName">
+
     </bean>
     <bean id="pointA" class="spring.learning.video.three.Point">
-        <property name="x" value="0" />
-        <property name="y" value="0" />
+        <property name="x" value="${pointA.pointX}" />
+        <property name="y" value="${pointA.pointY}" />
     </bean>
     <bean id="pointB" class="spring.learning.video.three.Point">
         <property name="x" value="-20" />
@@ -17,5 +18,8 @@
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
-    <bean class="spring.learning.video.three.DisplayNameBeanPostProcessor" />
+    <!--    <bean class="spring.learning.video.three.MyBeanFactoryPP" />-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="pointsconfig.properties" />
+    </bean>
 </beans>
