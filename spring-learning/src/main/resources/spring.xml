@@ -11,7 +11,7 @@
     <!--        <property name="pointB" ref="pointB" />-->
     <!--        <property name="pointC" ref="pointC" />-->
     <!--    </bean>-->
-    <bean id="center" class="spring.learning.video.three.Point">
+    <bean id="pointA" class="spring.learning.video.three.Point">
         <qualifier value="circleRelated" />
         <property name="x" value="0" />
         <property name="y" value="0" />
@@ -24,7 +24,6 @@
         <property name="x" value="20" />
         <property name="y" value="0" />
     </bean>
-    <bean id="circle" class="spring.learning.video.three.Circle">
-    </bean>
     <context:annotation-config />
+    <context:component-scan base-package="spring.learning.video.three" />
 </beans>
