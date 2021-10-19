@@ -16,32 +16,38 @@ import javax.servlet.http.HttpServletResponse;
 public class RedirectController {
 
     /**
-     * Redirect to external URL
+     * "redirect" prefix is injected into the controller
+     * when view name is returned with "redirect" prefix - UrlBasedViewResolver will recognize as a special indication
+     * when we use the logical view with "redirect:/" - we're doing a redirect to current Servlet context
+     * In browser will receive a 302 HTTP which means "Found" and redirect to the given URL
      * @param model Used to build URL attributes
      * @return The external URL
      */
-    @GetMapping("/redirectPrefix")
-    public ModelAndView redirectWithUsingRedirectPrefix(ModelMap model) {
+    @GetMapping("/1")
+    public ModelAndView redirectPrefix(ModelMap model) {
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
         return new ModelAndView("redirect:https://youtube.com", model);
 //        return new ModelAndView("redirect:/https://youtube.com", model);
     }
 
     /**
-     * Redirect to external URL
+     * HttpServletResponse will be injected and used to create an HTTP response
+     * In the method below we do create a HTTP response with a header parameter called "Location" and URL to redirect
+     * And also we do add a setStatus which set the HTTP verb to 302-Found in order to redirect to that URL
      * @param httpServletResponse HTTP response
      */
-    @RequestMapping(value = "/redirect", method = RequestMethod.GET)
+    @RequestMapping(value = "/2", method = RequestMethod.GET)
     public void method(HttpServletResponse httpServletResponse) {
         httpServletResponse.setHeader("Location", "https://google.com");
         httpServletResponse.setStatus(302);
     }
 
     /**
-     * Redirect to external URL
+     * ModelAndView interface allows us to pass all the information required in one return
+     * With the "redirect" prefix we managed to return a 302 HTTP and redirect to specified URL
      * @return The external URL
      */
-    @RequestMapping(value = "/redirect/two", method = RequestMethod.GET)
+    @RequestMapping(value = "/3", method = RequestMethod.GET)
     public ModelAndView method() {
         return new ModelAndView("redirect:" + "https://msn.com");
     }
