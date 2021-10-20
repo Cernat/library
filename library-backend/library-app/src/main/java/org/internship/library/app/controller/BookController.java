@@ -5,6 +5,8 @@ import org.internship.library.api.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +31,9 @@ public class BookController {
      * @return the book
      */
     @GetMapping("/{id}")
-    public Book getBook(@PathVariable String id) {
-       return bookService.getBook(id);
+    public ResponseEntity<Book> getBook(@PathVariable String id) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
    }
 
     /**
@@ -38,10 +41,12 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-   @PostMapping
-    public Book createBook(@RequestBody Book bookPayload) {
-        return bookService.createBook(bookPayload);
-   }
+    @PostMapping("/create")
+    public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
+       Book book = bookService.createBook(bookPayload);
+       return ResponseEntity.status(HttpStatus.CREATED).
+               body(book);
+    }
 
     /**
      * Retrieves the book updated
@@ -59,8 +64,9 @@ public class BookController {
      * @return the book
      */
    @DeleteMapping("/{id}")
-    public Book deleteBook(@PathVariable String id) {
-        return bookService.deleteBook(id);
+    public ResponseEntity<?> deleteBook(@PathVariable String id) {
+       bookService.deleteBook(id);
+       return new ResponseEntity(HttpStatus.NO_CONTENT);
    }
 
 }

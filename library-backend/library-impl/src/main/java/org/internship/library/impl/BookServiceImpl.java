@@ -13,7 +13,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBook(String id) {
         System.out.println("I will get a book here!");
-        return null;
+        return new Book(1L, "Internship Journey", "Razvan", 90);
     }
 
     /**
@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book createBook(Book book) {
         System.out.println("I will create a book here!");
-        return null;
+        return book;
     }
 
     /**
@@ -37,7 +37,7 @@ public class BookServiceImpl implements BookService {
         System.out.println(book);
         System.out.println(id);
         System.out.println("I will update a book here!");
-        return null;
+        return book;
     }
 
     /**
