@@ -32,7 +32,6 @@ public class BookController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable String id) {
-
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
    }
 
@@ -41,7 +40,7 @@ public class BookController {
      * @param bookPayload a book object
      * @return the book
      */
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
        Book book = bookService.createBook(bookPayload);
        return ResponseEntity.status(HttpStatus.CREATED).

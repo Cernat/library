@@ -11,6 +11,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>utility-app</artifactId>
+    <name>Utility App Module</name>
+    <description>Utility - Spring Boot App</description>
     <dependencies>
         <dependency>
             <groupId>org.internship</groupId>

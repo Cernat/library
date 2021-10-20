@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>library-client</artifactId>
+    <name>Library Client Module</name>
+    <description>REST Client</description>
     <dependencies>
         <dependency>
             <groupId>org.internship</groupId>
