@@ -15,9 +15,7 @@ import java.util.Arrays;
 public class BookRestClient implements BookService {
 
     private RestTemplate restTemplate;
-
-    @Value("${server.port}")
-    private String port;
+    private String libraryBookPath;
 
     /**
      * Retrieves the book specified by the id
@@ -26,7 +24,7 @@ public class BookRestClient implements BookService {
      */
     @Override
     public Book getBook(String id) {
-        String url = "http://localhost:" + port + "/library/book/" + id;
+        String url = libraryBookPath + id;
         Book book = restTemplate.getForObject(url, Book.class);
         return book;
     }
@@ -38,9 +36,7 @@ public class BookRestClient implements BookService {
      */
     @Override
     public Book createBook(Book book) {
-        String url = "http://localhost:" + port + "/library/book/create";
-        Book bookTemplate = restTemplate.postForObject(url, book, Book.class);
-        return bookTemplate;
+        return restTemplate.postForObject(libraryBookPath, book, Book.class);
     }
 
     /**
@@ -51,7 +47,7 @@ public class BookRestClient implements BookService {
      */
     @Override
     public Book updateBook(String id, Book book) {
-        String url = "http://localhost:" + port + "/library/book/" + id;
+        String url = libraryBookPath + id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -69,12 +65,16 @@ public class BookRestClient implements BookService {
      */
     @Override
     public Book deleteBook(String id) {
-        String url = "http://localhost:" + port + "/library/book/" + id;
+        String url = libraryBookPath + id;
         restTemplate.delete(url, Book.class);
         return null;
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    public void setLibraryBookPath(String libraryBookPath) {
+        this.libraryBookPath = libraryBookPath;
     }
 }
