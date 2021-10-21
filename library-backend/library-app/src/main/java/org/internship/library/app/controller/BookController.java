@@ -43,8 +43,8 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
        Book book = bookService.createBook(bookPayload);
-       return ResponseEntity.status(HttpStatus.CREATED).
-               body(book);
+       return ResponseEntity.status(HttpStatus.CREATED)
+               .body(book);
     }
 
     /**

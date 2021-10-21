@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>library-impl</artifactId>
     <name>Library Implementation Module</name>
-    <description>Methods Implementation, depends on Library App</description>
+    <description>Methods Implementation, depends on Library API</description>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
