@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>library-hibernate</artifactId>
+    <name>Library Hibernate Module</name>
+    <description>A learning module on how to use Hibernate</description>
     <dependencies>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
