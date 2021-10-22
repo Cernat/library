@@ -1,15 +1,12 @@
 package org.internship.hibernate.dto;
 
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -19,13 +16,9 @@ public class UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
-    @Transient
     private String userName;
-    @Temporal(TemporalType.DATE)
-    private Date joinedDate;
-    private String Address;
-    @Lob
-    private String description;
+    @Embedded
+    private Address address;
 
     public int getUserId() {
         return userId;
@@ -43,27 +36,11 @@ public class UserDetails {
         this.userName = userName;
     }
 
-    public Date getJoinedDate() {
-        return joinedDate;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setJoinedDate(Date joinedDate) {
-        this.joinedDate = joinedDate;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

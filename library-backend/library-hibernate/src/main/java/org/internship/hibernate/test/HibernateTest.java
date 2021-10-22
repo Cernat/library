@@ -3,6 +3,7 @@ package org.internship.hibernate.test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.internship.hibernate.dto.Address;
 import org.internship.hibernate.dto.UserDetails;
 
 import java.util.Date;
@@ -13,12 +14,13 @@ import java.util.Date;
 public class HibernateTest {
     public static void main(String[] args) {
         UserDetails user = new UserDetails();
-        UserDetails user2 = new UserDetails();
         user.setUserId(1);
-        user2.setUserName("First User");
-        user2.setAddress("Address 1");
-        user2.setJoinedDate(new Date());
-        user2.setDescription("Description 1");
+        user.setUserName("First User");
+
+        Address address = new Address();
+        address.setStreet("street");
+        address.setCity("city");
+        user.setAddress(address);
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -29,7 +31,6 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(user);
-        session.save(user2);
         session.getTransaction().commit();
         session.close();
     }
