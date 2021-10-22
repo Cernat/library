@@ -28,12 +28,12 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @ElementCollection(fetch = FetchType.EAGER)
+   @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ADDRESS",
             joinColumns = @JoinColumn(name = "USER_ID")
     )
     @GenericGenerator(name = "sequence-gen", strategy = "sequence")
-    @CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "sequence", type = @Type(type = "long"))
+   @CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "sequence", type = @Type(type = "long"))
     private Collection<Address> listOfAddresses = new ArrayList<>();
 
     public int getUserId() {
