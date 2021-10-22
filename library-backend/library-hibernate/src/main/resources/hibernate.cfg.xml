@@ -15,6 +15,7 @@
         <property name="show_sql">true</property>
 
         <mapping class="org.internship.hibernate.dto.UserDetails" />
+        <mapping class="org.internship.hibernate.dto.Vehicle" />
 
     </session-factory>
 </hibernate-configuration>
