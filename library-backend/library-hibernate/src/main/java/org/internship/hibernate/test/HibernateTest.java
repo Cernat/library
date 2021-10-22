@@ -36,7 +36,6 @@ public class HibernateTest {
         UserDetails user2 = new UserDetails();
         user2.setUserId(2);
         user2.setUserName("SECOND USER");
-        user2.setOfficeAddress(address);
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
          * .buildSessionFactory() - builds a session
