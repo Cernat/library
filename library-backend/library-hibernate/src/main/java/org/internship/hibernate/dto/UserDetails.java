@@ -29,10 +29,10 @@ public class UserDetails {
     private int userId;
     private String userName;
     @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name="USER_ADDRESS",
-            joinColumns = @JoinColumn(name="USER_ID")
+    @JoinTable(name = "USER_ADDRESS",
+            joinColumns = @JoinColumn(name = "USER_ID")
     )
-    @GenericGenerator(name="sequence-gen",strategy="sequence")
+    @GenericGenerator(name = "sequence-gen", strategy = "sequence")
     @CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "sequence", type = @Type(type = "long"))
     private Collection<Address> listOfAddresses = new ArrayList<>();
 
