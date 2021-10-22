@@ -2,6 +2,7 @@ package org.internship.hibernate.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 
 @Embeddable
 public class Address {

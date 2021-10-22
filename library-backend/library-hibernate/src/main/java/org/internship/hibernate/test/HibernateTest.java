@@ -7,6 +7,7 @@ import org.internship.hibernate.dto.Address;
 import org.internship.hibernate.dto.UserDetails;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Class used for creating and manipulate data using Hibernate
@@ -20,7 +21,17 @@ public class HibernateTest {
         Address address = new Address();
         address.setStreet("street");
         address.setCity("city");
-        user.setAddress(address);
+        address.setPincode("pincode");
+        address.setState("state");
+
+        Address address2 = new Address();
+        address2.setStreet("street");
+        address2.setCity("city");
+        address2.setPincode("pincode");
+        address2.setState("state");
+
+        user.getListOfAddresses().add(address);
+        user.getListOfAddresses().add(address2);
 
         UserDetails user2 = new UserDetails();
         user2.setUserId(2);

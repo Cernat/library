@@ -1,12 +1,14 @@
 package org.internship.hibernate.dto;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER_DETAILS")
@@ -16,8 +18,8 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @Embedded
-    private Address address;
+    @ElementCollection
+    private Set<Address> listOfAddresses = new HashSet<>();
 
     public int getUserId() {
         return userId;
@@ -35,11 +37,11 @@ public class UserDetails {
         this.userName = userName;
     }
 
-    public Address getAddress() {
-        return address;
+    public Set<Address> getListOfAddresses() {
+        return listOfAddresses;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setListOfAddresses(Set<Address> listOfAddresses) {
+        this.listOfAddresses = listOfAddresses;
     }
 }
