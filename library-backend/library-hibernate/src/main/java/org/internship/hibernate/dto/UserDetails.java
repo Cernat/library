@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,12 +28,12 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @ElementCollection
-    @JoinTable(name="USER_ADDRESS",
-                        joinColumns = @JoinColumn(name="USER_ID")
+   @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ADDRESS",
+            joinColumns = @JoinColumn(name = "USER_ID")
     )
-    @GenericGenerator(name="sequence-gen",strategy="sequence")
-    @CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "sequence", type = @Type(type = "long"))
+    @GenericGenerator(name = "sequence-gen", strategy = "sequence")
+   @CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "sequence", type = @Type(type = "long"))
     private Collection<Address> listOfAddresses = new ArrayList<>();
 
     public int getUserId() {

@@ -7,13 +7,13 @@ import javax.persistence.Entity;
 @Embeddable
 public class Address {
 
-    @Column(name="STREET_NAME")
+    @Column(name = "STREET_NAME")
     private String street;
-    @Column(name="CITY_NAME")
+    @Column(name = "CITY_NAME")
     private String city;
-    @Column(name="STATE_NAME")
+    @Column(name = "STATE_NAME")
     private String state;
-    @Column(name="PINCODE_NAME")
+    @Column(name = "PINCODE_NAME")
     private String pincode;
 
     public String getStreet() {
