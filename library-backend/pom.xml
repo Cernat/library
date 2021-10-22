@@ -15,5 +15,6 @@
         <module>library-api</module>
         <module>library-impl</module>
         <module>library-app</module>
+        <module>library-hibernate</module>
     </modules>
 </project>
