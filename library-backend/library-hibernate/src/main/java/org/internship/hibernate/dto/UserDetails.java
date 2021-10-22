@@ -2,6 +2,8 @@ package org.internship.hibernate.dto;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -15,6 +17,7 @@ import java.util.Date;
 public class UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     @Transient
     private String userName;
