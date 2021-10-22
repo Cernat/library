@@ -3,23 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>library-backend</artifactId>
+        <artifactId>library</artifactId>
         <groupId>org.internship</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>library-impl</artifactId>
-    <name>Library Implementation Module</name>
-    <description>Methods Implementation, depends on Library API</description>
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+
+    <artifactId>library-client</artifactId>
+    <name>Library Client Module</name>
+    <description>REST Client</description>
     <dependencies>
         <dependency>
             <groupId>org.internship</groupId>
             <artifactId>library-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.10</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
 </project>

@@ -11,8 +11,8 @@
     <groupId>org.internship</groupId>
     <artifactId>library-app</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>library-app</name>
-    <description>A digital Library</description>
+    <name>Library App Module</name>
+    <description>Library - Spring Boot App, depends on Library Implementation </description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

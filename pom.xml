@@ -6,9 +6,13 @@
     <groupId>org.internship</groupId>
     <artifactId>library</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Library Root Module</name>
+    <description>A digital library</description>
     <modules>
         <module>library-backend</module>
         <module>library-frontend</module>
+        <module>library-client</module>
+        <module>utility-app</module>
     </modules>
     <packaging>pom</packaging>
 </project>
