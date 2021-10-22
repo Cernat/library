@@ -5,6 +5,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+
     @Column(name="STREET_NAME")
     private String street;
     @Column(name="CITY_NAME")

@@ -20,7 +20,7 @@ public class HibernateTest {
         Address address = new Address();
         address.setStreet("street");
         address.setCity("city");
-        user.setHomeAddress(address);
+        user.setAddress(address);
 
         UserDetails user2 = new UserDetails();
         user2.setUserId(2);
@@ -35,7 +35,6 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(user);
-        session.save(user2);
         session.getTransaction().commit();
         session.close();
     }
