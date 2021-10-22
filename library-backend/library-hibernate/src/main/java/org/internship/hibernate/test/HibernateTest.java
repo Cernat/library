@@ -22,7 +22,13 @@ public class HibernateTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleName("Car");
 
-        user.setVehicle(vehicle);
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setVehicleName("Car2");
+
+        user.getVehicle().add(vehicle);
+        user.getVehicle().add(vehicle2);
+        vehicle.setUser(user);
+        vehicle2.setUser(user);
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -34,6 +40,7 @@ public class HibernateTest {
         session.beginTransaction();
         session.save(user);
         session.save(vehicle);
+        session.save(vehicle2);
         session.getTransaction().commit();
         session.close();
     }
