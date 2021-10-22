@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.internship.hibernate.dto.Address;
 import org.internship.hibernate.dto.UserDetails;
+import org.internship.hibernate.dto.Vehicle;
 
 import java.util.Date;
 import java.util.Set;
@@ -14,28 +15,14 @@ import java.util.Set;
  */
 public class HibernateTest {
     public static void main(String[] args) {
+
         UserDetails user = new UserDetails();
-        user.setUserId(1);
         user.setUserName("First User");
 
-        Address address = new Address();
-        address.setStreet("street");
-        address.setCity("city");
-        address.setPincode("pincode");
-        address.setState("state");
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleName("Car");
 
-        Address address2 = new Address();
-        address2.setStreet("street");
-        address2.setCity("city");
-        address2.setPincode("pincode");
-        address2.setState("state");
-
-        user.getListOfAddresses().add(address);
-        user.getListOfAddresses().add(address2);
-
-        UserDetails user2 = new UserDetails();
-        user2.setUserId(2);
-        user2.setUserName("SECOND USER");
+        user.setVehicle(vehicle);
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -46,12 +33,8 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(user);
+        session.save(vehicle);
         session.getTransaction().commit();
         session.close();
-
-        user = null;
-        session = sessionFactory.openSession();
-        user = (UserDetails) session.get(UserDetails.class, 1);
-        System.out.println(user.getListOfAddresses().size());
     }
 }
