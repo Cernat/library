@@ -33,6 +33,10 @@ public class HibernateTest {
         user.getListOfAddresses().add(address);
         user.getListOfAddresses().add(address2);
 
+        UserDetails user2 = new UserDetails();
+        user2.setUserId(2);
+        user2.setUserName("SECOND USER");
+        user2.setOfficeAddress(address);
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
          * .buildSessionFactory() - builds a session
