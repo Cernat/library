@@ -1,6 +1,5 @@
 package org.internship.hibernate.dto;
 
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
