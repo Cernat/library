@@ -16,6 +16,8 @@
 
         <mapping class="org.internship.hibernate.dto.UserDetails" />
         <mapping class="org.internship.hibernate.dto.Vehicle" />
+        <mapping class="org.internship.hibernate.dto.TwoWheeler" />
+        <mapping class="org.internship.hibernate.dto.FourWheeler" />
 
     </session-factory>
 </hibernate-configuration>

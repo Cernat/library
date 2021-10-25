@@ -32,7 +32,7 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private Collection<Vehicle> vehicle = new ArrayList<Vehicle>();
 
     public Collection<Vehicle> getVehicle() {

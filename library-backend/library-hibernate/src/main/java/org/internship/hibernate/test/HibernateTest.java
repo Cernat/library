@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.internship.hibernate.dto.Address;
+import org.internship.hibernate.dto.FourWheeler;
+import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
 import org.internship.hibernate.dto.Vehicle;
 
@@ -16,17 +18,15 @@ import java.util.Set;
 public class HibernateTest {
     public static void main(String[] args) {
 
-        UserDetails user = new UserDetails();
-        user.setUserName("First User");
-
         Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleName("Car");
+        vehicle.setVehicleName("Vehicle");
 
-        Vehicle vehicle2 = new Vehicle();
-        vehicle2.setVehicleName("Car2");
-
-        user.getVehicle().add(vehicle);
-        user.getVehicle().add(vehicle2);
+        TwoWheeler bike = new TwoWheeler();
+        bike.setVehicleName("Bike");
+        bike.setSteeringHandle("Bike Steering Handle");
+        FourWheeler car = new FourWheeler();
+        car.setVehicleName("Car");
+        car.setSteeringWheel("Car Steering Wheel");
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -36,7 +36,9 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.persist(user);
+        session.save(vehicle);
+        session.save(bike);
+        session.save(car);
         session.getTransaction().commit();
         session.close();
     }
