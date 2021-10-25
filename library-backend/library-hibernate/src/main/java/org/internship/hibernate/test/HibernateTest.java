@@ -18,16 +18,7 @@ import java.util.Set;
 public class HibernateTest {
     public static void main(String[] args) {
 
-        Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleName("Vehicle");
 
-        TwoWheeler bike = new TwoWheeler();
-        bike.setVehicleName("Bike");
-        bike.setSteeringHandle("Bike Steering Handle");
-
-        FourWheeler car = new FourWheeler();
-        car.setVehicleName("Car");
-        car.setSteeringWheel("Car Steering Wheel");
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -37,10 +28,16 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(vehicle);
-        session.save(bike);
-        session.save(car);
+
+        UserDetails user = (UserDetails) session.get(UserDetails.class, 5);
+//        session.delete(user);
+        user.setUserName("Updated User");
+        session.update(user);
+
         session.getTransaction().commit();
         session.close();
+
+//        System.out.println("User name pulled up is: " + user.getUserName());
+
     }
 }
