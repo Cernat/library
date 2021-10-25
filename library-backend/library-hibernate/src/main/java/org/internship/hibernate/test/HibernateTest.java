@@ -3,19 +3,13 @@ package org.internship.hibernate.test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.internship.hibernate.dto.FourWheeler;
-import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
-import org.internship.hibernate.dto.Vehicle;
 
 /**
  * Class used for creating and manipulate data using Hibernate
  */
 public class HibernateTest {
     public static void main(String[] args) {
-
-        UserDetails user = new UserDetails();
-        user.setUserName("Test User");
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -26,14 +20,19 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(user);
-
-        user.setUserName("Updated User");
-        user.setUserName("Updated User Again");
+        UserDetails user = (UserDetails) session.get(UserDetails.class, 1);
 
         session.getTransaction().commit();
         session.close();
 
-        user.setUserName("Updated User After Session Close");
+        user.setUserName("Updated Username after session close");
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.update(user);
+        user.setUserName("Change After Update");
+        session.getTransaction().commit();
+        session.close();
     }
 }

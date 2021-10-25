@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@org.hibernate.annotations.Entity(selectBeforeUpdate = true)
 public class UserDetails {
 
     @Id
