@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -13,8 +19,9 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int vehicleID;
     private String vehicleName;
-    @ManyToOne
-    private UserDetails user;
+    @ManyToMany(mappedBy = "vehicle")
+    private Collection<UserDetails> userList = new ArrayList<>();
+
 
     public int getVehicleID() {
         return vehicleID;
@@ -32,11 +39,11 @@ public class Vehicle {
         this.vehicleName = vehicleName;
     }
 
-    public UserDetails getUser() {
-        return user;
+    public Collection<UserDetails> getUserList() {
+        return userList;
     }
 
-    public void setUser(UserDetails user) {
-        this.user = user;
+    public void setUserList(Collection<UserDetails> userList) {
+        this.userList = userList;
     }
 }
