@@ -1,9 +1,13 @@
 package org.internship.hibernate.dto;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -13,15 +17,17 @@ import java.util.Collection;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+        name="VEHICLE_TYPE",
+        discriminatorType = DiscriminatorType.STRING
+)
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int vehicleID;
     private String vehicleName;
-    @ManyToMany(mappedBy = "vehicle")
-    private Collection<UserDetails> userList = new ArrayList<>();
-
 
     public int getVehicleID() {
         return vehicleID;
@@ -37,13 +43,5 @@ public class Vehicle {
 
     public void setVehicleName(String vehicleName) {
         this.vehicleName = vehicleName;
-    }
-
-    public Collection<UserDetails> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(Collection<UserDetails> userList) {
-        this.userList = userList;
     }
 }
