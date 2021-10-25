@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Vehicle {
@@ -20,6 +21,7 @@ public class Vehicle {
     private String vehicleName;
     @ManyToMany(mappedBy = "vehicle")
     private Collection<UserDetails> userList = new ArrayList<>();
+
 
     public int getVehicleID() {
         return vehicleID;
