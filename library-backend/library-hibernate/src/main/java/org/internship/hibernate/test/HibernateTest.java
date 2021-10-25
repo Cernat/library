@@ -24,6 +24,7 @@ public class HibernateTest {
         TwoWheeler bike = new TwoWheeler();
         bike.setVehicleName("Bike");
         bike.setSteeringHandle("Bike Steering Handle");
+
         FourWheeler car = new FourWheeler();
         car.setVehicleName("Car");
         car.setSteeringWheel("Car Steering Wheel");

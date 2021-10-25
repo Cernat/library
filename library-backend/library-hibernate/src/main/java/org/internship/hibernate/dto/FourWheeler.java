@@ -1,5 +1,4 @@
 package org.internship.hibernate.dto;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
