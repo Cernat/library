@@ -30,15 +30,16 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @OneToOne
-    @JoinColumn(name = "VEHICLE_ID")
-    private Vehicle vehicle;
+    @OneToMany
+    @JoinTable(name="USER_VEHICLE", joinColumns=@JoinColumn(name="USER_ID"),
+    inverseJoinColumns=@JoinColumn(name="VEHICLE_ID"))
+    private Collection<Vehicle> vehicle = new ArrayList<Vehicle>();
 
-    public Vehicle getVehicle() {
+    public Collection<Vehicle> getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(Collection<Vehicle> vehicle) {
         this.vehicle = vehicle;
     }
 
