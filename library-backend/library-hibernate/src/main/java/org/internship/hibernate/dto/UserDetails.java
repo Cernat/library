@@ -4,6 +4,7 @@ import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -30,9 +32,7 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
     private String userName;
-    @OneToMany
-    @JoinTable(name="USER_VEHICLE", joinColumns=@JoinColumn(name="USER_ID"),
-    inverseJoinColumns=@JoinColumn(name="VEHICLE_ID"))
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<Vehicle> vehicle = new ArrayList<Vehicle>();
 
     public Collection<Vehicle> getVehicle() {

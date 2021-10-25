@@ -27,8 +27,6 @@ public class HibernateTest {
 
         user.getVehicle().add(vehicle);
         user.getVehicle().add(vehicle2);
-        vehicle.setUser(user);
-        vehicle2.setUser(user);
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -38,9 +36,7 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(user);
-        session.save(vehicle);
-        session.save(vehicle2);
+        session.persist(user);
         session.getTransaction().commit();
         session.close();
     }
