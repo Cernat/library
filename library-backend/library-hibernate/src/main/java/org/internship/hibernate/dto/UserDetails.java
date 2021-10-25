@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,6 +27,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name = "UserDetails.byId", query = "from UserDetails where userId = ?")
+@NamedNativeQuery(name = "UserDetails.byName", query = "SELECT * FROM UserDetails where username = ?", resultClass = UserDetails.class)
 public class UserDetails {
 
     @Id
