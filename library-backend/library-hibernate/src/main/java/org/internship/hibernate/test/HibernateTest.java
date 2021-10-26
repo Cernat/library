@@ -1,9 +1,12 @@
 package org.internship.hibernate.test;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.internship.hibernate.dto.UserDetails;
+
+import java.util.List;
 
 /**
  * Class used for creating and manipulate data using Hibernate
@@ -20,19 +23,11 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        UserDetails user = (UserDetails) session.get(UserDetails.class, 1);
+        Query query = session.createQuery("from UserDetails where userId > 5");
+        List users = query.list();
 
         session.getTransaction().commit();
         session.close();
-
-        user.setUserName("Updated Username after session close");
-
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.update(user);
-        user.setUserName("Change After Update");
-        session.getTransaction().commit();
-        session.close();
+        System.out.println("Size of list result = " + users.size());
     }
 }
