@@ -25,6 +25,12 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+//        String minUserId = " 5 or 1 = 1";
+        String minUserId = "5";
+        String userName = "User 9";
+
+        Criteria criteria = session.createCriteria(UserDetails.class);
+        criteria.add(Restrictions.or(Restrictions.between("userId", 0, 3), Restrictions.between("userId", 7, 9)));
 
         UserDetails exampleUser = new UserDetails();
 //        exampleUser.setUserId(5);
@@ -43,7 +49,6 @@ public class HibernateTest {
 
         session.getTransaction().commit();
         session.close();
-
 
         for (UserDetails user : users)
             System.out.println(user.getUserName());
