@@ -3,22 +3,16 @@ package org.internship.hibernate.test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.internship.hibernate.dto.Address;
 import org.internship.hibernate.dto.FourWheeler;
 import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
 import org.internship.hibernate.dto.Vehicle;
-
-import java.util.Date;
-import java.util.Set;
 
 /**
  * Class used for creating and manipulate data using Hibernate
  */
 public class HibernateTest {
     public static void main(String[] args) {
-
-
 
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
@@ -36,8 +30,6 @@ public class HibernateTest {
 
         session.getTransaction().commit();
         session.close();
-
 //        System.out.println("User name pulled up is: " + user.getUserName());
-
     }
 }
