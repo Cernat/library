@@ -32,26 +32,18 @@ public class HibernateTest {
         Criteria criteria = session.createCriteria(UserDetails.class);
         criteria.add(Restrictions.or(Restrictions.between("userId", 0, 3), Restrictions.between("userId", 7, 9)));
 
-        UserDetails exampleUser = new UserDetails();
-//        exampleUser.setUserId(5);
-//        exampleUser.setUserName("User 5");
-        exampleUser.setUserName("User 1%");
-
-//        Example example = Example.create(exampleUser).excludeProperty("userName");
-        Example example = Example.create(exampleUser).enableLike();
-
-        Criteria criteria = session.createCriteria(UserDetails.class)
-                .add(example);
-//                .setProjection(Projections.property("userId"));
-//                .addOrder(Order.desc("userId"));
-
-        List<UserDetails> users = (List<UserDetails>) criteria.list();
+        UserDetails userDetails = (UserDetails) session.get(UserDetails.class, 1);
+        userDetails.setUserName("Updated User");
 
         session.getTransaction().commit();
         session.close();
 
-        for (UserDetails user : users)
-            System.out.println(user.getUserName());
+        Session session2 = sessionFactory.openSession();
+        session2.beginTransaction();
 
+        UserDetails user2 = (UserDetails) session2.get(UserDetails.class, 1);
+
+        session2.getTransaction().commit();
+        session2.close();
     }
 }
