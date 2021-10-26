@@ -14,9 +14,6 @@ import org.internship.hibernate.dto.Vehicle;
 public class HibernateTest {
     public static void main(String[] args) {
 
-        UserDetails user = new UserDetails();
-        user.setUserName("Test User");
-
         /**
          * .configure() - uses the hibernate.cfg.xml configuration file
          * .buildSessionFactory() - builds a session
@@ -26,14 +23,13 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(user);
-
+        UserDetails user = (UserDetails) session.get(UserDetails.class, 5);
+//        session.delete(user);
         user.setUserName("Updated User");
-        user.setUserName("Updated User Again");
+        session.update(user);
 
         session.getTransaction().commit();
         session.close();
-
-        user.setUserName("Updated User After Session Close");
+//        System.out.println("User name pulled up is: " + user.getUserName());
     }
 }
