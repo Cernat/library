@@ -4,10 +4,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.internship.hibernate.dto.FourWheeler;
-import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
-import org.internship.hibernate.dto.Vehicle;
+
+import java.util.List;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -41,6 +42,5 @@ public class HibernateTest {
 
         for (UserDetails user : users)
             System.out.println(user.getUserName());
-
     }
 }
