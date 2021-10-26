@@ -10,6 +10,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * Class used for creating and manipulate data using Hibernate
  */
@@ -24,20 +26,21 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+//        String minUserId = " 5 or 1 = 1";
+        String minUserId = "5";
+        String userName = "User 9";
 
-        Query query = session.createQuery("select userName from UserDetails");
-        query.setFirstResult(5);
-        query.setMaxResults(4);
-//        List<UserDetails> users = (List<UserDetails>) query.list();
-        List<String> usersNames = (List<String>) query.list();
+//        Query query = session.createQuery("from UserDetails where userId > " + minUserId);
+        Query query = session.createQuery("from UserDetails where userId > :userId and  userName = :userName");
+        query.setInteger("userId", Integer.parseInt(minUserId));
+        query.setString("userName", userName);
+
+        List<UserDetails> users = (List<UserDetails>) query.list();
 
         session.getTransaction().commit();
         session.close();
 
-//        for (UserDetails user : users)
-//            System.out.println(user.getUserName());
-
-        for (String user : usersNames)
-            System.out.println(user);
+        for (UserDetails user : users)
+            System.out.println(user.getUserName());
     }
 }
