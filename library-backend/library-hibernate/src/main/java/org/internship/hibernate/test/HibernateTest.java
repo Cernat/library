@@ -8,10 +8,6 @@ import org.internship.hibernate.dto.UserDetails;
 
 import java.util.List;
 
-import java.util.List;
-
-import java.util.List;
-
 /**
  * Class used for creating and manipulate data using Hibernate
  */
@@ -30,11 +26,8 @@ public class HibernateTest {
         String minUserId = "5";
         String userName = "User 9";
 
-//        Query query = session.createQuery("from UserDetails where userId > " + minUserId);
-        Query query = session.createQuery("from UserDetails where userId > :userId and  userName = :userName");
-        query.setInteger("userId", Integer.parseInt(minUserId));
-        query.setString("userName", userName);
-
+        Query query = session.getNamedQuery("UserDetails.byName");
+//        query.setString(0, "User 9");
         List<UserDetails> users = (List<UserDetails>) query.list();
 
         session.getTransaction().commit();
