@@ -1,10 +1,15 @@
 package org.internship.hibernate.test;
 
-import org.hibernate.Query;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
+import org.internship.hibernate.dto.FourWheeler;
+import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -26,9 +31,10 @@ public class HibernateTest {
         String minUserId = "5";
         String userName = "User 9";
 
-        Query query = session.getNamedQuery("UserDetails.byName");
-//        query.setString(0, "User 9");
-        List<UserDetails> users = (List<UserDetails>) query.list();
+        Criteria criteria = session.createCriteria(UserDetails.class);
+        criteria.add(Restrictions.eq("userName", "User 9"));
+
+        List<UserDetails> users = (List<UserDetails>) criteria.list();
 
         session.getTransaction().commit();
         session.close();
