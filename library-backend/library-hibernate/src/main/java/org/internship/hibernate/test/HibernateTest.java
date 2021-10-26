@@ -4,14 +4,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
-import org.internship.hibernate.dto.FourWheeler;
-import org.internship.hibernate.dto.TwoWheeler;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.internship.hibernate.dto.UserDetails;
-
-import java.util.List;
-
-import java.util.List;
 
 import java.util.List;
 
@@ -36,8 +32,18 @@ public class HibernateTest {
         Criteria criteria = session.createCriteria(UserDetails.class);
         criteria.add(Restrictions.or(Restrictions.between("userId", 0, 3), Restrictions.between("userId", 7, 9)));
 
-//        criteria.add(Restrictions.like("userName", "%User 6%"))
-//                .add(Restrictions.between("userId", 5, 50));
+        UserDetails exampleUser = new UserDetails();
+//        exampleUser.setUserId(5);
+//        exampleUser.setUserName("User 5");
+        exampleUser.setUserName("User 1%");
+
+//        Example example = Example.create(exampleUser).excludeProperty("userName");
+        Example example = Example.create(exampleUser).enableLike();
+
+        Criteria criteria = session.createCriteria(UserDetails.class)
+                .add(example);
+//                .setProjection(Projections.property("userId"));
+//                .addOrder(Order.desc("userId"));
 
         List<UserDetails> users = (List<UserDetails>) criteria.list();
 
@@ -46,5 +52,6 @@ public class HibernateTest {
 
         for (UserDetails user : users)
             System.out.println(user.getUserName());
+
     }
 }
