@@ -8,7 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.internship.hibernate.dto.FourWheeler;
 import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
-import org.internship.hibernate.dto.Vehicle;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class HibernateTest {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+//        String minUserId = " 5 or 1 = 1";
+        String minUserId = "5";
+        String userName = "User 9";
 
         Criteria criteria = session.createCriteria(UserDetails.class);
         criteria.add(Restrictions.eq("userName", "User 9"));
