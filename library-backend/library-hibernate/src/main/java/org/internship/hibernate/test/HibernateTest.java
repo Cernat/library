@@ -8,6 +8,8 @@ import org.internship.hibernate.dto.UserDetails;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * Class used for creating and manipulate data using Hibernate
  */
@@ -23,11 +25,19 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("from UserDetails where userId > 5");
-        List users = query.list();
+        Query query = session.createQuery("select userName from UserDetails");
+        query.setFirstResult(5);
+        query.setMaxResults(4);
+//        List<UserDetails> users = (List<UserDetails>) query.list();
+        List<String> usersNames = (List<String>) query.list();
 
         session.getTransaction().commit();
         session.close();
-        System.out.println("Size of list result = " + users.size());
+
+//        for (UserDetails user : users)
+//            System.out.println(user.getUserName());
+
+        for (String user : usersNames)
+            System.out.println(user);
     }
 }
