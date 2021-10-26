@@ -13,6 +13,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * Class used for creating and manipulate data using Hibernate
  */
@@ -32,7 +34,10 @@ public class HibernateTest {
         String userName = "User 9";
 
         Criteria criteria = session.createCriteria(UserDetails.class);
-        criteria.add(Restrictions.eq("userName", "User 9"));
+        criteria.add(Restrictions.or(Restrictions.between("userId", 0, 3), Restrictions.between("userId", 7, 9)));
+
+//        criteria.add(Restrictions.like("userName", "%User 6%"))
+//                .add(Restrictions.between("userId", 5, 50));
 
         List<UserDetails> users = (List<UserDetails>) criteria.list();
 
