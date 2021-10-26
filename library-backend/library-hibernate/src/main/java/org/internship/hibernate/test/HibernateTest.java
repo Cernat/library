@@ -3,10 +3,7 @@ package org.internship.hibernate.test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.internship.hibernate.dto.FourWheeler;
-import org.internship.hibernate.dto.TwoWheeler;
 import org.internship.hibernate.dto.UserDetails;
-import org.internship.hibernate.dto.Vehicle;
 
 /**
  * Class used for creating and manipulate data using Hibernate
@@ -23,13 +20,19 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        UserDetails user = (UserDetails) session.get(UserDetails.class, 5);
-//        session.delete(user);
-        user.setUserName("Updated User");
-        session.update(user);
+        UserDetails user = (UserDetails) session.get(UserDetails.class, 1);
 
         session.getTransaction().commit();
         session.close();
-//        System.out.println("User name pulled up is: " + user.getUserName());
+
+        user.setUserName("Updated Username after session close");
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.update(user);
+        user.setUserName("Change After Update");
+        session.getTransaction().commit();
+        session.close();
     }
 }
