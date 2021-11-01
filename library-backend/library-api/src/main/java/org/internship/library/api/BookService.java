@@ -9,7 +9,7 @@ public interface BookService {
      * @param id the book id
      * @return the book
      */
-    Book getBook(String id);
+    Book getBook(int id);
 
     /**
      * Method without implementation for creating a book

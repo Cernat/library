@@ -31,7 +31,7 @@ public class BookController {
      * @return the book
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable String id) {
+    public ResponseEntity<Book> getBook(@PathVariable int id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
    }
 

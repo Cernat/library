@@ -3,7 +3,6 @@ package org.internship.utility.app;
 import org.internship.library.api.Book;
 import org.internship.library.client.BookRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class UtilityController {
      */
     @GetMapping("get-rest-library")
     public ResponseEntity<?> get() {
-        return ResponseEntity.ok(bookRestClient.getBook("1"));
+        return ResponseEntity.ok(bookRestClient.getBook(1));
     }
 
     /**

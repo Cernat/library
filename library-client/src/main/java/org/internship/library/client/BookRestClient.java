@@ -2,11 +2,9 @@ package org.internship.library.client;
 
 import org.internship.library.api.Book;
 import org.internship.library.api.BookService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Arrays;
 
 /**
@@ -23,7 +21,7 @@ public class BookRestClient implements BookService {
      * @return the book
      */
     @Override
-    public Book getBook(String id) {
+    public Book getBook(int id) {
         String url = libraryBookPath + id;
         Book book = restTemplate.getForObject(url, Book.class);
         return book;

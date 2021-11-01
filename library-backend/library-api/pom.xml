@@ -11,6 +11,9 @@
     <artifactId>library-api</artifactId>
     <name>Library API Module</name>
     <description>Models, Service</description>
+    <dependencies>
+
+    </dependencies>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

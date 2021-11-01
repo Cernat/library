@@ -5,15 +5,16 @@ import org.internship.library.api.BookService;
 
 public class BookServiceImpl implements BookService {
 
+
     /**
      * This method will return book
      * @param id The book id
      * @return The book found at this id
      */
     @Override
-    public Book getBook(String id) {
+    public Book getBook(int id) {
         System.out.println("I will get a book here!");
-        return new Book(1L, "Internship Journey", "Razvan", 90);
+        return null;
     }
 
     /**
