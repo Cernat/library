@@ -6,14 +6,7 @@ services:
     restart: "unless-stopped"
     ports:
       - "1521:1521"
-    environment:
-      - url=jdbc:oracle:thin:@localhost:1521:ORCLCDB
-      - username=SYS AS SYSDBA
-      - password=Oradoc_db1
   backend:
-#    build:
-#      context: library-app/
-#      dockerfile: Dockerfile
     container_name: backend
     image: "library_app"
     depends_on:

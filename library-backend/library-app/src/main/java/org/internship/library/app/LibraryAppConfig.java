@@ -1,5 +1,6 @@
 package org.internship.library.app;
 
+import org.internship.library.api.BookRepository;
 import org.internship.library.api.BookService;
 import org.internship.library.impl.BookServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,14 +16,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@ComponentScan
+@ComponentScan(basePackages = {"org.internship.library.*"})
 @EntityScan(basePackages = {"org.internship.library.*"})
 @EnableJpaRepositories(basePackages = "org.internship.library.*")
 public class LibraryAppConfig {
 
     @Bean
-    public BookService bookService() {
-        return new BookServiceImpl();
+    public BookService bookService(BookRepository bookRepository) {
+        BookServiceImpl bookServiceImpl = new BookServiceImpl();
+        bookServiceImpl.setBookRepository(bookRepository);
+        return bookServiceImpl;
     }
 
     @Bean
@@ -33,4 +36,5 @@ public class LibraryAppConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
 }

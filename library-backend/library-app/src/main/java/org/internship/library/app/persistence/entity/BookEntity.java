@@ -1,35 +1,36 @@
-package org.internship.library.app.jpa;
+package org.internship.library.app.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.internship.library.api.Book;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity(name = "book")
 public class BookEntity implements Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String title;
     private String author;
     private Integer numberOfPages;
 
+
     public BookEntity() {
+        this.id = UUID.randomUUID().toString();
     }
 
-    public BookEntity(String id, String title, String author, Integer numberOfPages) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.numberOfPages = numberOfPages;
+    public BookEntity(Book book) {
+        this.id = book.getId();
+        this.title = book.getTitle();
+        this.author = book.getAuthor();
+        this.numberOfPages = book.getNumberOfPages();
     }
 
     @Override
-    public int getId() {
-        return 0;
+    public String getId() {
+        return id;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class BookEntity implements Book {
 
     @Override
     public String getTitle() {
-        return null;
+        return title;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class BookEntity implements Book {
 
     @Override
     public String getAuthor() {
-        return null;
+        return author;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class BookEntity implements Book {
 
     @Override
     public Integer getNumberOfPages() {
-        return null;
+        return numberOfPages;
     }
 
     @Override

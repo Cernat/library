@@ -1,5 +1,7 @@
 package org.internship.library.api;
 
+import java.util.Optional;
+
 /**
  * This interface defines the behaviour of a service
  */
@@ -9,7 +11,7 @@ public interface BookService {
      * @param id the book id
      * @return the book
      */
-    Book getBook(int id);
+    Book getBook(String id);
 
     /**
      * Method without implementation for creating a book
@@ -31,6 +33,9 @@ public interface BookService {
      * @param id the book id
      * @return the book
      */
-    Book deleteBook(String id);
+    void deleteBook(String id);
+
+    void setBookRepository(BookRepository bookRepository);
+    BookRepository getBookRepository();
 }
 

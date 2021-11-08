@@ -2,6 +2,7 @@ package org.internship.library.app.controller;
 
 import org.internship.library.api.Book;
 import org.internship.library.api.BookService;
+import org.internship.library.app.persistence.repository.BookJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,9 @@ public class BookController {
      * @return the book
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable int id) {
-        return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
+    public ResponseEntity<Book> getBook(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(bookService.getBook(id));
    }
 
     /**
@@ -43,6 +45,8 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
        Book book = bookService.createBook(bookPayload);
+        System.out.println(bookPayload);
+        System.out.println(book);
        return ResponseEntity.status(HttpStatus.CREATED)
                .body(book);
     }
@@ -53,8 +57,9 @@ public class BookController {
      * @return the book
      */
    @PutMapping("/{id}")
-    public Book updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
-        return bookService.updateBook(id, bookPayload);
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
+        Book updatedBook = bookService.updateBook(id, bookPayload);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
    }
 
     /**

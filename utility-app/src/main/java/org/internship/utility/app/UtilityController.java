@@ -3,8 +3,15 @@ package org.internship.utility.app;
 import org.internship.library.api.Book;
 import org.internship.library.client.BookRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UtilityController {
@@ -18,7 +25,7 @@ public class UtilityController {
      */
     @GetMapping("get-rest-library")
     public ResponseEntity<?> get() {
-        return ResponseEntity.ok(bookRestClient.getBook(1));
+        return ResponseEntity.ok(bookRestClient.getBook("1"));
     }
 
     /**
@@ -47,9 +54,9 @@ public class UtilityController {
      * @param id the book id
      * @return the book
      */
-    @PutMapping("delete-rest-library/{id}")
+    @DeleteMapping("delete-rest-library/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        return ResponseEntity.ok(bookRestClient.deleteBook(id));
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

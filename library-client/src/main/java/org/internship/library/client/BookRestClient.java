@@ -1,8 +1,13 @@
 package org.internship.library.client;
 
 import org.internship.library.api.Book;
+import org.internship.library.api.BookRepository;
 import org.internship.library.api.BookService;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -21,7 +26,7 @@ public class BookRestClient implements BookService {
      * @return the book
      */
     @Override
-    public Book getBook(int id) {
+    public Book getBook(String id) {
         String url = libraryBookPath + id;
         Book book = restTemplate.getForObject(url, Book.class);
         return book;
@@ -62,10 +67,19 @@ public class BookRestClient implements BookService {
      * @return the book
      */
     @Override
-    public Book deleteBook(String id) {
+    public void deleteBook(String id) {
         String url = libraryBookPath + id;
         restTemplate.delete(url, Book.class);
-        return null;
+    }
+
+    @Override
+    public void setBookRepository(BookRepository bookRepository) {
+        throw new UnsupportedOperationException("No repository required for the client");
+    }
+
+    @Override
+    public BookRepository getBookRepository() {
+        throw new UnsupportedOperationException("No repository required for the client");
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {
