@@ -32,11 +32,16 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Book updateBook(String id, Book book) {
-        Book updatedBook = bookJpaRepository.findById(id).get();
-        return bookJpaRepository.save(new BookEntity(book));
+        Book updatedBook = bookJpaRepository.findById(id).get(); // otherwise, Throws NoSuchElementException
+        Optional<Book> optionalBookEntity = Optional.ofNullable(updatedBook);
+        if (optionalBookEntity.isPresent()) {
+            return bookJpaRepository.save(new BookEntity(book));
+        } else {
+            throw new EntityNotFoundException("Book with id " + id + " not found");
+        }
     }
 
-//    @Query("delete from book t where t.id = ?1")
+    //    @Query("delete from book t where t.id = ?1")
     @Override
     public void deleteBook(String id) {
         Book book = bookJpaRepository.findById(id).get();

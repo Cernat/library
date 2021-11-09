@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @ComponentScan(basePackages = {"org.internship.library.*"})
-@EntityScan(basePackages = {"org.internship.library.*"})
+@EntityScan(basePackages = {"org.internship.library.app.persistence.entity"})
 @EnableJpaRepositories(basePackages = "org.internship.library.*")
 public class LibraryAppConfig {
 

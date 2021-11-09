@@ -1,12 +1,14 @@
 package org.internship.library.app.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.internship.library.api.Book;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
+/**
+ *  Implements the {@link Book} model for JPA.
+ */
 @Entity(name = "book")
 public class BookEntity implements Book {
 

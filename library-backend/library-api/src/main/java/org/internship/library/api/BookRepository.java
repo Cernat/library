@@ -6,26 +6,32 @@ package org.internship.library.api;
 public interface BookRepository {
 
     /**
-     * Method without implementation to find a book
+     * Finds the book by the given id
+     * Returns EntityNotFoundException on the contrary
+     * Returns Bad_Request(400) if Book fields are incomplete
      * @param id the book id
      */
     Book findBookById(String id);
 
     /**
-     * Method without implementation to create a book
+     * Creates the given book
+     *
      * @param book entity
      */
     Book createBook(Book book);
 
     /**
-     * Method without implementation to update a book
-     * @param id the book id
+     * Updates the book by the given id with the given book
+     * Returns EntityNotFoundException on the contrary
+     * Returns Bad_Request(400) if Book fields are incomplete
+     * @param id   the book id
      * @param book entity
      */
     Book updateBook(String id, Book book);
 
     /**
-     * Method without implementation to delete a book
+     * Deletes the book by the given id
+     *
      * @param id the book id
      */
     void deleteBook(String id);

@@ -22,6 +22,7 @@ public class BookRestClient implements BookService {
 
     /**
      * Retrieves the book specified by the id
+     *
      * @param id the book id
      * @return the book
      */
@@ -34,6 +35,7 @@ public class BookRestClient implements BookService {
 
     /**
      * Retrieves the book created
+     *
      * @param book the book object
      * @return the book
      */
@@ -44,7 +46,8 @@ public class BookRestClient implements BookService {
 
     /**
      * Retrieves the book updated
-     * @param id the id of book that it will be updated
+     *
+     * @param id   the id of book that it will be updated
      * @param book the book object
      * @return the modified book
      */
@@ -63,6 +66,7 @@ public class BookRestClient implements BookService {
 
     /**
      * Delete the book specified by the id
+     *
      * @param id the book id
      * @return the book
      */

@@ -2,7 +2,6 @@ package org.internship.library.app.controller;
 
 import org.internship.library.api.Book;
 import org.internship.library.api.BookService;
-import org.internship.library.app.persistence.repository.BookJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,49 +27,63 @@ public class BookController {
 
     /**
      * Retrieves the book specified by the id
+     *
      * @param id the book id
-     * @return the book
+     * @return the book OR NOT_FOUND(404)
      */
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(bookService.getBook(id));
-   }
+        logger.info("Retrieving book with the id of: " + id);
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
     /**
      * Retrieves the book created
+     *
      * @param bookPayload a book object
-     * @return the book
+     * @return the book or BAD_REQUEST(400)
      */
     @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
-       Book book = bookService.createBook(bookPayload);
-        System.out.println(bookPayload);
-        System.out.println(book);
-       return ResponseEntity.status(HttpStatus.CREATED)
-               .body(book);
+        logger.info("Receiving book from client: ", bookPayload);
+
+        Book newBook = bookService.createBook(bookPayload);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
     }
 
     /**
      * Retrieves the book updated
+     *
      * @param bookPayload a book object
      * @return the book
      */
-   @PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
-        Book updatedBook = bookService.updateBook(id, bookPayload);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
-   }
+        logger.info("Update the book with the id of: " + id + " with: " + bookPayload);
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(bookService.updateBook(id, bookPayload));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
     /**
      * Delete the book specified by the id
+     *
      * @param id the book id
      * @return the book
      */
-   @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable String id) {
-       bookService.deleteBook(id);
-       return new ResponseEntity(HttpStatus.NO_CONTENT);
-   }
+        logger.info("Deleting the book with the id of: " + id);
+        bookService.deleteBook(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
 }

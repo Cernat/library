@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-public class LibraryJpaConfig implements InitializingBean {
+public class LibraryPersistenceConfig implements InitializingBean {
 
     @Autowired(required = false)
     private ObjectMapper objectMapper;
