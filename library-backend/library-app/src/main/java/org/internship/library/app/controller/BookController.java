@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping(path = "book")
 public class BookController {
@@ -37,7 +39,7 @@ public class BookController {
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -68,7 +70,7 @@ public class BookController {
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(bookService.updateBook(id, bookPayload));
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }

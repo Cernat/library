@@ -6,45 +6,37 @@ import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 /**
- * Repository implementation(@link BookRepository) using JPA spring(@link BookJpaRepository)
+ * Repository implementation (@link BookRepository) using JPA spring (@link BookSpringProvidedRepository)
  */
 @Repository
 public class BookRepositoryImpl implements BookRepository {
 
     @Autowired
-    private BookJpaRepository bookJpaRepository;
+    private BookSpringProvidedRepository bookSpringProvidedRepository;
 
     @Override
     public Book findBookById(String id) {
-        Optional<BookEntity> optionalBookEntity = bookJpaRepository.findById(id);
-        return optionalBookEntity.orElseThrow(
-                () -> new EntityNotFoundException("Book with id " + id + " not found"));
+        Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
+        return optionalBookEntity.get();
     }
 
     @Override
     public Book createBook(Book book) {
-        return bookJpaRepository.save(new BookEntity(book));
+        return bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
     @Override
     public Book updateBook(String id, Book book) {
-        Book updatedBook = bookJpaRepository.findById(id).get(); // otherwise, Throws NoSuchElementException
-        Optional<Book> optionalBookEntity = Optional.ofNullable(updatedBook);
-        if (optionalBookEntity.isPresent()) {
-            return bookJpaRepository.save(new BookEntity(book));
-        } else {
-            throw new EntityNotFoundException("Book with id " + id + " not found");
-        }
+        Book updatedBook = bookSpringProvidedRepository.findById(id).get();
+        return bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
-    //    @Query("delete from book t where t.id = ?1")
     @Override
     public void deleteBook(String id) {
-        Book book = bookJpaRepository.findById(id).get();
-        bookJpaRepository.delete(new BookEntity(book));
+        Book book = bookSpringProvidedRepository.findById(id).get();
+        bookSpringProvidedRepository.delete(new BookEntity(book));
     }
 }

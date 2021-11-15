@@ -7,8 +7,8 @@ public interface BookRepository {
 
     /**
      * Finds the book by the given id
-     * Returns EntityNotFoundException on the contrary
-     * Returns Bad_Request(400) if Book fields are incomplete
+     * Returns NoSuchElementException on the contrary
+     *
      * @param id the book id
      */
     Book findBookById(String id);
@@ -22,8 +22,8 @@ public interface BookRepository {
 
     /**
      * Updates the book by the given id with the given book
-     * Returns EntityNotFoundException on the contrary
-     * Returns Bad_Request(400) if Book fields are incomplete
+     * Returns NoSuchElementException on the contrary
+     *
      * @param id   the book id
      * @param book entity
      */

@@ -5,39 +5,59 @@ package org.internship.library.api;
  */
 public interface Book {
     /**
-     * Setter and getter for id
+     * Getter for id
      *
-     * @return
+     * @return the id
      */
     public String getId();
 
+    /**
+     * Setter for id
+     *
+     * @param id to set
+     */
     public void setId(String id);
 
     /**
-     * Setter and getter for title
+     * Getter for title
      *
-     * @return
+     * @return the title
      */
     public String getTitle();
 
+    /**
+     * Setter for title
+     *
+     * @param title to set
+     */
     public void setTitle(String title);
 
     /**
-     * Setter and getter for author
+     * Getter for author
      *
-     * @return
+     * @return the author
      */
     public String getAuthor();
 
+    /**
+     * Setter for author
+     *
+     * @param author to set
+     */
     public void setAuthor(String author);
 
     /**
-     * Setter and getter for numberOfPages
+     * Getter for numberOfPages
      *
-     * @return
+     * @return the numberOfPages
      */
     public Integer getNumberOfPages();
 
+    /**
+     * Setter for numberOfPages
+     *
+     * @param numberOfPages to set
+     */
     public void setNumberOfPages(Integer numberOfPages);
 
 }

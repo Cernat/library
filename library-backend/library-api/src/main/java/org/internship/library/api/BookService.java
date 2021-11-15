@@ -5,7 +5,7 @@ package org.internship.library.api;
  */
 public interface BookService {
     /**
-     * Method without implementation for retrieving a book
+     * Retrieving a book
      *
      * @param id the book id
      * @return the book
@@ -13,7 +13,7 @@ public interface BookService {
     Book getBook(String id);
 
     /**
-     * Method without implementation for creating a book
+     * Creates the given
      *
      * @param book the book object
      * @return the book
@@ -21,7 +21,7 @@ public interface BookService {
     Book createBook(Book book);
 
     /**
-     * Method without implementation for updating a book
+     * Updates the book by the given id with the given book
      *
      * @param book the book object
      * @param id   the id of book that it will be updated
@@ -30,7 +30,7 @@ public interface BookService {
     Book updateBook(String id, Book book);
 
     /**
-     * Method without implementation for deleting a book
+     * Deletes a book
      *
      * @param id the book id
      * @return the book
