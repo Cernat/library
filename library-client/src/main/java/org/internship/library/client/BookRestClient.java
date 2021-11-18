@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Using RestTemplate, BookRestClient is a REST client for our API APP
@@ -74,6 +75,11 @@ public class BookRestClient implements BookService {
     public void deleteBook(String id) {
         String url = libraryBookPath + id;
         restTemplate.delete(url, Book.class);
+    }
+
+    @Override
+    public List<Book> findBookEntitiesByAuthor(String author) {
+        return null;
     }
 
     @Override

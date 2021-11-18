@@ -1,7 +1,9 @@
-package org.internship.library.app.persistence.repository;
+package org.internship.library.app.impl;
 
 import org.internship.library.api.Book;
+import org.internship.library.api.BookRepository;
 import org.internship.library.app.persistence.entity.BookEntity;
+import org.internship.library.impl.BookServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -9,114 +11,130 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit Testing Class (@link BookRepositoryImpl)
+ * Unit Testing Class (@link BookServiceImpl)
  */
 @ExtendWith(MockitoExtension.class)
-class BookRepositoryImplTest {
+public class BookServiceImplTest {
 
     @Mock
-    private BookSpringProvidedRepository bookSpringProvidedRepository;
+    private BookRepository bookRepository;
 
     @InjectMocks
-    private BookRepositoryImpl bookRepositoryImpl;
+    private BookServiceImpl bookServiceImpl;
 
     /**
-     * Verify if bookRepositoryImpl call the right method for findBookById
+     * Verify if bookServiceImpl call the right method for getBook()
      */
     @Test
-    void shouldFindBookByIdTest() {
+    void shouldGetBookTest() {
 
         BookEntity testBook = new BookEntity();
+
         final String testBookId = "3";
         testBook.setId(testBookId);
         testBook.setTitle("Razv");
         testBook.setAuthor("Cern");
         testBook.setNumberOfPages(50);
 
-        when(bookSpringProvidedRepository.findById(testBookId)).thenReturn(Optional.of(testBook));
-        Book foundBook = bookRepositoryImpl.findBookById(testBookId);
+        when(bookRepository.findBookById(testBookId)).thenReturn(testBook);
+        Book foundBook = bookServiceImpl.getBook(testBookId);
 
         assertEquals(testBook.getId(), foundBook.getId());
         assertEquals(testBook.getAuthor(), foundBook.getAuthor());
         assertEquals(testBook.getTitle(), foundBook.getTitle());
         assertEquals(testBook.getNumberOfPages(), foundBook.getNumberOfPages());
-        verify(bookSpringProvidedRepository, times(1)).findById(testBookId);
+
+        verify(bookRepository, times(1)).findBookById(testBookId);
     }
 
     /**
-     * Verify if bookRepositoryImpl call the right method for createBook
+     * Verify if bookServiceImpl call the right method for createBook()
      */
     @Test
-    void canCreateBookTest() {
+    void shouldCreateBookTest() {
         BookEntity testBook = new BookEntity();
         testBook.setId("3");
         testBook.setTitle("Razv");
         testBook.setAuthor("Cern");
         testBook.setNumberOfPages(50);
 
-        bookRepositoryImpl.createBook(testBook);
-        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor = ArgumentCaptor.forClass(BookEntity.class);
-        verify(bookSpringProvidedRepository).save(bookEntityArgumentCaptor.capture());
+        bookServiceImpl.createBook(testBook);
+
+        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor =
+                ArgumentCaptor.forClass(BookEntity.class);
+
+        verify(bookRepository)
+                .createBook(bookEntityArgumentCaptor.capture());
+
         BookEntity capturedBook = bookEntityArgumentCaptor.getValue();
 
+        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());
         assertEquals(testBook.getNumberOfPages(), capturedBook.getNumberOfPages());
-        verify(bookSpringProvidedRepository, times(1)).save(capturedBook);
+
+        verify(bookRepository, times(1)).createBook(testBook);
     }
 
     /**
-     * Verify if bookRepositoryImpl call the right method for updateBook
+     * Verify if bookServiceImpl call the right method for updateBook()
      */
     @Test
-    void updateBook() {
-
+    void shouldUpdateBookTest() {
         BookEntity testBook = new BookEntity();
         final String testBookId = "3";
         testBook.setId(testBookId);
         testBook.setTitle("Razv");
         testBook.setAuthor("Cern");
         testBook.setNumberOfPages(50);
-        when(bookSpringProvidedRepository.findById(testBookId)).thenReturn(Optional.of(testBook));
-        bookRepositoryImpl.updateBook(testBookId, testBook);
-        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor = ArgumentCaptor.forClass(BookEntity.class);
 
-        verify(bookSpringProvidedRepository).save(bookEntityArgumentCaptor.capture());
+        when(bookRepository.updateBook(eq(testBookId), any(BookEntity.class))).thenReturn(testBook);
+        bookServiceImpl.updateBook(testBookId, testBook);
+
+        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor =
+                ArgumentCaptor.forClass(BookEntity.class);
+
+        verify(bookRepository)
+                .updateBook(eq(testBookId), bookEntityArgumentCaptor.capture());
+
         BookEntity capturedBook = bookEntityArgumentCaptor.getValue();
+
+        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());
         assertEquals(testBook.getNumberOfPages(), capturedBook.getNumberOfPages());
-        verify(bookSpringProvidedRepository, times(1)).save(capturedBook);
+
+        verify(bookRepository, times(1)).updateBook(testBookId, testBook);
     }
 
     /**
-     * Verify if bookRepositoryImpl call the right method for deleteBook
+     * Verify if bookServiceImpl call the right method for deleteBook()
      */
     @Test
-    void canDeleteBookTest() {
+    void shouldDeleteBookTest() {
         final String testBookId = "3";
-        bookRepositoryImpl.deleteBook(testBookId);
-        assertThat(bookSpringProvidedRepository.count()).isEqualTo(0);
-        verify(bookSpringProvidedRepository, times(1)).deleteById(testBookId);
+        bookServiceImpl.deleteBook(testBookId);
+        verify(bookRepository, times(1)).deleteBook(testBookId);
     }
 
     /**
-     * Verify if bookRepositoryImpl call the right method for findBookEntitiesByAuthor
+     * Verify if bookServiceImpl call the right method for findBookEntitiesByAuthor()
      */
     @Test
-    void findBookEntitiesByAuthorTest() {
-        bookRepositoryImpl.findBookEntitiesByAuthor("Cern");
-        verify(bookSpringProvidedRepository, times(1)).findBookEntitiesByAuthor("Cern");
+    void shouldFindBookEntitiesByAuthor() {
+        final String author = "Cern";
+        bookServiceImpl.findBookEntitiesByAuthor(author);
+        verify(bookRepository, times(1)).findBookEntitiesByAuthor(author);
     }
 }

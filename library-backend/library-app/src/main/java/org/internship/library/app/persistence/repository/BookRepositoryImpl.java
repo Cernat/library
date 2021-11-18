@@ -23,11 +23,11 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book findBookById(String id) {
         Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
-        Book foundBook = optionalBookEntity.get();
-        foundBook.setAuthor("Dl. " + foundBook.getAuthor());
-        return foundBook;
-//        return optionalBookEntity.orElseThrow(
-//                () -> new EntityNotFoundException("Book with id " + id + " not found"));
+//        Book foundBook = optionalBookEntity.get();
+//        foundBook.setAuthor("Dl. " + foundBook.getAuthor());
+//        return foundBook;
+        return optionalBookEntity.orElseThrow(
+                () -> new EntityNotFoundException("Book with id " + id + " not found"));
     }
 
     @Override
