@@ -23,11 +23,7 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book findBookById(String id) {
         Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
-//        Book foundBook = optionalBookEntity.get();
-//        foundBook.setAuthor("Dl. " + foundBook.getAuthor());
-//        return foundBook;
-        return optionalBookEntity.orElseThrow(
-                () -> new EntityNotFoundException("Book with id " + id + " not found"));
+        return optionalBookEntity.get();
     }
 
     @Override
@@ -38,21 +34,14 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Book updateBook(String id, Book book) {
-        Book updatedBook = bookSpringProvidedRepository.findById(id).get(); // otherwise, Throws NoSuchElementException
-        Optional<Book> optionalBookEntity = Optional.ofNullable(updatedBook);
-        if (optionalBookEntity.isPresent()) {
-            return bookSpringProvidedRepository.save(new BookEntity(book));
-        } else {
-            throw new EntityNotFoundException("Book with id " + id + " not found");
-        }
+        Book updatedBook = bookSpringProvidedRepository.findById(id).get();
+        return bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
-    //    @Query("delete from book t where t.id = ?1")
     @Override
     public void deleteBook(String id) {
-//        Book book = bookSpringProvidedRepository.findById(id).get();
-//        bookJpaRepository.delete(new BookEntity(book));
-        bookSpringProvidedRepository.deleteById(id);
+        Book book = bookSpringProvidedRepository.findById(id).get();
+        bookSpringProvidedRepository.delete(new BookEntity(book));
     }
 
     public List<Book> findBookEntitiesByAuthor(String authorName) {
