@@ -1,9 +1,12 @@
 package org.internship.library.app;
 
+import org.internship.library.app.persistence.LibraryPersistenceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.internship.library")
+@Import({LibraryAppConfig.class, LibraryPersistenceConfig.class})
 public class LibraryApplication {
 
     public static void main(String[] args) {

@@ -7,9 +7,11 @@ import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ComponentScan
 @EnableAutoConfiguration
 public class LibraryPersistenceConfig implements InitializingBean {
 

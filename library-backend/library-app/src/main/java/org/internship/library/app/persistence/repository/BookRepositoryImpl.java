@@ -6,7 +6,6 @@ import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +27,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Book createBook(Book book) {
-        BookEntity newBook =  bookSpringProvidedRepository.save(new BookEntity(book));
-        return newBook;
+        return bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
     @Override

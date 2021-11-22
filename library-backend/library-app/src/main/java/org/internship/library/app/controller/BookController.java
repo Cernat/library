@@ -89,10 +89,11 @@ public class BookController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/author")
+    @GetMapping
     public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName) {
-        List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
+        logger.info("Retrieving all books with author name: " + authorName);
 
+        List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
         return new ResponseEntity<>(allBooksByAuthorName, HttpStatus.OK);
     }
 

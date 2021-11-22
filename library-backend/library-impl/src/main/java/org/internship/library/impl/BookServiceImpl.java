@@ -19,7 +19,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book getBook(String id) {
-        System.out.println("I will get a book here!");
         Book book = bookRepository.findBookById(id);
         return book;
     }
@@ -32,7 +31,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book createBook(Book book) {
-        System.out.println("I will create a book here!");
         Book newBook = bookRepository.createBook(book);
         return newBook;
     }
@@ -45,7 +43,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public Book updateBook(String id, Book book) {
-        System.out.println("I will update a book here!");
         return bookRepository.updateBook(id, book);
     }
 
@@ -57,14 +54,11 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public void deleteBook(String id) {
-        System.out.println("I will delete a book here, later! :D");
         bookRepository.deleteBook(id);
     }
 
     @Override
     public List<Book> findBookEntitiesByAuthor(String author) {
-        System.out.println("I will get all books by author name");
-
         return bookRepository.findBookEntitiesByAuthor(author);
     }
 

@@ -1,5 +1,6 @@
 package org.internship.library.app.controller;
 
+import org.internship.library.api.Book;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.junit.jupiter.api.Test;
@@ -104,7 +105,7 @@ public class BookControllerIntegrationTest {
     void getBooksByAuthorName() {
 
         String authorName = "Cern";
-        String uri = "http://localhost:7777/library/book/author?authorName=" + authorName;
+        String uri = "http://localhost:7777/library/book?authorName=" + authorName;
         ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.getForEntity(uri, BookEntity[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
