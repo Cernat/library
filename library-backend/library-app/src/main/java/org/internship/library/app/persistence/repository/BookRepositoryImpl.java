@@ -5,13 +5,12 @@ import org.internship.library.api.BookRepository;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository implementation(@link BookRepository) using JPA spring(@link BookJpaRepository)
+ * Repository implementation (@link BookRepository) using JPA spring (@link BookSpringProvidedRepository)
  */
 @Repository
 public class BookRepositoryImpl implements BookRepository {
