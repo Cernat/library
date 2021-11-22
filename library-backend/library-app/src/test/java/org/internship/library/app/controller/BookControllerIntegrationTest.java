@@ -1,10 +1,10 @@
 package org.internship.library.app.controller;
 
-import org.internship.library.api.Book;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -29,16 +29,20 @@ public class BookControllerIntegrationTest {
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
+    @Value("${library.book.client.url}")
+    String url;
+    final String testBookId = "5";
+    final String authorName = "Cern";
 
     /**
      * Verify if get request return a book from database
      */
     @Test
-    public void getBook() {
+    public void shouldGetBookTest() {
 
-        String uri = "http://localhost:7777/library/book/{id}";
-        final String testBookId = "5";
-        ResponseEntity responseEntity = testRestTemplate.getForEntity(uri, BookEntity.class, testBookId);
+        ResponseEntity responseEntity = testRestTemplate.getForEntity(url + "/{id}", BookEntity.class, testBookId);
+        BookEntity foundBook = (BookEntity) responseEntity.getBody();
+        assertEquals(testBookId, foundBook.getId());
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
@@ -47,17 +51,19 @@ public class BookControllerIntegrationTest {
      * Verify if post request persist a book in the database
      */
     @Test
-    void postBook() {
+    void shouldPostBookTest() {
 
-        String uri = "http://localhost:7777/library/book";
-        final String testBookId = "5";
         BookEntity testBook = new BookEntity();
         testBook.setId(testBookId);
         testBook.setTitle("Razv");
         testBook.setAuthor("Cern");
         testBook.setNumberOfPages(50);
-        ResponseEntity responseEntity = testRestTemplate.postForEntity(uri, testBook, BookEntity.class);
-
+        ResponseEntity responseEntity = testRestTemplate.postForEntity(url + "/", testBook, BookEntity.class);
+        BookEntity foundBook = (BookEntity) responseEntity.getBody();
+        assertEquals(testBook.getId(), foundBook.getId());
+        assertEquals(testBook.getAuthor(), foundBook.getAuthor());
+        assertEquals(testBook.getTitle(), foundBook.getTitle());
+        assertEquals(testBook.getNumberOfPages(), foundBook.getNumberOfPages());
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
     }
@@ -66,35 +72,35 @@ public class BookControllerIntegrationTest {
      * Verify if update request update a book in the database
      */
     @Test
-    void updateBook() {
+    void shouldUpdateBookTest() {
 
-        String uri = "http://localhost:7777/library/book/{id}";
-        final String testBookId = "5";
-        BookEntity testBook = new BookEntity();
-        testBook.setId(testBookId);
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        ResponseEntity foundBookBeforeUpdate = testRestTemplate.getForEntity(url + "/{id}", BookEntity.class, testBookId);
+        assertNotNull(foundBookBeforeUpdate);
+        BookEntity bookBeforeUpdate = (BookEntity) foundBookBeforeUpdate.getBody();
+        bookBeforeUpdate.setAuthor("Updated Author");
 
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpEntity<BookEntity> requestUpdate = new HttpEntity<>(testBook, headers);
+        HttpEntity<BookEntity> requestUpdate = new HttpEntity<>(bookBeforeUpdate, headers);
 
-        ResponseEntity responseEntity = testRestTemplate.exchange(uri, HttpMethod.PUT, requestUpdate, BookEntity.class, testBookId);
+        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestUpdate, BookEntity.class, testBookId);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+
+        ResponseEntity foundBookAfterUpdate = testRestTemplate.getForEntity(url + "/{id}", BookEntity.class, testBookId);
+        assertNotNull(foundBookAfterUpdate);
+        BookEntity bookAfterUpdate = (BookEntity) responseEntity.getBody();
+        assertEquals(bookBeforeUpdate.getAuthor(), bookAfterUpdate.getAuthor());
     }
 
     /**
      * Verify if delete request delete a book in database
      */
     @Test
-    void deleteBook() {
+    void shouldDeleteBookTest() {
 
-        String uri = "http://localhost:7777/library/book/{id}";
-        final String testBookId = "5";
-        testRestTemplate.delete(uri, testBookId);
-        ResponseEntity responseEntity = testRestTemplate.getForEntity(uri, BookEntity.class, testBookId);
+        testRestTemplate.delete(url + "/{id}", testBookId);
+        ResponseEntity responseEntity = testRestTemplate.getForEntity(url + "/{id}", BookEntity.class, testBookId);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
@@ -102,11 +108,9 @@ public class BookControllerIntegrationTest {
      * Verify if get request return all books by author name
      */
     @Test
-    void getBooksByAuthorName() {
+    void shouldGetBooksByAuthorNameTest() {
 
-        String authorName = "Cern";
-        String uri = "http://localhost:7777/library/book?authorName=" + authorName;
-        ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.getForEntity(uri, BookEntity[].class);
+        ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.getForEntity(url + "/?authorName=" + authorName, BookEntity[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }

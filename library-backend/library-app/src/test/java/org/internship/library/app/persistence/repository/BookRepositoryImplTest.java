@@ -79,7 +79,7 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for updateBook
      */
     @Test
-    void updateBook() {
+    void shouldUpdateBookTest() {
 
         BookEntity testBook = new BookEntity();
         final String testBookId = "3";

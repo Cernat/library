@@ -38,5 +38,11 @@ public interface BookRepository {
      */
     void deleteBook(String id);
 
+    /**
+     * Retrieves all the books by the given author
+     *
+     * @param author to search books
+     * @return book entities
+     */
     List<Book> findBookEntitiesByAuthor(String author);
 }

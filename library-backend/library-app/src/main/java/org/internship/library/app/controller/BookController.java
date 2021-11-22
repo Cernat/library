@@ -90,6 +90,11 @@ public class BookController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Retrieves a list of books specified by the author
+     * @param authorName to search books
+     * @return a list of book entities
+     */
     @GetMapping
     public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName) {
         logger.info("Retrieving all books with author name: " + authorName);
@@ -97,5 +102,4 @@ public class BookController {
         List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
         return new ResponseEntity<>(allBooksByAuthorName, HttpStatus.OK);
     }
-
 }

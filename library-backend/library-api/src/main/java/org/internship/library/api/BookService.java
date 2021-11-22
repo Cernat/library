@@ -15,7 +15,7 @@ public interface BookService {
     Book getBook(String id);
 
     /**
-     * Creates the given
+     * Creates the given book
      *
      * @param book the book object
      * @return the book
@@ -39,10 +39,23 @@ public interface BookService {
      */
     void deleteBook(String id);
 
+    /**
+     * Retrieves a list of books by given author
+     * @param author to search books
+     * @return a list of books
+     */
     List<Book> findBookEntitiesByAuthor(String author);
 
+    /**
+     * Sets the BookRepository interface {@link BookRepository}
+     * @param bookRepository interface
+     */
     void setBookRepository(BookRepository bookRepository);
 
+    /**
+     * Gets the BookRepository interface {@link BookRepository}
+     * @return instance of bookRepository
+     */
     BookRepository getBookRepository();
 }
 
