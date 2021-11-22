@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @RestController
 @RequestMapping(path = "book")
@@ -86,6 +88,14 @@ public class BookController {
         logger.info("Deleting the book with the id of: " + id);
         bookService.deleteBook(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName) {
+        logger.info("Retrieving all books with author name: " + authorName);
+
+        List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
+        return new ResponseEntity<>(allBooksByAuthorName, HttpStatus.OK);
     }
 
 }

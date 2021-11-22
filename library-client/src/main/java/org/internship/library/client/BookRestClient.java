@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Using RestTemplate, BookRestClient is a REST client for our API APP
@@ -29,7 +30,7 @@ public class BookRestClient implements BookService {
     @Override
     public Book getBook(String id) {
         String url = libraryBookPath + id;
-        Book book = restTemplate.getForObject(url, Book.class);
+        Book book = restTemplate.getForObject(url, BookModel.class);
         return book;
     }
 
@@ -41,7 +42,7 @@ public class BookRestClient implements BookService {
      */
     @Override
     public Book createBook(Book book) {
-        return restTemplate.postForObject(libraryBookPath, book, Book.class);
+        return restTemplate.postForObject(libraryBookPath, book, BookModel.class);
     }
 
     /**
@@ -60,7 +61,7 @@ public class BookRestClient implements BookService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Book> requestUpdate = new HttpEntity<>(book, headers);
 
-        ResponseEntity<Book> bookEntity = restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Book.class);
+        ResponseEntity<BookModel> bookEntity = restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, BookModel.class);
         return bookEntity.getBody();
     }
 
@@ -73,7 +74,14 @@ public class BookRestClient implements BookService {
     @Override
     public void deleteBook(String id) {
         String url = libraryBookPath + id;
-        restTemplate.delete(url, Book.class);
+        restTemplate.delete(url);
+    }
+
+    @Override
+    public List<Book> findBookEntitiesByAuthor(String author) {
+        String url = libraryBookPath + "?authorName=" + author;
+        ResponseEntity<BookModel> responseEntity = restTemplate.getForEntity(url, BookModel.class);
+        return (List<Book>) responseEntity;
     }
 
     @Override

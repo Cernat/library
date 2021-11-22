@@ -1,5 +1,7 @@
 package org.internship.library.api;
 
+import java.util.List;
+
 /**
  * This interface defines the behaviour of Book repository
  */
@@ -36,4 +38,5 @@ public interface BookRepository {
      */
     void deleteBook(String id);
 
+    List<Book> findBookEntitiesByAuthor(String author);
 }

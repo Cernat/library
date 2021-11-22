@@ -1,5 +1,7 @@
 package org.internship.library.api;
 
+import java.util.List;
+
 /**
  * This interface defines the behaviour of a service
  */
@@ -36,6 +38,8 @@ public interface BookService {
      * @return the book
      */
     void deleteBook(String id);
+
+    List<Book> findBookEntitiesByAuthor(String author);
 
     void setBookRepository(BookRepository bookRepository);
 

@@ -5,7 +5,8 @@ import org.internship.library.api.BookRepository;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,4 +40,10 @@ public class BookRepositoryImpl implements BookRepository {
         Book book = bookSpringProvidedRepository.findById(id).get();
         bookSpringProvidedRepository.delete(new BookEntity(book));
     }
+
+    public List<Book> findBookEntitiesByAuthor(String authorName) {
+        List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
+        return new ArrayList<>(bookEntities);
+    }
+
 }
