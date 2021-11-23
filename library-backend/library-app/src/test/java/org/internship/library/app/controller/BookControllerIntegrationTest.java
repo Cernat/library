@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Integration Testing Class from Controller to DB
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {LibraryAppConfigTest.class})
+@SpringBootTest(classes = {LibraryAppConfigTest.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class BookControllerIntegrationTest {
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();

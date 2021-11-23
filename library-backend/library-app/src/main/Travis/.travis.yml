@@ -8,5 +8,8 @@ jdk:
 services:
   - docker
 
-script:
-  -
+before_install:
+  - docker-compose up
+
+after_success:
+  - mvn clean install
