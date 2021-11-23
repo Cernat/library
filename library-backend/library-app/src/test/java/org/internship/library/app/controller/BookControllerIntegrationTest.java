@@ -2,6 +2,7 @@ package org.internship.library.app.controller;
 
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.BookEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,18 @@ public class BookControllerIntegrationTest {
     String url;
     final String testBookId = "5";
     final String authorName = "Cern";
+
+    @BeforeEach
+    void setUp() {
+        BookEntity testBook = new BookEntity();
+        testBook.setId(testBookId);
+        testBook.setTitle("Razv");
+        testBook.setAuthor("Cern");
+        testBook.setNumberOfPages(50);
+        ResponseEntity responseEntity = testRestTemplate.postForEntity(url + "/", testBook, BookEntity.class);
+        assertNotNull(responseEntity);
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+    }
 
     /**
      * Verify if get request return a book from database

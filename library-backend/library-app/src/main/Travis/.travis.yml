@@ -1,0 +1,12 @@
+# The language we use
+language: java
+
+# Java Development Kit (JDK)
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+
+script:
+  -

@@ -37,8 +37,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void deleteBook(String id) {
-        Book book = bookSpringProvidedRepository.findById(id).get();
-        bookSpringProvidedRepository.delete(new BookEntity(book));
+        bookSpringProvidedRepository.deleteById(id);
     }
 
     public List<Book> findBookEntitiesByAuthor(String authorName) {
