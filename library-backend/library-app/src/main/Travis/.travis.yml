@@ -11,5 +11,9 @@ services:
 before_install:
   - docker-compose up
 
-after_success:
+script:
   - mvn clean install
+
+branches:
+  only:
+    - Travis-CI
