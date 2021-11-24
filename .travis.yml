@@ -18,26 +18,19 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
 script:
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker --version
   - docker-compose --version
-  - pwd
-  - ls
-  - cd library-backend
-  - ls
-  - cd library-app
-  - ls
-  - cd src
-  - ls
-  - cd main
-  - ls
-  - cd Docker
-  - ls
+  - cd library-backend/library-app/src/main/Docker
   - docker-compose pull db
+  - docker images
+  - docker ps -a
   - cd ../../..
-  - mvn clean install
+  - travis_wait 2 mvn clean install
+  - docker images
+  - docker ps -a
 
 branches:
   only:
