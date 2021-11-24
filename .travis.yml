@@ -20,6 +20,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker --version
   - docker-compose --version
   - pwd
