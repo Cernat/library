@@ -27,7 +27,7 @@ script:
   - docker-compose pull db
   - docker images
   - docker ps -a
-  - docker-compose -d up db
+  - docker-compose up -d db
   - cd ../../..
   - docker images
   - docker ps -a
