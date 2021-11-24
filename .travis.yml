@@ -31,7 +31,7 @@ script:
   - cd ../../..
   - docker images
   - docker ps -a
-  - travis_wait 2 mvn clean install
+  - travis_wait 10 mvn clean install
   - docker images
   - docker ps -a
 
