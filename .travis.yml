@@ -3,7 +3,9 @@ language: java
 
 # Java Development Kit (JDK)
 jdk:
-  - oraclejdk8
+  - openjdk8
+
+dist: trusty
 
 services:
   - docker
