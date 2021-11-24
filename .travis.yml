@@ -10,9 +10,9 @@ dist: trusty
 services:
   - docker
 
-before_install:
-  - docker-compose pull db
-  - docker-compose up db
+#before_install:
+#  - docker-compose pull db
+#  - docker-compose up db
 
 script:
   - docker --version
@@ -31,6 +31,7 @@ script:
   - ls
   - cd Docker
   - ls
+  - docker-compose pull db
   - mvn clean install
 
 branches:
