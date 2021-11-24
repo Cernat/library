@@ -27,8 +27,8 @@ script:
   - docker-compose pull db
   - docker images
   - docker ps -a
-  - cd ../../..
   - docker-compose up db
+  - cd ../../..
   - docker images
   - docker ps -a
   - travis_wait 2 mvn clean install
