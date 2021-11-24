@@ -27,11 +27,11 @@ script:
   - docker-compose pull db
   - docker images
   - docker ps -a
-  - docker-compose up -d db
+  - travis_wait 5 docker-compose up -d db
   - cd ../../..
   - docker images
   - docker ps -a
-  - travis_wait 10 mvn clean install
+  - mvn clean install
   - docker images
   - docker ps -a
 
