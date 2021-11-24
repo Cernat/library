@@ -36,6 +36,7 @@ script:
   - cd Docker
   - ls
   - docker-compose pull db
+  - cd ../../..
   - mvn clean install
 
 branches:
