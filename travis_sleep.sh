@@ -3,8 +3,8 @@
 
 # Constants
 RED='\033[0;31m'
-minutes=5
-limit=3
+minutes=0
+limit=5
 
 while kill -0 $! >/dev/null 2>&1; do
   echo -n -e " \b" # never leave evidences!
