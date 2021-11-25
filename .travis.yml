@@ -17,8 +17,7 @@ before_install:
   - bash before_install.sh
 
 before_script:
-  - ls
-  - bash before_scipt.sh
+  - bash before_script.sh
 
 script:
   - bash script.sh
