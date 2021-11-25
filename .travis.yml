@@ -46,6 +46,12 @@ after_failure:
   - mvn clean install
   - docker images
   - docker ps -a
+  - mvn clean install
+  - docker images
+  - docker ps -a
+  - mvn clean install
+  - docker images
+  - docker ps -a
 
 branches:
   only:
