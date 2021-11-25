@@ -14,49 +14,15 @@ services:
   - docker
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - bash before_install.sh
 
 before_script:
-  - docker --version
-  - docker-compose --version
-  - cd library-backend/library-app/src/main/Docker
-  - docker-compose pull db
-  - docker images
-  - docker ps -a
-  - docker-compose up -d db
+  - bash before_scipt.sh
 
 script:
-#  - cd ../../..
-  - cd ../../../../..
-  - chmod +x travis_sleep.sh
-  - bash travis_sleep.sh
-  - docker images
-  - docker ps -a
-  - cd library-backend/library-app
-#  - mvn clean install
-#  - docker images
-#  - docker ps -a
-
-after_script:
-  - mvn clean install
-  - docker images
-  - docker ps -a
-
-#after_failure:
-#  - mvn clean install
-#  - docker images
-#  - docker ps -a
-#  - mvn clean install
-#  - docker images
-#  - docker ps -a
-#  - mvn clean install
-#  - docker images
-#  - docker ps -a
+  - bash script.sh
 
 branches:
   only:
     - Travis-CI
+    - master
