@@ -1,7 +1,5 @@
 # Changing directory backwards
 echo "[INFO] Changing directory"
-ls
-cd ../../../../..
 
 # Changing the access permission
 echo "[INFO] Changing access permission"
