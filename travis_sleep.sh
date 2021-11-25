@@ -4,7 +4,7 @@
 # Constants
 RED='\033[0;31m'
 minutes=0
-limit=5
+limit=3
 
 while kill -0 $! >/dev/null 2>&1; do
   echo -n -e " \b" # never leave evidences!
@@ -17,7 +17,7 @@ while kill -0 $! >/dev/null 2>&1; do
 
   minutes=$((minutes+1))
 
-  sleep 60
+  sleep 210
 done
 
 exit 0
