@@ -20,14 +20,16 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
-script:
+before_script:
   - docker --version
   - docker-compose --version
   - cd library-backend/library-app/src/main/Docker
   - docker-compose pull db
   - docker images
   - docker ps -a
-  - travis_wait 5 docker-compose up -d db
+  - docker-compose up -d db
+    
+script:
   - cd ../../..
   - docker images
   - docker ps -a
