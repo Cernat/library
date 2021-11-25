@@ -28,11 +28,21 @@ before_script:
   - docker images
   - docker ps -a
   - docker-compose up -d db
-    
+
 script:
   - cd ../../..
   - docker images
   - docker ps -a
+  - mvn clean install
+  - docker images
+  - docker ps -a
+
+after_script:
+  - mvn clean install
+  - docker images
+  - docker ps -a
+
+after_failure:
   - mvn clean install
   - docker images
   - docker ps -a
