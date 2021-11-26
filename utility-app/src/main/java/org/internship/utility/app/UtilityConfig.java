@@ -1,5 +1,6 @@
 package org.internship.utility.app;
 
+import org.internship.library.api.BookRepository;
 import org.internship.library.client.BookRestClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,5 +24,4 @@ public class UtilityConfig {
         bookRestClient.setLibraryBookPath(url);
         return bookRestClient;
     }
-
 }

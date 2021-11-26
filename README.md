@@ -3,4 +3,5 @@
 
 # A digital library developed during the internship journey
 
-https://app.travis-ci.com/Cernat/library.svg?branch=master
+
+[![Build Status](https://app.travis-ci.com/Cernat/library.svg?branch=Travis-CI)](https://app.travis-ci.com/Cernat/library)

@@ -21,3 +21,7 @@ spring:
       ddl-auto: update
       use-new-id-generator-mappings: false
     show-sql: true
+library:
+  book:
+    client:
+      url: http://localhost:7777/library/book

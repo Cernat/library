@@ -1,69 +1,63 @@
 package org.internship.library.api;
 
 /**
- * Book class
+ * This interface defines the structure of a Book
  */
-public class Book {
-    private Long id;
-    private String title;
-    private String author;
-    private Integer numberOfPages;
+public interface Book {
+    /**
+     * Getter for id
+     *
+     * @return the id
+     */
+    public String getId();
 
-    public Book(Long id, String title, String author, Integer numberOfPages) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.numberOfPages = numberOfPages;
-    }
+    /**
+     * Setter for id
+     *
+     * @param id to set
+     */
+    public void setId(String id);
 
-    public Book() {
-    }
+    /**
+     * Getter for title
+     *
+     * @return the title
+     */
+    public String getTitle();
 
-    public Book(String title, String author, Integer numberOfPages) {
-        this.title = title;
-        this.author = author;
-        this.numberOfPages = numberOfPages;
-    }
+    /**
+     * Setter for title
+     *
+     * @param title to set
+     */
+    public void setTitle(String title);
 
-    public Long getId() {
-        return id;
-    }
+    /**
+     * Getter for author
+     *
+     * @return the author
+     */
+    public String getAuthor();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    /**
+     * Setter for author
+     *
+     * @param author to set
+     */
+    public void setAuthor(String author);
 
-    public String getTitle() {
-        return title;
-    }
+    /**
+     * Getter for numberOfPages
+     *
+     * @return the numberOfPages
+     */
+    public Integer getNumberOfPages();
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    /**
+     * Setter for numberOfPages
+     *
+     * @param numberOfPages to set
+     */
+    public void setNumberOfPages(Integer numberOfPages);
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getNumberOfPages() {
-        return numberOfPages;
-    }
-
-    public void setNumberOfPages(Integer numberOfPages) {
-        this.numberOfPages = numberOfPages;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "Id=" + id +
-                ", title='" + title + '\'' +
-                ", Author='" + author + '\'' +
-                ", numberOfPages=" + numberOfPages +
-                '}';
-    }
 }

@@ -1,13 +1,17 @@
 package org.internship.library.client;
 
 import org.internship.library.api.Book;
+import org.internship.library.api.BookRepository;
 import org.internship.library.api.BookService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Using RestTemplate, BookRestClient is a REST client for our API APP
@@ -19,29 +23,32 @@ public class BookRestClient implements BookService {
 
     /**
      * Retrieves the book specified by the id
+     *
      * @param id the book id
      * @return the book
      */
     @Override
     public Book getBook(String id) {
         String url = libraryBookPath + id;
-        Book book = restTemplate.getForObject(url, Book.class);
+        Book book = restTemplate.getForObject(url, BookModel.class);
         return book;
     }
 
     /**
      * Retrieves the book created
+     *
      * @param book the book object
      * @return the book
      */
     @Override
     public Book createBook(Book book) {
-        return restTemplate.postForObject(libraryBookPath, book, Book.class);
+        return restTemplate.postForObject(libraryBookPath, book, BookModel.class);
     }
 
     /**
      * Retrieves the book updated
-     * @param id the id of book that it will be updated
+     *
+     * @param id   the id of book that it will be updated
      * @param book the book object
      * @return the modified book
      */
@@ -54,20 +61,37 @@ public class BookRestClient implements BookService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Book> requestUpdate = new HttpEntity<>(book, headers);
 
-        ResponseEntity<Book> bookEntity = restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, Book.class);
+        ResponseEntity<BookModel> bookEntity = restTemplate.exchange(url, HttpMethod.PUT, requestUpdate, BookModel.class);
         return bookEntity.getBody();
     }
 
     /**
      * Delete the book specified by the id
+     *
      * @param id the book id
      * @return the book
      */
     @Override
-    public Book deleteBook(String id) {
+    public void deleteBook(String id) {
         String url = libraryBookPath + id;
-        restTemplate.delete(url, Book.class);
-        return null;
+        restTemplate.delete(url);
+    }
+
+    @Override
+    public List<Book> findBookEntitiesByAuthor(String author) {
+        String url = libraryBookPath + "?authorName=" + author;
+        ResponseEntity<BookModel> responseEntity = restTemplate.getForEntity(url, BookModel.class);
+        return (List<Book>) responseEntity;
+    }
+
+    @Override
+    public void setBookRepository(BookRepository bookRepository) {
+        throw new UnsupportedOperationException("No repository required for the client");
+    }
+
+    @Override
+    public BookRepository getBookRepository() {
+        throw new UnsupportedOperationException("No repository required for the client");
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {
