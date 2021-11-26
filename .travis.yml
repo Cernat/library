@@ -1,0 +1,28 @@
+# The language we use
+language: java
+
+# Java Development Kit (JDK)
+jdk:
+  - openjdk8
+
+dist: trusty
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.25.5
+
+services:
+  - docker
+
+before_install:
+  - bash before_install.sh
+
+before_script:
+  - bash before_script.sh
+
+script:
+  - bash script.sh
+
+branches:
+  only:
+    - Travis-CI
+    - master
