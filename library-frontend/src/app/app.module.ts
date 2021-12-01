@@ -12,6 +12,9 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { PanelComponent } from './panel/panel.component';
 import { InputFormatDirective } from './input-format.directive';
 import { ContactFormComponent } from './contact-form/contact-form.component';
+import { PostsComponent } from './posts/posts.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { PostService } from './services/post.service';
 
 @NgModule({
   declarations: [
@@ -23,15 +26,18 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
     PanelComponent,
     InputFormatDirective,
     ContactFormComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
-    CoursesService
+    CoursesService,
+    PostService
   ],
   bootstrap: [AppComponent],
   schemas: [
