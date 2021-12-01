@@ -2,4 +2,11 @@
 
 <courses></courses>
 
-
+<app-favorite [isFavorite]="post.isFavorite" (change)="onFavoriteChanged($event)"></app-favorite>
+<bootstrap-panel>
+    <ng-container class="heading">Heading</ng-container>
+    <div class="body">
+        <h2>Body</h2>
+        <p>Some Content Here...</p>
+    </div>
+</bootstrap-panel>
