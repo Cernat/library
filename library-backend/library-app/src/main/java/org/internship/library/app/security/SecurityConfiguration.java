@@ -1,4 +1,4 @@
-package org.internship.library.app;
+package org.internship.library.app.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,10 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.CorsFilter;
+
+import static org.internship.library.app.security.UserRole.ADMIN;
+import static org.internship.library.app.security.UserRole.USER;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -23,7 +23,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final MyUserDetailsService myUserDetailsService;
     private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(ApplicationPasswordEncoder applicationPasswordEncoder, MyUserDetailsService myUserDetailsService, CorsFilter corsFilter) {
+    @Autowired
+    public SecurityConfiguration(ApplicationPasswordEncoder applicationPasswordEncoder,
+                                 MyUserDetailsService myUserDetailsService,
+                                 CorsFilter corsFilter) {
         this.applicationPasswordEncoder = applicationPasswordEncoder;
         this.myUserDetailsService = myUserDetailsService;
         this.corsFilter = corsFilter;
@@ -32,19 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Set your configuration on the auth object
-
-        auth.userDetailsService(myUserDetailsService).passwordEncoder(encoder());
-//        auth.authenticationProvider(authenticationProvider());
-
-//        auth.inMemoryAuthentication()
-//                .withUser("blah")
-//                .password("blah")
-//                .roles("USER")
-//                .and()
-//                .withUser("inMemoryTest")
-//                .password("inMemoryTest")
-//                .roles("ADMIN");
+        auth.authenticationProvider(authenticationProvider());
     }
 
 //    @Bean
@@ -52,24 +43,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        return NoOpPasswordEncoder.getInstance();
 //    }
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder encoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
 //        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
-        http.authorizeRequests()
-//                .antMatchers("/book").permitAll()
-//                .antMatchers("/**").hasAnyRole("ADMIN")
-                .antMatchers("/").hasAnyRole("ADMIN")
-//                .antMatchers("/book").hasAnyRole("ADMIN")
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/registration/**").permitAll()
+                .antMatchers("/swagger-ui/**").hasAuthority(ADMIN.name())
+                .antMatchers("/book/**").hasAuthority(ADMIN.name())
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .and()
-                .csrf().disable();
+                .rememberMe();
     }
 
     @Bean
@@ -77,8 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(myUserDetailsService);
-//        provider.setPasswordEncoder(applicationPasswordEncoder);
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        provider.setPasswordEncoder(applicationPasswordEncoder);
         return provider;
     }
 }

@@ -1,14 +1,16 @@
 package org.internship.library.app.persistence.entity;
 
 import io.swagger.annotations.ApiParam;
+import org.internship.library.app.security.UserRole;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "users")
@@ -31,9 +33,10 @@ public class UserEntity {
     @ApiParam(value = "test")
     private String email;
 
-    @Column(name = "roles")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "app_user_role")
     @ApiParam(value = "USER")
-    private String roles;
+    private UserRole userRole;
 
     public String getUserName() {
         return userName;
@@ -43,12 +46,12 @@ public class UserEntity {
         this.userName = userName;
     }
 
-    public String getRoles() {
-        return roles;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public Integer getId() {
