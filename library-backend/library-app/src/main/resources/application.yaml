@@ -25,3 +25,6 @@ spring:
       ddl-auto: update
       use-new-id-generator-mappings: false
     show-sql: true
+cors:
+  allowedOrigins:
+    - 'http://localhost:4200'

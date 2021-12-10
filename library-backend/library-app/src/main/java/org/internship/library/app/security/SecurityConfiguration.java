@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import static org.internship.library.app.security.UserRole.ADMIN;
@@ -38,31 +39,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
-
-//    @Bean
-//    public PasswordEncoder encoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
-        http
+        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
+        http.httpBasic().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/registration/**").permitAll()
                 .antMatchers("/swagger-ui/**").hasAuthority(ADMIN.name())
-                .antMatchers("/book/**").hasAuthority(ADMIN.name())
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .rememberMe();
+                .antMatchers("/api/v1/user/**").hasAuthority(USER.name())
+                .antMatchers("/book/**").permitAll()
+                .anyRequest().authenticated();
+
     }
 
     @Bean

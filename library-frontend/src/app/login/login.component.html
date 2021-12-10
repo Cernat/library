@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+
+    <div id="login-form" >
+    <form class="clr-form clr-form-horizontal" [formGroup]="form" (ngSubmit)="login()">
+        <div class="clr-form-control">
+          <label for="example9" class="clr-control-label">Username</label>
+          <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+              <input 
+                  formControlName="username"
+                  type="text" 
+                  id="example9" 
+                  placeholder="example" 
+                  class="clr-input" />
+                  <div *ngIf="username?.touched && username?.invalid" class="alert alert-danger">
+                    Username is required
+                  </div>
+                  <!-- <div *ngIf="username?.errors?.required" class="alert alert-danger">
+                    Username is required
+                  </div> -->
+                  <div *ngIf="username?.errors?.minlength" class="alert alert-danger">
+                    Username should be minimum {{ username?.errors?.minlength.requiredLength }} characters
+                  </div>
+                  <div *ngIf="username?.errors?.cannotContainSpace" class="alert alert-info">
+                    Username cannot contain space
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="clr-form-control">
+          <label for="example12" class="clr-control-label">Password</label>
+          <div class="clr-control-container">
+            <div class="clr-input-wrapper">
+              <input 
+                  formControlName="password"
+                  type="password" 
+                  id="example12" 
+                  placeholder="*********" 
+                  class="clr-input" />
+            </div>
+          </div>
+        </div>
+        <div class="clr-form-control" id="buttonsGroup">
+            <button class="btn btn-primary" type="submit"> Login </button>
+            <button class="btn btn-primary" type="button" (click)="register()"> Sign Up </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+</body>
+</html>
+

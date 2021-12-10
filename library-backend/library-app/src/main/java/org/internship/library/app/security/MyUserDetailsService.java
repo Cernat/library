@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.internship.library.app.security.UserRole.USER;
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -60,6 +62,7 @@ public class MyUserDetailsService implements UserDetailsService {
 //        validatePassword(user);
         String encodedPassword = applicationPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setUserRole(USER);
         userRepository.save(user);
 
         return user;
