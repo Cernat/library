@@ -7,17 +7,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import static org.internship.library.app.security.UserRole.ADMIN;
-import static org.internship.library.app.security.UserRole.USER;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    UserDetailsService userDetailsService;
 
     private final ApplicationPasswordEncoder applicationPasswordEncoder;
     private final MyUserDetailsService myUserDetailsService;
@@ -38,19 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
-
-//    @Bean
-//    public PasswordEncoder encoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
+        http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -66,8 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider()
-    {
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(myUserDetailsService);
         provider.setPasswordEncoder(applicationPasswordEncoder);
