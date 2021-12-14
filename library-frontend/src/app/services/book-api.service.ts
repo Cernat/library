@@ -16,10 +16,6 @@ export class BookApiService {
 
   public findBookById(): Observable<Book> {
 
-    
-
     return this.http.get<any>(this.libraryBookPath + '/' + this.id);
-    
-
   }
 }

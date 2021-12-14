@@ -61,6 +61,17 @@
             </div>
           </div>
         </div>
+        
+        <div class="clr-form-control">
+          <label class="clr-control-label">User Role</label>
+          <clr-select-container>
+            <select clrSelect name="type" formControlName="userRole">
+              <option value="USER" >User</option>
+              <option value="ADMIN" >Admin</option>
+            </select>
+          </clr-select-container>
+        </div>
+
         <div class="clr-form-control" id="buttonsGroup">
             <button class="btn btn-primary" type="submit"> Sign Up </button>
             <button class="btn btn-primary" type="button" (click)="goBack()"> Sign In </button>

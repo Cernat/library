@@ -15,14 +15,8 @@ export class HomeService {
 
   receiveAllUser() {
 
-    // let headers = new HttpHeaders({
-    //   authorization: sessionStorage.getItem('basicauth')!
-
-    // });
-
     return this.http.get<any>(this.libraryBookPath + '/', {
     });
-
   }
 
 }

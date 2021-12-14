@@ -52,7 +52,7 @@ public class MyUserDetailsService implements UserDetailsService {
         PasswordValidationHelper.validatePassword(user);
         String encodedPassword = applicationPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setUserRole(USER);
+//        user.setUserRole(USER);
         userRepository.save(user);
 
         return user;

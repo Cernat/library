@@ -21,7 +21,8 @@ export class SignupComponent implements OnInit {
       UsernameValidators.cannotContainSpace
     ]),
     email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    userRole: new FormControl('', Validators.required)
   });
 
   constructor(
@@ -37,21 +38,10 @@ export class SignupComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.form.get("email")?.value);
-    console.log(this.form.get("userName")?.value);
-    console.log(this.form.get("password")?.value);
-    this.user.email = this.form.get("email")?.value;
-    this.user.userName = this.form.get("userName")?.value;
-    this.user.password = this.form.get("password")?.value;
     console.log(this.form.value);
-    console.log(this.user, this.user.appUserRole);
-
     this.signUpService.signUp(this.form.value).subscribe((userReceived: any) => {
-
       console.log(userReceived);
-
     });
-
   }
 
 }
