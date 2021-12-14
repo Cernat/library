@@ -39,7 +39,7 @@ class UserControllerIntegrationTest {
     UserRepository userRepository;
     @Value("${library.user.client.url}")
     String url;
-    final String testUsername = "userTest";
+    private static final String testUsername = "userTest";
 
 
     /**

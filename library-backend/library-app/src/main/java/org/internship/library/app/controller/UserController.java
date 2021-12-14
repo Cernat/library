@@ -43,8 +43,6 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
-//        return ResponseEntity.ok(userService.findById(id));
     }
 
     /**

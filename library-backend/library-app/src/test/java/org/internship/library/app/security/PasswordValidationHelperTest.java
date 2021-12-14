@@ -4,10 +4,13 @@ import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.service.exception.UserCredentialsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.sun.javaws.JnlpxArgs.verify;
 import static org.internship.library.app.security.PasswordValidationHelper.validatePassword;
 
-
+@ExtendWith(MockitoExtension.class)
 class PasswordValidationHelperTest {
 
 
@@ -42,5 +45,8 @@ class PasswordValidationHelperTest {
                 "Password must contain at least one uppercase Latin character [A-Z]." +
                 "Password must contain at least one special character like ! @ # & ( )." +
                 "Password must contain a length of at least 8 characters and a maximum of 20 characters.", thrown3.getMessage());
+
+        emptyUser.setPassword("Test123!");
+        validatePassword(emptyUser);
     }
 }

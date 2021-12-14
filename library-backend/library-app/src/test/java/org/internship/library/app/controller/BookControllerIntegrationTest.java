@@ -33,8 +33,7 @@ public class BookControllerIntegrationTest {
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Value("${library.book.client.url}")
     String url;
-    final String testBookId = "100";
-    final String authorName = "Cern";
+    private static final String testBookId = "100";
 
     public static HttpHeaders createHeaders(String username, String password) {
         return new HttpHeaders() {{
@@ -142,6 +141,8 @@ public class BookControllerIntegrationTest {
      */
     @Test
     void shouldGetBooksByAuthorNameTest() {
+
+        final String authorName = "Cern";
 
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
         ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.exchange(url + "/?authorName=" + authorName, HttpMethod.GET, requestHeader, BookEntity[].class);
