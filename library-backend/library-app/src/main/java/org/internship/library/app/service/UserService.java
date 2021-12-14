@@ -1,28 +1,23 @@
 package org.internship.library.app.service;
 
-import org.internship.library.api.Book;
-import org.internship.library.app.persistence.entity.BookEntity;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
 import org.internship.library.app.security.ApplicationPasswordEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ApplicationPasswordEncoder applicationPasswordEncoder;
 
-    @Autowired
-    ApplicationPasswordEncoder applicationPasswordEncoder;
-
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ApplicationPasswordEncoder applicationPasswordEncoder) {
         this.userRepository = userRepository;
+        this.applicationPasswordEncoder = applicationPasswordEncoder;
     }
 
     public List<UserEntity> findAll() {
