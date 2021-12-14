@@ -3,7 +3,6 @@ package org.internship.library.app.service;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
 import org.internship.library.app.security.ApplicationPasswordEncoder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

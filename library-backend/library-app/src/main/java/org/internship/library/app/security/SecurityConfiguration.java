@@ -11,6 +11,7 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import static org.internship.library.app.security.UserRole.ADMIN;
+import static org.internship.library.app.security.UserRole.USER;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -37,12 +38,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
-        http
+        http.httpBasic().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/registration/**").permitAll()
                 .antMatchers("/swagger-ui/**").hasAuthority(ADMIN.name())
-                .antMatchers("/book/**").hasAuthority(ADMIN.name())
+//                .antMatchers("/book/**").hasAuthority(ADMIN.name())
+                .antMatchers("/book/**").hasAuthority(USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
