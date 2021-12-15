@@ -25,3 +25,6 @@ library:
   book:
     client:
       url: http://localhost:7777/library/book
+  user:
+    client:
+      url: http://localhost:7777/library/api/v1/user

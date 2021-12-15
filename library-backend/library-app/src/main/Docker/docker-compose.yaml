@@ -16,6 +16,8 @@ services:
     restart: on-failure
     links:
       - db
+    volumes:
+      - ./data:/ORCL/u01
     environment:
       - spring.datasource.url=jdbc:oracle:thin:@db:1521:ORCLCDB
       - spring.datasource.username=SYS AS SYSDBA
