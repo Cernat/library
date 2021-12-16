@@ -1,7 +1,7 @@
 package org.internship.library.app.impl;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
+import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.BookAPI.BookRepository;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.internship.library.impl.BookServiceImpl;
 import org.junit.jupiter.api.Test;

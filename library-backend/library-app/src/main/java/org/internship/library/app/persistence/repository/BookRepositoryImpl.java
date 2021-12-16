@@ -1,11 +1,12 @@
 package org.internship.library.app.persistence.repository;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
+import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.BookAPI.BookRepository;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,18 +22,18 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book findBookById(String id) {
         Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
-        return optionalBookEntity.get();
+        return (Book) optionalBookEntity.get();
     }
 
     @Override
     public Book createBook(Book book) {
-        return bookSpringProvidedRepository.save(new BookEntity(book));
+        return (Book) bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
     @Override
     public Book updateBook(String id, Book book) {
-        Book updatedBook = bookSpringProvidedRepository.findById(id).get();
-        return bookSpringProvidedRepository.save(new BookEntity(book));
+        Book updatedBook = (Book) bookSpringProvidedRepository.findById(id).get();
+        return (Book) bookSpringProvidedRepository.save(new BookEntity(book));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     public List<Book> findBookEntitiesByAuthor(String authorName) {
         List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
-        return new ArrayList<>(bookEntities);
+        return new ArrayList<Book>(bookEntities);
     }
 
 }

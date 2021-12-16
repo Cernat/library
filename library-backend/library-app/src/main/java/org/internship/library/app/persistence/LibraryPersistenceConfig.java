@@ -2,7 +2,7 @@ package org.internship.library.app.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.internship.library.api.Book;
+import org.internship.library.api.BookAPI.Book;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

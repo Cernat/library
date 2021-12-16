@@ -1,6 +1,6 @@
 package org.internship.library.client;
 
-import org.internship.library.api.Book;
+import org.internship.library.api.BookAPI.Book;
 
 public class BookModel implements Book {
 

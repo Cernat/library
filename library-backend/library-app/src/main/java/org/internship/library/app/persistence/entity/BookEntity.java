@@ -1,6 +1,6 @@
 package org.internship.library.app.persistence.entity;
 
-import org.internship.library.api.Book;
+import org.internship.library.api.BookAPI.Book;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,7 +10,7 @@ import java.util.UUID;
  *  Implements the {@link Book} model for JPA.
  */
 @Entity(name = "book")
-public class BookEntity implements Book {
+public class BookEntity implements Book{
 
     @Id
     private String id;
@@ -34,7 +34,6 @@ public class BookEntity implements Book {
     public String getId() {
         return id;
     }
-
     @Override
     public void setId(String id) {
         this.id = id;

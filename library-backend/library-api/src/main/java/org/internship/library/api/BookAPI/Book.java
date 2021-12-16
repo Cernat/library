@@ -1,4 +1,4 @@
-package org.internship.library.api;
+package org.internship.library.api.BookAPI;
 
 /**
  * This interface defines the structure of a Book

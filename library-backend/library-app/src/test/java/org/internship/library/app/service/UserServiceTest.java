@@ -1,5 +1,7 @@
 package org.internship.library.app.service;
 
+import org.internship.library.api.DTO.UserDTO;
+import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
 import org.internship.library.app.security.ApplicationPasswordEncoder;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -69,13 +72,13 @@ class UserServiceTest {
         testUser.setUserRole(UserRole.USER);
 
         when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-        UserEntity foundUser = userService.findById(testUser.getId());
+        UserDTO foundUser = userService.findById(testUser.getId());
 
-        assertEquals(testUser.getId(), foundUser.getId());
+//        assertEquals(testUser.getId(), foundUser.getId());
         assertEquals(testUser.getUserName(), foundUser.getUserName());
         assertEquals(testUser.getPassword(), foundUser.getPassword());
         assertEquals(testUser.getEmail(), foundUser.getEmail());
-        assertEquals(testUser.getUserRole(), foundUser.getUserRole());
+        assertEquals(testUser.getUserRole(), UserRole.valueOf(foundUser.getUserRole()));
         verify(userRepository, times(1)).findById(testUser.getId());
     }
 
@@ -92,17 +95,20 @@ class UserServiceTest {
         testUser.setEmail("testUser@gmail.com");
         testUser.setUserRole(UserRole.USER);
 
-        userService.createUser(testUser);
+        UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
+        when(applicationPasswordEncoder.encode(testUser.getPassword())).thenReturn(testUser.getPassword());
+        when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        userService.createUser(userDTO);
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).save(userEntityArgumentCaptor.capture());
         UserEntity capturedUser = userEntityArgumentCaptor.getValue();
 
-        assertEquals(testUser.getId(), capturedUser.getId());
         assertEquals(testUser.getUserName(), capturedUser.getUserName());
         assertEquals(testUser.getPassword(), capturedUser.getPassword());
         assertEquals(testUser.getEmail(), capturedUser.getEmail());
         assertEquals(testUser.getUserRole(), capturedUser.getUserRole());
-        verify(userRepository, times(1)).save(testUser);
+        verify(userRepository, times(1)).save(capturedUser);
 
     }
 
@@ -119,8 +125,11 @@ class UserServiceTest {
         testUser.setEmail("testUser@gmail.com");
         testUser.setUserRole(UserRole.USER);
 
-        when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-        userService.updateUser(testUser.getId(), testUser);
+//        when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
+        when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
+        userService.updateUser(testUser.getId(), userDTO);
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
 
         verify(userRepository).save(userEntityArgumentCaptor.capture());

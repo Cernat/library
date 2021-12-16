@@ -1,8 +1,8 @@
 package org.internship.library.client;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
-import org.internship.library.api.BookService;
+import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.BookAPI.BookRepository;
+import org.internship.library.api.BookAPI.BookService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

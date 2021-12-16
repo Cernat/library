@@ -1,5 +1,6 @@
 package org.internship.library.app.controller;
 
+import org.internship.library.api.DTO.UserDTO;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.service.UserService;
 import org.slf4j.Logger;
@@ -32,10 +33,10 @@ public class UserController {
     /**
      * Retrieves the user given by the id
      * @param id to search for
-     * @return user entity
+     * @return user DTO
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUser(@PathVariable Integer id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Integer id) {
         logger.info("Retrieving user with the id of: " + id);
 
         try {
@@ -50,7 +51,7 @@ public class UserController {
      * @return list of all users
      */
     @GetMapping("/")
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         logger.info("Retrieving all users: ");
 
         return ResponseEntity.ok(userService.findAll());
@@ -58,28 +59,28 @@ public class UserController {
 
     /**
      * Persist a user entity
-     * @param user user entity
+     * @param userDTO user DTO
      * @return the user
      */
     @PostMapping("/")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
-        logger.info("Creating users with username: " + user.getUserName());
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        logger.info("Creating users with username: " + userDTO.getUserName());
 
-        UserEntity newUser = userService.createUser(user);
+        UserDTO newUser = userService.createUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     /**
      * Update a user entity
      * @param id to search the user
-     * @param user newer field to update
+     * @param userDTO newer field to update
      * @return the updated user entity
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity user) {
-        logger.info("Updating users with username: " + user.getUserName());
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        logger.info("Updating users with username: " + userDTO.getUserName());
 
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, user));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, userDTO));
     }
 
     /**

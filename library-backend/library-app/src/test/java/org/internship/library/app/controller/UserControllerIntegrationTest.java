@@ -1,9 +1,9 @@
 package org.internship.library.app.controller;
 
+import org.internship.library.api.DTO.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
-import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -70,12 +70,12 @@ class UserControllerIntegrationTest {
     void shouldGetUser() {
 
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<?> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
         Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
 
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
         UserEntity foundUser = (UserEntity) responseEntity.getBody();
-        assertEquals(userToFind.get().getId(), foundUser.getId());
+        assertEquals(userToFind.get().getUserName(), foundUser.getUserName());
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
@@ -88,7 +88,7 @@ class UserControllerIntegrationTest {
     void getAllUsers() {
 
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserEntity[].class);
+        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserDTO[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }

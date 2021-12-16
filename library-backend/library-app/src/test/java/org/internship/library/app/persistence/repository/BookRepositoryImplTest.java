@@ -1,6 +1,6 @@
 package org.internship.library.app.persistence.repository;
 
-import org.internship.library.api.Book;
+import org.internship.library.api.BookAPI.Book;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
