@@ -1,9 +1,9 @@
 package org.internship.library.app.persistence.repository;
 
 import org.internship.library.api.book.Book;
+import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
-import org.internship.library.api.dto.BookDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,6 +32,11 @@ class BookRepositoryImplTest {
     @InjectMocks
     private BookRepositoryImpl bookRepositoryImpl;
 
+    private final static String testBookId = "3";
+    private final static String testBookTitle = "Razv";
+    private final static String testBookAuthor = "Cern";
+    private final static Integer testNumberOfPages = 50;
+
     /**
      * Verify if bookRepositoryImpl call the right method for findBookById
      */
@@ -40,11 +44,10 @@ class BookRepositoryImplTest {
     void shouldFindBookByIdTest() {
 
         Book testBook = new BookDTO();
-        final String testBookId = "3";
         testBook.setId(testBookId);
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
         BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
 
@@ -64,10 +67,10 @@ class BookRepositoryImplTest {
     @Test
     void canCreateBookTest() {
         Book testBook = new BookDTO();
-        testBook.setId("3");
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        testBook.setId(testBookId);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
         BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
 
@@ -93,11 +96,10 @@ class BookRepositoryImplTest {
     void shouldUpdateBookTest() {
 
         Book testBook = new BookDTO();
-        final String testBookId = "3";
         testBook.setId(testBookId);
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
         BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
 
@@ -120,7 +122,6 @@ class BookRepositoryImplTest {
      */
     @Test
     void canDeleteBookTest() {
-        final String testBookId = "3";
         bookRepositoryImpl.deleteBook(testBookId);
         assertThat(bookSpringProvidedRepository.count()).isEqualTo(0);
         verify(bookSpringProvidedRepository, times(1)).deleteById(testBookId);
@@ -131,7 +132,7 @@ class BookRepositoryImplTest {
      */
     @Test
     void findBookEntitiesByAuthorTest() {
-        bookRepositoryImpl.findBookEntitiesByAuthor("Cern");
-        verify(bookSpringProvidedRepository, times(1)).findBookEntitiesByAuthor("Cern");
+        bookRepositoryImpl.findBookEntitiesByAuthor(testBookAuthor);
+        verify(bookSpringProvidedRepository, times(1)).findBookEntitiesByAuthor(testBookAuthor);
     }
 }

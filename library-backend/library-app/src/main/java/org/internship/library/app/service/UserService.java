@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -42,8 +43,8 @@ public class UserService {
 
     public UserDTO updateUser(Integer id, UserDTO user) {
 
-        UserEntity updateUser = userRepository.getById(id);
-        user.setPassword(updateUser.getPassword());
+        Optional<UserEntity> updateUser = userRepository.findById(id);
+        user.setPassword(updateUser.get().getPassword());
         return UserMapper.userEntityToUserDTO(userRepository.save(UserMapper.userDTOtoUserEntity(user)));
     }
 

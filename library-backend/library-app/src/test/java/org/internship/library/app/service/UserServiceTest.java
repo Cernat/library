@@ -38,15 +38,21 @@ class UserServiceTest {
     @InjectMocks
     UserService userService;
 
+    private static final Integer testUserId = 5;
+    private static final String testUserName = "userTest";
+    private static final String testUserPassword = "userTest";
+    private static final String testUserEmail = "userTest@gmail.com";
+    private static final String testUserRole = "USER";
+
     @BeforeEach
     void setUp() {
 
-        UserEntity userTest = new UserEntity();
-        userTest.setId(5);
-        userTest.setUserName("userTest");
-        userTest.setPassword("userTest");
-        userTest.setEmail("userTest@gmail.com");
-        userTest.setUserRole(UserRole.USER);
+        UserEntity testUser = new UserEntity();
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
     }
 
     /**
@@ -65,11 +71,11 @@ class UserServiceTest {
     void shouldFindUserByIdTest() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
         when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
         UserDTO foundUser = userService.findById(testUser.getId());
@@ -88,11 +94,11 @@ class UserServiceTest {
     void canCreateUserTest() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
         UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
         when(applicationPasswordEncoder.encode(testUser.getPassword())).thenReturn(testUser.getPassword());
@@ -118,13 +124,14 @@ class UserServiceTest {
     void updateUser() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
         when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
+        when(userRepository.findById(testUserId)).thenReturn(Optional.of(testUser));
 
         UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
         userService.updateUser(testUser.getId(), userDTO);
@@ -145,7 +152,6 @@ class UserServiceTest {
      */
     @Test
     void deleteUser() {
-        final Integer testUserId = 3;
         userRepository.deleteById(testUserId);
         assertThat(userRepository.count()).isEqualTo(0);
         verify(userRepository, times(1)).deleteById(testUserId);
