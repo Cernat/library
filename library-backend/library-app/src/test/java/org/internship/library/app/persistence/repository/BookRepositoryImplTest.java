@@ -1,9 +1,9 @@
 package org.internship.library.app.persistence.repository;
 
-import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.book.Book;
 import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
-import org.internship.library.impl.DTO.BookDTO;
+import org.internship.library.api.dto.BookDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
 
 import java.util.Optional;
 

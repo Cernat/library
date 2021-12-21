@@ -1,6 +1,6 @@
 package org.internship.library.app.persistence.entity;
 
-import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.book.Book;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

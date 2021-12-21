@@ -1,6 +1,6 @@
 package org.internship.library.app.controller;
 
-import org.internship.library.api.DTO.UserDTO;
+import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;

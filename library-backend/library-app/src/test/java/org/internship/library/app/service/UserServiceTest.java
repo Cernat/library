@@ -1,6 +1,6 @@
 package org.internship.library.app.service;
 
-import org.internship.library.api.DTO.UserDTO;
+import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
@@ -74,7 +74,6 @@ class UserServiceTest {
         when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
         UserDTO foundUser = userService.findById(testUser.getId());
 
-//        assertEquals(testUser.getId(), foundUser.getId());
         assertEquals(testUser.getUserName(), foundUser.getUserName());
         assertEquals(testUser.getPassword(), foundUser.getPassword());
         assertEquals(testUser.getEmail(), foundUser.getEmail());
@@ -125,7 +124,6 @@ class UserServiceTest {
         testUser.setEmail("testUser@gmail.com");
         testUser.setUserRole(UserRole.USER);
 
-//        when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
         when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
 
         UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);

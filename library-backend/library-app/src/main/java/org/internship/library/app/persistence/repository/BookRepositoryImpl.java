@@ -1,10 +1,10 @@
 package org.internship.library.app.persistence.repository;
 
-import org.internship.library.api.BookAPI.Book;
-import org.internship.library.api.BookAPI.BookRepository;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookRepository;
 import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
-import org.internship.library.impl.DTO.BookDTO;
+import org.internship.library.api.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package org.internship.library.app.service;
 
-import org.internship.library.api.DTO.UserDTO;
+import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
@@ -41,9 +41,10 @@ public class UserService {
     }
 
     public UserDTO updateUser(Integer id, UserDTO user) {
-        UserEntity newUser = UserMapper.userDTOtoUserEntity(user);
-        newUser.setId(id);
-        return UserMapper.userEntityToUserDTO(userRepository.save(newUser));
+
+        UserEntity updateUser = userRepository.getById(id);
+        user.setPassword(updateUser.getPassword());
+        return UserMapper.userEntityToUserDTO(userRepository.save(UserMapper.userDTOtoUserEntity(user)));
     }
 
     public void deleteUser(Integer id) {

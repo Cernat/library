@@ -1,6 +1,7 @@
 package org.internship.library.app.adapter;
 
-import org.internship.library.api.DTO.UserDTO;
+
+import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.security.UserRole;
 
@@ -12,6 +13,7 @@ public class UserMapper {
     public static UserDTO userEntityToUserDTO(UserEntity user) {
 
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
         userDTO.setUserName(user.getUserName());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
@@ -29,6 +31,7 @@ public class UserMapper {
         if(userDTO != null) {}
 
         UserEntity userEntity = new UserEntity();
+        userEntity.setId(userDTO.getId());
         userEntity.setUserName(userDTO.getUserName());
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setPassword(userDTO.getPassword());

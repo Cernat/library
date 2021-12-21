@@ -1,7 +1,6 @@
 package org.internship.library.app.controller;
 
-import org.internship.library.api.DTO.UserDTO;
-import org.internship.library.app.persistence.entity.UserEntity;
+import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -17,7 +17,6 @@ class PasswordValidationHelperTest {
     void shouldValidatePasswordTest() {
         UserEntity emptyUser = new UserEntity();
         emptyUser.setPassword("");
-//        validatePassword(emptyUser);
 
         UserCredentialsException thrown = Assertions.assertThrows(UserCredentialsException.class, () -> {
             validatePassword(emptyUser);

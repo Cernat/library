@@ -1,6 +1,4 @@
-package org.internship.library.api.BookAPI;
-
-import org.internship.library.api.BookAPI.Book;
+package org.internship.library.api.book;
 
 import java.util.List;
 

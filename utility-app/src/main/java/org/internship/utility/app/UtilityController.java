@@ -1,6 +1,6 @@
 package org.internship.utility.app;
 
-import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.book.Book;
 import org.internship.library.client.BookRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

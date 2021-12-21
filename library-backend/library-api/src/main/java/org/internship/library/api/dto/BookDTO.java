@@ -1,6 +1,6 @@
-package org.internship.library.impl.DTO;
+package org.internship.library.api.dto;
 
-import org.internship.library.api.BookAPI.Book;
+import org.internship.library.api.book.Book;
 
 import java.util.UUID;
 

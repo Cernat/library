@@ -1,20 +1,17 @@
 package org.internship.library.app.impl;
 
-import org.internship.library.api.BookAPI.Book;
-import org.internship.library.api.BookAPI.BookRepository;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookRepository;
 import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.internship.library.impl.BookServiceImpl;
-import org.internship.library.impl.DTO.BookDTO;
+import org.internship.library.api.dto.BookDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.stubbing.Answer;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -82,7 +79,6 @@ public class BookServiceImplTest {
 
         BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
-//        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());
@@ -114,7 +110,6 @@ public class BookServiceImplTest {
 
         BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
-//        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());

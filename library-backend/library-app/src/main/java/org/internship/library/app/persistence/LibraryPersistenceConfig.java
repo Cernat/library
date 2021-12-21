@@ -2,9 +2,8 @@ package org.internship.library.app.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.internship.library.api.BookAPI.Book;
-import org.internship.library.app.persistence.entity.BookEntity;
-import org.internship.library.impl.DTO.BookDTO;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.dto.BookDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -25,7 +24,6 @@ public class LibraryPersistenceConfig implements InitializingBean {
         if (objectMapper != null) {
 
             final SimpleModule bookModule = new SimpleModule();
-//            bookModule.addAbstractTypeMapping(Book.class, BookEntity.class);
             bookModule.addAbstractTypeMapping(Book.class, BookDTO.class);
 
             // Register the modules

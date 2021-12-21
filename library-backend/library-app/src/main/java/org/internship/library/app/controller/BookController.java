@@ -1,7 +1,7 @@
 package org.internship.library.app.controller;
 
-import org.internship.library.api.BookAPI.Book;
-import org.internship.library.api.BookAPI.BookService;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
