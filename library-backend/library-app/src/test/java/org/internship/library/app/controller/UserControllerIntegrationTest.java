@@ -70,7 +70,7 @@ class UserControllerIntegrationTest {
     void shouldGetUser() {
 
 
-        HttpEntity<?> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
         Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
 
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
