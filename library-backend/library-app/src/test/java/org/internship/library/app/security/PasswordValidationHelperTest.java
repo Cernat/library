@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.sun.javaws.JnlpxArgs.verify;
 import static org.internship.library.app.security.PasswordValidationHelper.validatePassword;
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +17,6 @@ class PasswordValidationHelperTest {
     void shouldValidatePasswordTest() {
         UserEntity emptyUser = new UserEntity();
         emptyUser.setPassword("");
-//        validatePassword(emptyUser);
 
         UserCredentialsException thrown = Assertions.assertThrows(UserCredentialsException.class, () -> {
             validatePassword(emptyUser);

@@ -1,7 +1,9 @@
 package org.internship.library.app.impl;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookRepository;
+import org.internship.library.api.dto.BookDTO;
+import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.internship.library.impl.BookServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -31,19 +32,23 @@ public class BookServiceImplTest {
     @InjectMocks
     private BookServiceImpl bookServiceImpl;
 
+    private final static String testBookId = "3";
+    private final static String testBookTitle = "Razv";
+    private final static String testBookAuthor = "Cern";
+    private final static Integer testNumberOfPages = 50;
+
     /**
      * Verify if bookServiceImpl call the right method for getBook()
      */
     @Test
     void shouldGetBookTest() {
 
-        BookEntity testBook = new BookEntity();
+        Book testBook = new BookDTO();
 
-        final String testBookId = "3";
         testBook.setId(testBookId);
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
         when(bookRepository.findBookById(testBookId)).thenReturn(testBook);
         Book foundBook = bookServiceImpl.getBook(testBookId);
@@ -61,23 +66,22 @@ public class BookServiceImplTest {
      */
     @Test
     void shouldCreateBookTest() {
-        BookEntity testBook = new BookEntity();
-        testBook.setId("3");
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        Book testBook = new BookDTO();
+        testBook.setId(testBookId);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
         bookServiceImpl.createBook(testBook);
 
-        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor =
-                ArgumentCaptor.forClass(BookEntity.class);
+        ArgumentCaptor<BookDTO> bookDTOArgumentCaptor =
+                ArgumentCaptor.forClass(BookDTO.class);
 
         verify(bookRepository)
-                .createBook(bookEntityArgumentCaptor.capture());
+                .createBook(bookDTOArgumentCaptor.capture());
 
-        BookEntity capturedBook = bookEntityArgumentCaptor.getValue();
+        BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
-        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());
@@ -91,25 +95,23 @@ public class BookServiceImplTest {
      */
     @Test
     void shouldUpdateBookTest() {
-        BookEntity testBook = new BookEntity();
-        final String testBookId = "3";
+        Book testBook = new BookDTO();
         testBook.setId(testBookId);
-        testBook.setTitle("Razv");
-        testBook.setAuthor("Cern");
-        testBook.setNumberOfPages(50);
+        testBook.setTitle(testBookTitle);
+        testBook.setAuthor(testBookAuthor);
+        testBook.setNumberOfPages(testNumberOfPages);
 
-        when(bookRepository.updateBook(eq(testBookId), any(BookEntity.class))).thenReturn(testBook);
+        when(bookRepository.updateBook(eq(testBookId), any(BookDTO.class))).thenReturn(testBook);
         bookServiceImpl.updateBook(testBookId, testBook);
 
-        ArgumentCaptor<BookEntity> bookEntityArgumentCaptor =
-                ArgumentCaptor.forClass(BookEntity.class);
+        ArgumentCaptor<BookDTO> bookDTOArgumentCaptor =
+                ArgumentCaptor.forClass(BookDTO.class);
 
         verify(bookRepository)
-                .updateBook(eq(testBookId), bookEntityArgumentCaptor.capture());
+                .updateBook(eq(testBookId), bookDTOArgumentCaptor.capture());
 
-        BookEntity capturedBook = bookEntityArgumentCaptor.getValue();
+        BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
-        assertThat(capturedBook).isEqualTo(testBook);
         assertEquals(testBook.getId(), capturedBook.getId());
         assertEquals(testBook.getAuthor(), capturedBook.getAuthor());
         assertEquals(testBook.getTitle(), capturedBook.getTitle());
@@ -123,7 +125,6 @@ public class BookServiceImplTest {
      */
     @Test
     void shouldDeleteBookTest() {
-        final String testBookId = "3";
         bookServiceImpl.deleteBook(testBookId);
         verify(bookRepository, times(1)).deleteBook(testBookId);
     }
@@ -133,8 +134,7 @@ public class BookServiceImplTest {
      */
     @Test
     void shouldFindBookEntitiesByAuthor() {
-        final String author = "Cern";
-        bookServiceImpl.findBookEntitiesByAuthor(author);
-        verify(bookRepository, times(1)).findBookEntitiesByAuthor(author);
+        bookServiceImpl.findBookEntitiesByAuthor(testBookAuthor);
+        verify(bookRepository, times(1)).findBookEntitiesByAuthor(testBookAuthor);
     }
 }

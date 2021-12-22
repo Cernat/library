@@ -1,8 +1,10 @@
 package org.internship.library.app.persistence.repository;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookRepository;
+import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
+import org.internship.library.api.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
@@ -21,18 +23,23 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book findBookById(String id) {
         Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
-        return optionalBookEntity.get();
+        BookDTO bookDTO = BookMapper.bookEntityToBookDTO(optionalBookEntity.get());
+        return bookDTO;
     }
 
     @Override
     public Book createBook(Book book) {
-        return bookSpringProvidedRepository.save(new BookEntity(book));
+        BookDTO bookDTO = (BookDTO) book;
+        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(bookDTO);
+        return BookMapper.bookEntityToBookDTO(bookSpringProvidedRepository.save(bookEntity));
     }
 
     @Override
     public Book updateBook(String id, Book book) {
-        Book updatedBook = bookSpringProvidedRepository.findById(id).get();
-        return bookSpringProvidedRepository.save(new BookEntity(book));
+        BookDTO bookDTO = (BookDTO) book;
+        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(bookDTO);
+        return BookMapper.bookEntityToBookDTO(bookSpringProvidedRepository.save(bookEntity));
+
     }
 
     @Override
@@ -40,9 +47,10 @@ public class BookRepositoryImpl implements BookRepository {
         bookSpringProvidedRepository.deleteById(id);
     }
 
+    @Override
     public List<Book> findBookEntitiesByAuthor(String authorName) {
         List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
-        return new ArrayList<>(bookEntities);
+        List<BookDTO> bookDTOS = BookMapper.listOfBooksEntityToListOfBookDTO(bookEntities);
+        return new ArrayList<>(bookDTOS);
     }
-
 }

@@ -1,5 +1,7 @@
 package org.internship.library.app.service;
 
+import org.internship.library.api.dto.UserDTO;
+import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
 import org.internship.library.app.security.ApplicationPasswordEncoder;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -35,15 +38,21 @@ class UserServiceTest {
     @InjectMocks
     UserService userService;
 
+    private static final Integer testUserId = 5;
+    private static final String testUserName = "userTest";
+    private static final String testUserPassword = "userTest";
+    private static final String testUserEmail = "userTest@gmail.com";
+    private static final String testUserRole = "USER";
+
     @BeforeEach
     void setUp() {
 
-        UserEntity userTest = new UserEntity();
-        userTest.setId(5);
-        userTest.setUserName("userTest");
-        userTest.setPassword("userTest");
-        userTest.setEmail("userTest@gmail.com");
-        userTest.setUserRole(UserRole.USER);
+        UserEntity testUser = new UserEntity();
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
     }
 
     /**
@@ -62,20 +71,19 @@ class UserServiceTest {
     void shouldFindUserByIdTest() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
         when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-        UserEntity foundUser = userService.findById(testUser.getId());
+        UserDTO foundUser = userService.findById(testUser.getId());
 
-        assertEquals(testUser.getId(), foundUser.getId());
         assertEquals(testUser.getUserName(), foundUser.getUserName());
         assertEquals(testUser.getPassword(), foundUser.getPassword());
         assertEquals(testUser.getEmail(), foundUser.getEmail());
-        assertEquals(testUser.getUserRole(), foundUser.getUserRole());
+        assertEquals(testUser.getUserRole(), UserRole.valueOf(foundUser.getUserRole()));
         verify(userRepository, times(1)).findById(testUser.getId());
     }
 
@@ -86,23 +94,26 @@ class UserServiceTest {
     void canCreateUserTest() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
-        userService.createUser(testUser);
+        UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
+        when(applicationPasswordEncoder.encode(testUser.getPassword())).thenReturn(testUser.getPassword());
+        when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        userService.createUser(userDTO);
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
         verify(userRepository).save(userEntityArgumentCaptor.capture());
         UserEntity capturedUser = userEntityArgumentCaptor.getValue();
 
-        assertEquals(testUser.getId(), capturedUser.getId());
         assertEquals(testUser.getUserName(), capturedUser.getUserName());
         assertEquals(testUser.getPassword(), capturedUser.getPassword());
         assertEquals(testUser.getEmail(), capturedUser.getEmail());
         assertEquals(testUser.getUserRole(), capturedUser.getUserRole());
-        verify(userRepository, times(1)).save(testUser);
+        verify(userRepository, times(1)).save(capturedUser);
 
     }
 
@@ -113,14 +124,17 @@ class UserServiceTest {
     void updateUser() {
 
         UserEntity testUser = new UserEntity();
-        testUser.setId(5);
-        testUser.setUserName("testUser");
-        testUser.setPassword("testUser");
-        testUser.setEmail("testUser@gmail.com");
-        testUser.setUserRole(UserRole.USER);
+        testUser.setId(testUserId);
+        testUser.setUserName(testUserName);
+        testUser.setPassword(testUserPassword);
+        testUser.setEmail(testUserEmail);
+        testUser.setUserRole(UserRole.valueOf(testUserRole));
 
-        when(userRepository.findById(testUser.getId())).thenReturn(Optional.of(testUser));
-        userService.updateUser(testUser.getId(), testUser);
+        when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(i -> i.getArguments()[0]);
+        when(userRepository.findById(testUserId)).thenReturn(Optional.of(testUser));
+
+        UserDTO userDTO = UserMapper.userEntityToUserDTO(testUser);
+        userService.updateUser(testUser.getId(), userDTO);
         ArgumentCaptor<UserEntity> userEntityArgumentCaptor = ArgumentCaptor.forClass(UserEntity.class);
 
         verify(userRepository).save(userEntityArgumentCaptor.capture());
@@ -138,7 +152,6 @@ class UserServiceTest {
      */
     @Test
     void deleteUser() {
-        final Integer testUserId = 3;
         userRepository.deleteById(testUserId);
         assertThat(userRepository.count()).isEqualTo(0);
         verify(userRepository, times(1)).deleteById(testUserId);

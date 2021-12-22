@@ -1,4 +1,4 @@
-package org.internship.library.api;
+package org.internship.library.api.book;
 
 import java.util.List;
 

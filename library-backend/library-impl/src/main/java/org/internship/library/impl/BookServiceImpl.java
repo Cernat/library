@@ -1,8 +1,8 @@
 package org.internship.library.impl;
 
-import org.internship.library.api.Book;
-import org.internship.library.api.BookRepository;
-import org.internship.library.api.BookService;
+import org.internship.library.api.book.Book;
+import org.internship.library.api.book.BookRepository;
+import org.internship.library.api.book.BookService;
 
 import java.util.List;
 

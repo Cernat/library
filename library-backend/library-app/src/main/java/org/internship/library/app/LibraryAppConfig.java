@@ -1,7 +1,7 @@
 package org.internship.library.app;
 
-import org.internship.library.api.BookRepository;
-import org.internship.library.api.BookService;
+import org.internship.library.api.book.BookRepository;
+import org.internship.library.api.book.BookService;
 import org.internship.library.impl.BookServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
