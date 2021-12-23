@@ -2,10 +2,16 @@ version: '3.5'
 services:
   db:
     container_name: db
-    image: "store/oracle/database-enterprise:12.2.0.1-slim"
+    image: "postgres:14.1"
     restart: "unless-stopped"
     ports:
-      - "1521:1521"
+      - "5432:5432"
+    volumes:
+      - /private/var/lib/postgresql:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=db_library
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=db_library
   backend:
     container_name: backend
     image: "library_app"
@@ -16,9 +22,7 @@ services:
     restart: on-failure
     links:
       - db
-    volumes:
-      - ./data:/ORCL/u01
-    environment:
-      - spring.datasource.url=jdbc:oracle:thin:@db:1521:ORCLCDB
-      - spring.datasource.username=SYS AS SYSDBA
-      - spring.datasource.password=Oradoc_db1
+#    environment:
+#      - spring.datasource.url=jdbc:oracle:thin:@db:1521:ORCLCDB
+#      - spring.datasource.username=SYS AS SYSDBA
+#      - spring.datasource.password=Oradoc_db1

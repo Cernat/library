@@ -26,3 +26,4 @@ branches:
   only:
     - Travis-CI
 #    - master
+    - Ticket-88

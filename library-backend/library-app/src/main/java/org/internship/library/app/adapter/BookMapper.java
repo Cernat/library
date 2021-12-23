@@ -24,10 +24,6 @@ public class BookMapper {
 
     public static BookEntity bookDTOtoBookEntity(BookDTO bookDTO) {
 
-        BookEntity book = new BookEntity();
-        if (bookDTO != null) {
-        }
-
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(bookDTO.getId());
         bookEntity.setAuthor(bookDTO.getAuthor());
