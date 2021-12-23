@@ -2,8 +2,10 @@ package org.internship.library.app.controller;
 
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
+import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
+import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -22,17 +24,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.internship.library.app.controller.BookControllerIntegrationTest.createHeaders;
+import static org.internship.library.app.LibraryAppConfigTest.testUserName;
+import static org.internship.library.app.LibraryAppConfigTest.testUserPassword;
+import static org.internship.library.app.controller.BookControllerIT.createHeaders;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Integration Testing Class from Controller to DB
  */
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {LibraryAppConfigTest.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest(classes = {LibraryAppConfigTest.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserControllerIntegrationTest {
+class UserControllerIT extends LibraryAppConfigTest{
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Autowired
@@ -40,6 +44,19 @@ class UserControllerIntegrationTest {
     @Value("${library.user.client.url}")
     String url;
     private static final String testUsername = "userTest";
+    private static final String testPassword = "userTest123!";
+    private static final String testEmail = "userTest@gmail.com";
+//    @Autowired
+//    ApplicationPasswordEncoder applicationPasswordEncoder;
+//
+//
+//
+//    private static final Integer testUserId = 5;
+//    private static final String testUserName = "test4";
+//    private static final String testUserPassword = "test4";
+//    private static final String testUserEmail = "userTest@gmail.com2";
+//    private static final String testUserRole = "USER";
+
 
 
     /**
@@ -47,15 +64,15 @@ class UserControllerIntegrationTest {
      */
     @Test
     @Order(1)
-    void createUser() {
+    void createUserTest() {
 
         UserEntity userTest = new UserEntity();
         userTest.setUserName(testUsername);
-        userTest.setPassword("userTest");
-        userTest.setEmail("userTest@gmail.com");
+        userTest.setPassword(testPassword);
+        userTest.setEmail(testEmail);
         userTest.setUserRole(UserRole.USER);
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(userTest, createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(userTest, createHeaders(testUserName, testUserPassword));
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, UserEntity.class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
@@ -70,7 +87,7 @@ class UserControllerIntegrationTest {
     void shouldGetUser() {
 
 
-        HttpEntity<?> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
 
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
@@ -87,7 +104,7 @@ class UserControllerIntegrationTest {
     @Order(3)
     void getAllUsers() {
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserDTO[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
@@ -100,11 +117,11 @@ class UserControllerIntegrationTest {
     @Order(4)
     void updateUser() {
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         Optional<UserEntity> foundUserBeforeUpdate = userRepository.findByUserName(testUsername);
         foundUserBeforeUpdate.get().setEmail("Updated Email");
 
-        HttpEntity<UserEntity> requestHeaderWithBody = new HttpEntity<>(foundUserBeforeUpdate.get(), createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeaderWithBody = new HttpEntity<>(foundUserBeforeUpdate.get(), createHeaders(testUserName, testUserPassword));
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody, UserEntity.class, foundUserBeforeUpdate.get().getId());
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
@@ -122,11 +139,13 @@ class UserControllerIntegrationTest {
     @Order(5)
     void deleteUser() {
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders("test", "test"));
+        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
 
-        testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader, UserEntity.class, userToFind.get().getId());
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader, UserEntity.class, userToFind.get().getId());
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
+
+        ResponseEntity responseEntity2 = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity2.getStatusCode());
     }
 }

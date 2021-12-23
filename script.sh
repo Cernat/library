@@ -1,13 +1,13 @@
 # Changing directory backwards
-echo "[INFO] Changing directory"
+#echo "[INFO] Changing directory"
 
 # Changing the access permission
-echo "[INFO] Changing access permission"
-chmod +x travis_sleep.sh
+#echo "[INFO] Changing access permission"
+#chmod +x travis_sleep.sh
 
 # Executing travis_sleep.sh
-echo "[INFO] Executing travis_sleep"
-bash travis_sleep.sh
+#echo "[INFO] Executing travis_sleep"
+#bash travis_sleep.sh
 
 # Changing directory backwards
 echo "[INFO] Changing directory"
