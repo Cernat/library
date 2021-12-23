@@ -1,10 +1,15 @@
 package org.internship.library.app.controller;
 
+import static org.internship.library.app.controller.BookControllerIT.createHeaders;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.NoSuchElementException;
+
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
-import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -18,17 +23,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
-import static org.internship.library.app.controller.BookControllerIT.createHeaders;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 /**
  * Integration Testing Class from Controller to DB
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserControllerIT extends LibraryAppConfigTest {
+class UserControllerIT extends LibraryAppConfigTest
+{
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Autowired
@@ -44,16 +44,18 @@ class UserControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(1)
-    void createUserTest() {
-
+    void createUserTest()
+    {
         UserEntity userTest = new UserEntity();
         userTest.setUserName(testUsername);
         userTest.setPassword(testPassword);
         userTest.setEmail(testEmail);
         userTest.setUserRole(UserRole.USER);
 
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(userTest, createHeaders(testUserName, testUserPassword));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, UserEntity.class);
+        HttpEntity<UserEntity> requestHeader =
+            new HttpEntity<>(userTest, createHeaders(testUserName, testUserPassword));
+        ResponseEntity<UserEntity> responseEntity =
+            testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, UserEntity.class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
 
@@ -64,14 +66,19 @@ class UserControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(2)
-    void shouldGetUser() {
-
+    void shouldGetUser()
+    {
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
+        UserEntity userToFind = userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
 
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
-        UserEntity foundUser = (UserEntity) responseEntity.getBody();
-        assertEquals(userToFind.get().getUserName(), foundUser.getUserName());
+        ResponseEntity<UserEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
+                UserEntity.class, userToFind.getId());
+        UserEntity foundUser = responseEntity.getBody();
+        if (foundUser != null)
+        {
+            assertEquals(userToFind.getUserName(), foundUser.getUserName());
+        }
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
@@ -81,34 +88,44 @@ class UserControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(3)
-    void getAllUsers() {
-
+    void getAllUsers()
+    {
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserDTO[].class);
+        ResponseEntity<UserDTO[]> responseEntity =
+            testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserDTO[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
 
     /**
-     * Verify if update request updates an user in the database
+     * Verify if update request updates a user in the database
      */
     @Test
     @Order(4)
-    void updateUser() {
-
+    void updateUser()
+    {
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        Optional<UserEntity> foundUserBeforeUpdate = userRepository.findByUserName(testUsername);
-        foundUserBeforeUpdate.get().setEmail("Updated Email");
+        UserEntity foundUserBeforeUpdate =
+            userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
+        foundUserBeforeUpdate.setEmail("Updated Email");
 
-        HttpEntity<UserEntity> requestHeaderWithBody = new HttpEntity<>(foundUserBeforeUpdate.get(), createHeaders(testUserName, testUserPassword));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody, UserEntity.class, foundUserBeforeUpdate.get().getId());
+        HttpEntity<UserEntity> requestHeaderWithBody =
+            new HttpEntity<>(foundUserBeforeUpdate, createHeaders(testUserName, testUserPassword));
+        ResponseEntity<UserEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody,
+                UserEntity.class, foundUserBeforeUpdate.getId());
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
-        ResponseEntity foundBookAfterUpdate = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, foundUserBeforeUpdate.get().getId());
+        ResponseEntity<UserEntity> foundBookAfterUpdate =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
+                UserEntity.class, foundUserBeforeUpdate.getId());
         assertNotNull(foundBookAfterUpdate);
-        UserEntity userAfterUpdate = (UserEntity) foundBookAfterUpdate.getBody();
-        assertEquals(foundUserBeforeUpdate.get().getEmail(), userAfterUpdate.getEmail());
+        UserEntity userAfterUpdate = foundBookAfterUpdate.getBody();
+        if (userAfterUpdate != null)
+        {
+            assertEquals(foundUserBeforeUpdate.getEmail(), userAfterUpdate.getEmail());
+        }
     }
 
     /**
@@ -116,15 +133,19 @@ class UserControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(5)
-    void deleteUser() {
-
+    void deleteUser()
+    {
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
+        UserEntity userToFind = userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
 
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader, UserEntity.class, userToFind.get().getId());
+        ResponseEntity<UserEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader,
+                UserEntity.class, userToFind.getId());
         assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
 
-        ResponseEntity responseEntity2 = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserEntity.class, userToFind.get().getId());
+        ResponseEntity<UserEntity> responseEntity2 =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
+                UserEntity.class, userToFind.getId());
         assertEquals(HttpStatus.NOT_FOUND, responseEntity2.getStatusCode());
     }
 }

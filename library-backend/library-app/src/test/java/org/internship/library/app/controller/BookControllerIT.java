@@ -1,5 +1,12 @@
 package org.internship.library.app.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Collections;
+
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.junit.jupiter.api.MethodOrderer;
@@ -15,37 +22,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Base64;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 /**
  * Integration Testing Class from Controller to DB
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class BookControllerIT extends LibraryAppConfigTest {
+public class BookControllerIT extends LibraryAppConfigTest
+{
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Value("${library.book.client.url}")
     String url;
     private static final String testBookId = "100";
-    private static final String testBookAuthor = "RazvTEST";
-    private static final String testBookTitle = "CernTEST";
+    private static final String testBookAuthor = "RazvanTEST";
+    private static final String testBookTitle = "CernatTEST";
     private static final Integer testBookNumberOfPages = 50;
 
-    public static HttpHeaders createHeaders(String username, String password) {
-        return new HttpHeaders() {{
-            String auth = username + ":" + password;
-            byte[] encodedAuth = Base64.getEncoder().encode(
-                    auth.getBytes(Charset.forName("US-ASCII")));
-            String authHeader = "Basic " + new String(encodedAuth);
-            set("Authorization", authHeader);
-            setContentType(MediaType.APPLICATION_JSON);
-            setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        }};
+    public static HttpHeaders createHeaders(String username, String password)
+    {
+        return new HttpHeaders()
+        {
+            {
+                String auth = username + ":" + password;
+                byte[] encodedAuth = Base64.getEncoder().encode(
+                    auth.getBytes(StandardCharsets.US_ASCII));
+                String authHeader = "Basic " + new String(encodedAuth);
+                set("Authorization", authHeader);
+                setContentType(MediaType.APPLICATION_JSON);
+                setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            }
+        };
     }
 
     /**
@@ -53,22 +58,27 @@ public class BookControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(1)
-    void shouldPostBookTest() {
-
+    void shouldPostBookTest()
+    {
         BookEntity testBook = new BookEntity();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testBookNumberOfPages);
 
-        HttpEntity<BookEntity> requestHeader = new HttpEntity<>(testBook, createHeaders(testUserName, testUserPassword));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, BookEntity.class);
+        HttpEntity<BookEntity> requestHeader =
+            new HttpEntity<>(testBook, createHeaders(testUserName, testUserPassword));
+        ResponseEntity<BookEntity> responseEntity =
+            testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, BookEntity.class);
 
-        BookEntity foundBook = (BookEntity) responseEntity.getBody();
-        assertEquals(testBook.getId(), foundBook.getId());
-        assertEquals(testBook.getAuthor(), foundBook.getAuthor());
-        assertEquals(testBook.getTitle(), foundBook.getTitle());
-        assertEquals(testBook.getNumberOfPages(), foundBook.getNumberOfPages());
+        BookEntity foundBook = responseEntity.getBody();
+        if (foundBook != null)
+        {
+            assertEquals(testBook.getId(), foundBook.getId());
+            assertEquals(testBook.getAuthor(), foundBook.getAuthor());
+            assertEquals(testBook.getTitle(), foundBook.getTitle());
+            assertEquals(testBook.getNumberOfPages(), foundBook.getNumberOfPages());
+        }
         assertNotNull(responseEntity);
 
     }
@@ -78,12 +88,16 @@ public class BookControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(2)
-    public void shouldGetBookTest() {
-
+    public void shouldGetBookTest()
+    {
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
-        BookEntity foundBook = (BookEntity) responseEntity.getBody();
-        assertEquals(testBookId, foundBook.getId());
+        ResponseEntity<BookEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
+        BookEntity foundBook = responseEntity.getBody();
+        if (foundBook != null)
+        {
+            assertEquals(testBookId, foundBook.getId());
+        }
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
@@ -93,10 +107,11 @@ public class BookControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(3)
-    void shouldGetBooksByAuthorNameTest() {
-
+    void shouldGetBooksByAuthorNameTest()
+    {
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.exchange(url + "/?authorName=" + testBookAuthor, HttpMethod.GET, requestHeader, BookEntity[].class);
+        ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.exchange(url + "/?authorName=" + testBookAuthor,
+            HttpMethod.GET, requestHeader, BookEntity[].class);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
     }
@@ -106,24 +121,35 @@ public class BookControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(4)
-    void shouldUpdateBookTest() {
-
+    void shouldUpdateBookTest()
+    {
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        ResponseEntity foundBookBeforeUpdate = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
+        ResponseEntity<BookEntity> foundBookBeforeUpdate =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
         assertNotNull(foundBookBeforeUpdate);
-        BookEntity bookBeforeUpdate = (BookEntity) foundBookBeforeUpdate.getBody();
-        bookBeforeUpdate.setAuthor("Updated Author");
+        BookEntity bookBeforeUpdate = foundBookBeforeUpdate.getBody();
+        if (bookBeforeUpdate != null)
+        {
+            bookBeforeUpdate.setAuthor("Updated Author");
+        }
 
-        HttpEntity<BookEntity> requestHeaderWithBody = new HttpEntity<>(bookBeforeUpdate, createHeaders(testUserName, testUserPassword));
+        HttpEntity<BookEntity> requestHeaderWithBody =
+            new HttpEntity<>(bookBeforeUpdate, createHeaders(testUserName, testUserPassword));
 
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody, BookEntity.class, testBookId);
+        ResponseEntity<BookEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody,
+                BookEntity.class, testBookId);
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
-        ResponseEntity foundBookAfterUpdate = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
+        ResponseEntity<BookEntity> foundBookAfterUpdate =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
         assertNotNull(foundBookAfterUpdate);
-        BookEntity bookAfterUpdate = (BookEntity) responseEntity.getBody();
-        assertEquals(bookBeforeUpdate.getAuthor(), bookAfterUpdate.getAuthor());
+        BookEntity bookAfterUpdate = responseEntity.getBody();
+        if (bookBeforeUpdate != null && bookAfterUpdate != null)
+        {
+            assertEquals(bookBeforeUpdate.getAuthor(), bookAfterUpdate.getAuthor());
+        }
     }
 
     /**
@@ -131,11 +157,12 @@ public class BookControllerIT extends LibraryAppConfigTest {
      */
     @Test
     @Order(5)
-    void shouldDeleteBookTest() {
-
+    void shouldDeleteBookTest()
+    {
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader, BookEntity.class, testBookId);
-        ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
+        ResponseEntity<BookEntity> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -19,22 +20,25 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = {"org.internship.library.*"})
 @EntityScan(basePackages = {"org.internship.library.app.persistence.entity"})
 @EnableJpaRepositories(basePackages = "org.internship.library.*")
-public class LibraryAppConfig {
+public class LibraryAppConfig
+{
 
     @Bean
-    public BookService bookService(BookRepository bookRepository) {
+    public BookService bookService(BookRepository bookRepository)
+    {
         BookServiceImpl bookServiceImpl = new BookServiceImpl();
         bookServiceImpl.setBookRepository(bookRepository);
         return bookServiceImpl;
     }
 
     @Bean
-    public Docket api() {
+    public Docket api()
+    {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
+            .select()
+            .apis(RequestHandlerSelectors.any())
+            .paths(PathSelectors.any())
+            .build();
     }
 
 }

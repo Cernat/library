@@ -1,5 +1,13 @@
 package org.internship.library.app.service;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
@@ -15,19 +23,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Unit testing for {@link UserService}
  */
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserServiceTest
+{
 
     @Mock
     UserRepository userRepository;
@@ -45,8 +46,8 @@ class UserServiceTest {
     private static final String testUserRole = "USER";
 
     @BeforeEach
-    void setUp() {
-
+    void setUp()
+    {
         UserEntity testUser = new UserEntity();
         testUser.setId(testUserId);
         testUser.setUserName(testUserName);
@@ -59,7 +60,8 @@ class UserServiceTest {
      * Verify if userRepository call the right method for findAll
      */
     @Test
-    void shouldFindAllUsersTest() {
+    void shouldFindAllUsersTest()
+    {
         userService.findAll();
         verify(userRepository, times(1)).findAll();
     }
@@ -68,8 +70,8 @@ class UserServiceTest {
      * Verify if userRepository call the right method for findById
      */
     @Test
-    void shouldFindUserByIdTest() {
-
+    void shouldFindUserByIdTest()
+    {
         UserEntity testUser = new UserEntity();
         testUser.setId(testUserId);
         testUser.setUserName(testUserName);
@@ -91,8 +93,8 @@ class UserServiceTest {
      * Verify if userRepository call the right method for save
      */
     @Test
-    void canCreateUserTest() {
-
+    void canCreateUserTest()
+    {
         UserEntity testUser = new UserEntity();
         testUser.setId(testUserId);
         testUser.setUserName(testUserName);
@@ -121,8 +123,8 @@ class UserServiceTest {
      * Verify if userRepository call the right method for save
      */
     @Test
-    void updateUser() {
-
+    void updateUser()
+    {
         UserEntity testUser = new UserEntity();
         testUser.setId(testUserId);
         testUser.setUserName(testUserName);
@@ -151,7 +153,8 @@ class UserServiceTest {
      * Verify if userRepository call the right method for deleteById
      */
     @Test
-    void deleteUser() {
+    void deleteUser()
+    {
         userRepository.deleteById(testUserId);
         assertThat(userRepository.count()).isEqualTo(0);
         verify(userRepository, times(1)).deleteById(testUserId);

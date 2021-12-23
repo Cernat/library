@@ -1,5 +1,13 @@
 package org.internship.library.app.persistence.repository;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.internship.library.api.book.Book;
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
@@ -12,19 +20,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Unit Testing Class (@link BookRepositoryImpl)
  */
 @ExtendWith(MockitoExtension.class)
-class BookRepositoryImplTest {
+class BookRepositoryImplTest
+{
 
     @Mock
     private BookSpringProvidedRepository bookSpringProvidedRepository;
@@ -41,8 +42,8 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for findBookById
      */
     @Test
-    void shouldFindBookByIdTest() {
-
+    void shouldFindBookByIdTest()
+    {
         Book testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -65,7 +66,8 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for createBook
      */
     @Test
-    void canCreateBookTest() {
+    void canCreateBookTest()
+    {
         Book testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -93,8 +95,8 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for updateBook
      */
     @Test
-    void shouldUpdateBookTest() {
-
+    void shouldUpdateBookTest()
+    {
         Book testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -121,7 +123,8 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for deleteBook
      */
     @Test
-    void canDeleteBookTest() {
+    void canDeleteBookTest()
+    {
         bookRepositoryImpl.deleteBook(testBookId);
         assertThat(bookSpringProvidedRepository.count()).isEqualTo(0);
         verify(bookSpringProvidedRepository, times(1)).deleteById(testBookId);
@@ -131,7 +134,8 @@ class BookRepositoryImplTest {
      * Verify if bookRepositoryImpl call the right method for findBookEntitiesByAuthor
      */
     @Test
-    void findBookEntitiesByAuthorTest() {
+    void findBookEntitiesByAuthorTest()
+    {
         bookRepositoryImpl.findBookEntitiesByAuthor(testBookAuthor);
         verify(bookSpringProvidedRepository, times(1)).findBookEntitiesByAuthor(testBookAuthor);
     }
