@@ -4,13 +4,14 @@ import org.internship.library.api.book.Book;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Implements the {@link Book} model for JPA.
  */
 @Entity(name = "book")
-public class BookEntity {
+public class BookEntity implements Serializable {
 
     @Id
     private String id;

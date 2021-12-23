@@ -4,6 +4,7 @@ import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
+import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
