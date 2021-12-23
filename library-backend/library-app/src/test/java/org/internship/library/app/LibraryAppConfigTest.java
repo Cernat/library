@@ -50,9 +50,6 @@ public class LibraryAppConfigTest {
         if (!userRepository.findByUserName(testUserName).isPresent())
         {
             userRepository.save(UserMapper.userDTOtoUserEntity(adminUser));
-
         }
-
-//        userController.createUser(adminUser);
     }
 }

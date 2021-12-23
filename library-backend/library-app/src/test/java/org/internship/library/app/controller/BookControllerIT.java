@@ -2,7 +2,6 @@ package org.internship.library.app.controller;
 
 import org.internship.library.app.LibraryAppConfigTest;
 import org.internship.library.app.persistence.entity.BookEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -49,20 +48,6 @@ public class BookControllerIT extends LibraryAppConfigTest {
         }};
     }
 
-//    @BeforeEach
-//    void setUp() {
-//
-//        BookEntity testBook = new BookEntity();
-//        testBook.setId(testBookId);
-//        testBook.setTitle("TEST");
-//        testBook.setAuthor("TEST");
-//        testBook.setNumberOfPages(1000);
-//
-//        HttpEntity<BookEntity> requestHeader = new HttpEntity<>(testBook);
-//        ResponseEntity responseEntity = testRestTemplate.withBasicAuth(testUserName, testUserPassword).exchange(url + "/", HttpMethod.POST, requestHeader, BookEntity.class);
-//        assertNotNull(responseEntity);
-//        assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
-//    }
     /**
      * Verify if post request persist a book in the database
      */
@@ -96,7 +81,6 @@ public class BookControllerIT extends LibraryAppConfigTest {
     public void shouldGetBookTest() {
 
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-//        ResponseEntity responseEntity = testRestTemplate.getForEntity(url + "/{id}", BookEntity.class, testBookId);
         ResponseEntity responseEntity = testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, BookEntity.class, testBookId);
         BookEntity foundBook = (BookEntity) responseEntity.getBody();
         assertEquals(testBookId, foundBook.getId());
@@ -110,7 +94,6 @@ public class BookControllerIT extends LibraryAppConfigTest {
     @Test
     @Order(3)
     void shouldGetBooksByAuthorNameTest() {
-
 
         HttpEntity<BookEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         ResponseEntity<BookEntity[]> responseEntity = testRestTemplate.exchange(url + "/?authorName=" + testBookAuthor, HttpMethod.GET, requestHeader, BookEntity[].class);

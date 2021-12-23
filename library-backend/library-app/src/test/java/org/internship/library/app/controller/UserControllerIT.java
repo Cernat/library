@@ -2,30 +2,23 @@ package org.internship.library.app.controller;
 
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
-import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.persistence.repository.UserRepository;
-import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-import static org.internship.library.app.LibraryAppConfigTest.testUserName;
-import static org.internship.library.app.LibraryAppConfigTest.testUserPassword;
 import static org.internship.library.app.controller.BookControllerIT.createHeaders;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,10 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * Integration Testing Class from Controller to DB
  */
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest(classes = {LibraryAppConfigTest.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class UserControllerIT extends LibraryAppConfigTest{
+class UserControllerIT extends LibraryAppConfigTest {
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
     @Autowired
@@ -46,18 +37,6 @@ class UserControllerIT extends LibraryAppConfigTest{
     private static final String testUsername = "userTest";
     private static final String testPassword = "userTest123!";
     private static final String testEmail = "userTest@gmail.com";
-//    @Autowired
-//    ApplicationPasswordEncoder applicationPasswordEncoder;
-//
-//
-//
-//    private static final Integer testUserId = 5;
-//    private static final String testUserName = "test4";
-//    private static final String testUserPassword = "test4";
-//    private static final String testUserEmail = "userTest@gmail.com2";
-//    private static final String testUserRole = "USER";
-
-
 
     /**
      * Verify if post request persist an user in the database
@@ -85,7 +64,6 @@ class UserControllerIT extends LibraryAppConfigTest{
     @Test
     @Order(2)
     void shouldGetUser() {
-
 
         HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         Optional<UserEntity> userToFind = userRepository.findByUserName(testUsername);
