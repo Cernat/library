@@ -29,8 +29,6 @@
     <modules>
         <module>library-backend</module>
         <module>library-frontend</module>
-        <module>library-client</module>
-        <module>utility-app</module>
     </modules>
     <packaging>pom</packaging>
 </project>

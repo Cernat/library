@@ -1,8 +1,0 @@
-server:
-  port: 7778
-  servlet:
-    context-path: /utility
-library:
-  book:
-    client:
-      url: http://localhost:7777/library/book/
