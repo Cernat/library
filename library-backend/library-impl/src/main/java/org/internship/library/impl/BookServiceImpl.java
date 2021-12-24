@@ -2,9 +2,9 @@ package org.internship.library.impl;
 
 import java.util.List;
 
-import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookRepository;
 import org.internship.library.api.book.BookService;
+import org.internship.library.api.dto.BookDTO;
 
 public class BookServiceImpl implements BookService
 {
@@ -18,7 +18,7 @@ public class BookServiceImpl implements BookService
      * @return The book found at this id
      */
     @Override
-    public Book getBook(String id)
+    public BookDTO getBook(String id)
     {
         return bookRepository.findBookById(id);
     }
@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService
      * @return The book created
      */
     @Override
-    public Book createBook(Book book)
+    public BookDTO createBook(BookDTO book)
     {
         return bookRepository.createBook(book);
     }
@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService
      * @return The book updated
      */
     @Override
-    public Book updateBook(String id, Book book)
+    public BookDTO updateBook(String id, BookDTO book)
     {
         return bookRepository.updateBook(id, book);
     }
@@ -59,7 +59,7 @@ public class BookServiceImpl implements BookService
     }
 
     @Override
-    public List<Book> findBookEntitiesByAuthor(String author)
+    public List<BookDTO> findBookEntitiesByAuthor(String author)
     {
         return bookRepository.findBookEntitiesByAuthor(author);
     }

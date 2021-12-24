@@ -1,5 +1,7 @@
 package org.internship.library.api.book;
 
+import org.internship.library.api.dto.BookDTO;
+
 import java.util.List;
 
 /**
@@ -13,14 +15,14 @@ public interface BookRepository
      *
      * @param id the book id
      */
-    Book findBookById(String id);
+    BookDTO findBookById(String id);
 
     /**
      * Creates the given book
      *
      * @param book entity
      */
-    Book createBook(Book book);
+    BookDTO createBook(BookDTO book);
 
     /**
      * Updates the book by the given id with the given book Returns NoSuchElementException on the contrary
@@ -28,7 +30,7 @@ public interface BookRepository
      * @param id the book id
      * @param book entity
      */
-    Book updateBook(String id, Book book);
+    BookDTO updateBook(String id, BookDTO book);
 
     /**
      * Deletes the book by the given id
@@ -43,5 +45,5 @@ public interface BookRepository
      * @param author to search books
      * @return book entities
      */
-    List<Book> findBookEntitiesByAuthor(String author);
+    List<BookDTO> findBookEntitiesByAuthor(String author);
 }

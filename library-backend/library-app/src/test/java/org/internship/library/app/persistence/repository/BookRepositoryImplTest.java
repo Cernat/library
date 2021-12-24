@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.internship.library.api.book.Book;
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
 import org.internship.library.app.persistence.entity.BookEntity;
@@ -44,16 +43,16 @@ class BookRepositoryImplTest
     @Test
     void shouldFindBookByIdTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testNumberOfPages);
 
-        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
+        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity(testBook);
 
         when(bookSpringProvidedRepository.findById(testBookId)).thenReturn(Optional.of(testBookEntity));
-        Book foundBook = bookRepositoryImpl.findBookById(testBookId);
+        BookDTO foundBook = bookRepositoryImpl.findBookById(testBookId);
 
         assertEquals(testBook.getId(), foundBook.getId());
         assertEquals(testBook.getAuthor(), foundBook.getAuthor());
@@ -68,13 +67,13 @@ class BookRepositoryImplTest
     @Test
     void canCreateBookTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testNumberOfPages);
 
-        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
+        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity(testBook);
 
         when(bookSpringProvidedRepository.save(Mockito.any(BookEntity.class))).thenReturn(testBookEntity);
 
@@ -97,13 +96,13 @@ class BookRepositoryImplTest
     @Test
     void shouldUpdateBookTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testNumberOfPages);
 
-        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity((BookDTO) testBook);
+        BookEntity testBookEntity = BookMapper.bookDTOtoBookEntity(testBook);
 
         when(bookSpringProvidedRepository.save(Mockito.any(BookEntity.class))).thenReturn(testBookEntity);
 
