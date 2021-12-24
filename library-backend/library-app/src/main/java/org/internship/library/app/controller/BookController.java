@@ -1,5 +1,8 @@
 package org.internship.library.app.controller;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookService;
 import org.slf4j.Logger;
@@ -16,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 
 @RestController
 @RequestMapping(path = "book")
-public class BookController {
+public class BookController
+{
 
     Logger logger = LoggerFactory.getLogger(BookController.class);
 
@@ -36,12 +37,16 @@ public class BookController {
      * @return the book OR NOT_FOUND(404)
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable String id) {
+    public ResponseEntity<Book> getBook(@PathVariable String id)
+    {
         logger.info("Retrieving book with the id of: " + id);
 
-        try {
+        try
+        {
             return ResponseEntity.status(HttpStatus.OK).body(bookService.getBook(id));
-        } catch (NoSuchElementException e) {
+        }
+        catch (NoSuchElementException e)
+        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -53,8 +58,9 @@ public class BookController {
      * @return the book or BAD_REQUEST(400)
      */
     @PostMapping
-    public ResponseEntity<Book> postBook(@RequestBody Book bookPayload) {
-        logger.info("Receiving book from client: ", bookPayload);
+    public ResponseEntity<Book> postBook(@RequestBody Book bookPayload)
+    {
+        logger.info("Receiving book from client: {}", bookPayload);
 
         Book newBook = bookService.createBook(bookPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
@@ -67,12 +73,16 @@ public class BookController {
      * @return the book
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookPayload) {
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookPayload)
+    {
         logger.info("Update the book with the id of: " + id + " with: " + bookPayload);
 
-        try {
+        try
+        {
             return ResponseEntity.status(HttpStatus.OK).body(bookService.updateBook(id, bookPayload));
-        } catch (NoSuchElementException e) {
+        }
+        catch (NoSuchElementException e)
+        {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -84,7 +94,8 @@ public class BookController {
      * @return the book
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable String id) {
+    public ResponseEntity<?> deleteBook(@PathVariable String id)
+    {
         logger.info("Deleting the book with the id of: " + id);
         bookService.deleteBook(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -92,11 +103,13 @@ public class BookController {
 
     /**
      * Retrieves a list of books specified by the author
+     * 
      * @param authorName to search books
      * @return a list of book entities
      */
     @GetMapping
-    public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName) {
+    public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName)
+    {
         logger.info("Retrieving all books with author name: " + authorName);
 
         List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);

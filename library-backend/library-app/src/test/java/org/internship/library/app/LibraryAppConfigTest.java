@@ -2,7 +2,6 @@ package org.internship.library.app;
 
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.adapter.UserMapper;
-import org.internship.library.app.controller.UserController;
 import org.internship.library.app.persistence.repository.UserRepository;
 import org.internship.library.app.security.ApplicationPasswordEncoder;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,17 +10,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@SpringBootTest(classes = { LibraryAppConfig.class }, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {LibraryAppConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class LibraryAppConfigTest {
+public class LibraryAppConfigTest
+{
 
     @Autowired
     private UserRepository userRepository;
@@ -35,11 +31,13 @@ public class LibraryAppConfigTest {
     public static final String testUserRole = "USER";
 
     @BeforeAll
-    void beforeAll() {
+    void beforeAll()
+    {
         createUser();
     }
 
-    public void createUser() {
+    public void createUser()
+    {
         UserDTO adminUser = new UserDTO();
         adminUser.setId(testUserId);
         adminUser.setUserName(testUserName);

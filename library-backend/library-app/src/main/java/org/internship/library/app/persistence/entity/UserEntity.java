@@ -1,7 +1,6 @@
 package org.internship.library.app.persistence.entity;
 
-import io.swagger.annotations.ApiParam;
-import org.internship.library.app.security.UserRole;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,13 +8,17 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Table;
 import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.Table;
+
+import org.internship.library.app.security.UserRole;
+
+import io.swagger.annotations.ApiParam;
 
 @Entity
 @Table(name = "users")
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,43 +42,53 @@ public class UserEntity implements Serializable {
     @ApiParam(value = "USER")
     private UserRole userRole;
 
-    public String getUserName() {
+    public String getUserName()
+    {
         return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(String userName)
+    {
         this.userName = userName;
     }
 
-    public UserRole getUserRole() {
+    public UserRole getUserRole()
+    {
         return userRole;
     }
 
-    public void setUserRole(UserRole userRole) {
+    public void setUserRole(UserRole userRole)
+    {
         this.userRole = userRole;
     }
 
-    public Integer getId() {
+    public Integer getId()
+    {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id)
+    {
         Id = id;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 }

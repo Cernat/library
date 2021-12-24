@@ -4,19 +4,21 @@ import org.internship.library.api.book.Book;
 
 import java.util.UUID;
 
-public class BookDTO implements Book {
+public class BookDTO implements Book
+{
 
     private String id;
     private String title;
     private String author;
     private Integer numberOfPages;
 
-
-    public BookDTO() {
+    public BookDTO()
+    {
         this.id = UUID.randomUUID().toString();
     }
 
-    public BookDTO(Book book) {
+    public BookDTO(Book book)
+    {
         this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();
@@ -24,48 +26,56 @@ public class BookDTO implements Book {
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     @Override
-    public void setId(String id) {
+    public void setId(String id)
+    {
 
         this.id = id;
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle()
+    {
 
         return title;
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(String title)
+    {
 
         this.title = title;
     }
 
     @Override
-    public String getAuthor() {
+    public String getAuthor()
+    {
 
         return author;
     }
 
     @Override
-    public void setAuthor(String author) {
+    public void setAuthor(String author)
+    {
 
         this.author = author;
     }
 
     @Override
-    public Integer getNumberOfPages() {
+    public Integer getNumberOfPages()
+    {
 
         return numberOfPages;
     }
 
     @Override
-    public void setNumberOfPages(Integer numberOfPages) {
+    public void setNumberOfPages(Integer numberOfPages)
+    {
         this.numberOfPages = numberOfPages;
     }
 }

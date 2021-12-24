@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * This interface defines the behaviour of Book repository
  */
-public interface BookRepository {
+public interface BookRepository
+{
 
     /**
-     * Finds the book by the given id
-     * Returns NoSuchElementException on the contrary
+     * Finds the book by the given id Returns NoSuchElementException on the contrary
      *
      * @param id the book id
      */
@@ -23,10 +23,9 @@ public interface BookRepository {
     Book createBook(Book book);
 
     /**
-     * Updates the book by the given id with the given book
-     * Returns NoSuchElementException on the contrary
+     * Updates the book by the given id with the given book Returns NoSuchElementException on the contrary
      *
-     * @param id   the book id
+     * @param id the book id
      * @param book entity
      */
     Book updateBook(String id, Book book);

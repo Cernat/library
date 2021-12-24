@@ -1,5 +1,8 @@
 package org.internship.library.app.security;
 
+import static org.internship.library.app.security.UserRole.ADMIN;
+import static org.internship.library.app.security.UserRole.USER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,12 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.filter.CorsFilter;
 
-import static org.internship.library.app.security.UserRole.ADMIN;
-import static org.internship.library.app.security.UserRole.USER;
-
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter
+{
 
     private final ApplicationPasswordEncoder applicationPasswordEncoder;
     private final MyUserDetailsService myUserDetailsService;
@@ -23,35 +23,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfiguration(ApplicationPasswordEncoder applicationPasswordEncoder,
-                                 MyUserDetailsService myUserDetailsService,
-                                 CorsFilter corsFilter) {
+        MyUserDetailsService myUserDetailsService,
+        CorsFilter corsFilter)
+    {
         this.applicationPasswordEncoder = applicationPasswordEncoder;
         this.myUserDetailsService = myUserDetailsService;
         this.corsFilter = corsFilter;
     }
 
-
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception
+    {
         http.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
         http.httpBasic().and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/registration/**").permitAll()
-                .antMatchers("/swagger-ui/**").hasAuthority(ADMIN.name())
-                .antMatchers("/api/v1/user/**").hasAuthority(USER.name())
-                .antMatchers("/book/**").hasAuthority(USER.name())
-                .anyRequest().authenticated();
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/api/v1/registration/**").permitAll()
+            .antMatchers("/swagger-ui/**").hasAuthority(ADMIN.name())
+            .antMatchers("/api/v1/user/**").hasAuthority(USER.name())
+            .antMatchers("/book/**").hasAuthority(USER.name())
+            .anyRequest().authenticated();
 
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider()
+    {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(myUserDetailsService);
         provider.setPasswordEncoder(applicationPasswordEncoder);

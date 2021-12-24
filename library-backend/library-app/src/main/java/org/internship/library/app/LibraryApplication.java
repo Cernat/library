@@ -8,11 +8,12 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(scanBasePackages = "org.internship.library")
 @Import({LibraryAppConfig.class, LibraryPersistenceConfig.class, CorsConfig.class})
-public class LibraryApplication {
+public class LibraryApplication
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         SpringApplication.run(LibraryApplication.class, args);
     }
-
 
 }

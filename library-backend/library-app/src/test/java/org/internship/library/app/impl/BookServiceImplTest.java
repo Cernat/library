@@ -1,5 +1,12 @@
 package org.internship.library.app.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookRepository;
 import org.internship.library.api.dto.BookDTO;
@@ -13,18 +20,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 /**
  * Unit Testing Class (@link BookServiceImpl)
  */
 @ExtendWith(MockitoExtension.class)
-public class BookServiceImplTest {
+public class BookServiceImplTest
+{
 
     @Mock
     private BookRepository bookRepository;
@@ -41,8 +42,8 @@ public class BookServiceImplTest {
      * Verify if bookServiceImpl call the right method for getBook()
      */
     @Test
-    void shouldGetBookTest() {
-
+    void shouldGetBookTest()
+    {
         Book testBook = new BookDTO();
 
         testBook.setId(testBookId);
@@ -65,7 +66,8 @@ public class BookServiceImplTest {
      * Verify if bookServiceImpl call the right method for createBook()
      */
     @Test
-    void shouldCreateBookTest() {
+    void shouldCreateBookTest()
+    {
         Book testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -75,10 +77,10 @@ public class BookServiceImplTest {
         bookServiceImpl.createBook(testBook);
 
         ArgumentCaptor<BookDTO> bookDTOArgumentCaptor =
-                ArgumentCaptor.forClass(BookDTO.class);
+            ArgumentCaptor.forClass(BookDTO.class);
 
         verify(bookRepository)
-                .createBook(bookDTOArgumentCaptor.capture());
+            .createBook(bookDTOArgumentCaptor.capture());
 
         BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
@@ -94,7 +96,8 @@ public class BookServiceImplTest {
      * Verify if bookServiceImpl call the right method for updateBook()
      */
     @Test
-    void shouldUpdateBookTest() {
+    void shouldUpdateBookTest()
+    {
         Book testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -105,10 +108,10 @@ public class BookServiceImplTest {
         bookServiceImpl.updateBook(testBookId, testBook);
 
         ArgumentCaptor<BookDTO> bookDTOArgumentCaptor =
-                ArgumentCaptor.forClass(BookDTO.class);
+            ArgumentCaptor.forClass(BookDTO.class);
 
         verify(bookRepository)
-                .updateBook(eq(testBookId), bookDTOArgumentCaptor.capture());
+            .updateBook(eq(testBookId), bookDTOArgumentCaptor.capture());
 
         BookEntity capturedBook = BookMapper.bookDTOtoBookEntity(bookDTOArgumentCaptor.getValue());
 
@@ -124,7 +127,8 @@ public class BookServiceImplTest {
      * Verify if bookServiceImpl call the right method for deleteBook()
      */
     @Test
-    void shouldDeleteBookTest() {
+    void shouldDeleteBookTest()
+    {
         bookServiceImpl.deleteBook(testBookId);
         verify(bookRepository, times(1)).deleteBook(testBookId);
     }
@@ -133,7 +137,8 @@ public class BookServiceImplTest {
      * Verify if bookServiceImpl call the right method for findBookEntitiesByAuthor()
      */
     @Test
-    void shouldFindBookEntitiesByAuthor() {
+    void shouldFindBookEntitiesByAuthor()
+    {
         bookServiceImpl.findBookEntitiesByAuthor(testBookAuthor);
         verify(bookRepository, times(1)).findBookEntitiesByAuthor(testBookAuthor);
     }

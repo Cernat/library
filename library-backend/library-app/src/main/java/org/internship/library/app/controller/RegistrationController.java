@@ -13,11 +13,13 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/registration")
-public class RegistrationController {
+public class RegistrationController
+{
 
     private final RegistrationService registrationService;
 
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService)
+    {
         this.registrationService = registrationService;
     }
 
@@ -28,13 +30,15 @@ public class RegistrationController {
      * @return the user
      */
     @PostMapping
-    public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity user) {
+    public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity user)
+    {
         UserEntity newUser = registrationService.register(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @RequestMapping("/login")
-    public Principal user(Principal user) {
+    public Principal user(Principal user)
+    {
         return user;
     }
 }
