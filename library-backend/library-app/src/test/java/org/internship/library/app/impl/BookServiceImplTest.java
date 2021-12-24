@@ -7,7 +7,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookRepository;
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
@@ -44,7 +43,7 @@ public class BookServiceImplTest
     @Test
     void shouldGetBookTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
 
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
@@ -52,7 +51,7 @@ public class BookServiceImplTest
         testBook.setNumberOfPages(testNumberOfPages);
 
         when(bookRepository.findBookById(testBookId)).thenReturn(testBook);
-        Book foundBook = bookServiceImpl.getBook(testBookId);
+        BookDTO foundBook = bookServiceImpl.getBook(testBookId);
 
         assertEquals(testBook.getId(), foundBook.getId());
         assertEquals(testBook.getAuthor(), foundBook.getAuthor());
@@ -68,7 +67,7 @@ public class BookServiceImplTest
     @Test
     void shouldCreateBookTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);
@@ -98,7 +97,7 @@ public class BookServiceImplTest
     @Test
     void shouldUpdateBookTest()
     {
-        Book testBook = new BookDTO();
+        BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
         testBook.setAuthor(testBookAuthor);

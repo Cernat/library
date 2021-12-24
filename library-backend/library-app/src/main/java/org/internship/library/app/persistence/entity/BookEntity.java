@@ -6,10 +6,10 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.internship.library.api.book.Book;
+import org.internship.library.api.dto.BookDTO;
 
 /**
- * Implements the {@link Book} model for JPA.
+ * Implements the {@link BookDTO} model for JPA.
  */
 @Entity(name = "book")
 public class BookEntity implements Serializable
@@ -26,7 +26,7 @@ public class BookEntity implements Serializable
         this.id = UUID.randomUUID().toString();
     }
 
-    public BookEntity(Book book)
+    public BookEntity(BookDTO book)
     {
         this.id = book.getId();
         this.title = book.getTitle();

@@ -3,8 +3,8 @@ package org.internship.library.app.controller;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookService;
+import org.internship.library.api.dto.BookDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class BookController
      * @return the book OR NOT_FOUND(404)
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable String id)
+    public ResponseEntity<BookDTO> getBook(@PathVariable String id)
     {
         logger.info("Retrieving book with the id of: " + id);
 
@@ -58,11 +58,11 @@ public class BookController
      * @return the book or BAD_REQUEST(400)
      */
     @PostMapping
-    public ResponseEntity<Book> postBook(@RequestBody Book bookPayload)
+    public ResponseEntity<BookDTO> postBook(@RequestBody BookDTO bookPayload)
     {
         logger.info("Receiving book from client: {}", bookPayload);
 
-        Book newBook = bookService.createBook(bookPayload);
+        BookDTO newBook = bookService.createBook(bookPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
     }
 
@@ -73,7 +73,7 @@ public class BookController
      * @return the book
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book bookPayload)
+    public ResponseEntity<BookDTO> updateBook(@PathVariable String id, @RequestBody BookDTO bookPayload)
     {
         logger.info("Update the book with the id of: " + id + " with: " + bookPayload);
 
@@ -108,11 +108,11 @@ public class BookController
      * @return a list of book entities
      */
     @GetMapping
-    public ResponseEntity<List<Book>> getBooksByAuthorName(@RequestParam String authorName)
+    public ResponseEntity<List<BookDTO>> getBooksByAuthorName(@RequestParam String authorName)
     {
         logger.info("Retrieving all books with author name: " + authorName);
 
-        List<Book> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
+        List<BookDTO> allBooksByAuthorName = bookService.findBookEntitiesByAuthor(authorName);
         return new ResponseEntity<>(allBooksByAuthorName, HttpStatus.OK);
     }
 }

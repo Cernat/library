@@ -1,5 +1,7 @@
 package org.internship.library.api.book;
 
+import org.internship.library.api.dto.BookDTO;
+
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ public interface BookService
      * @param id the book id
      * @return the book
      */
-    Book getBook(String id);
+    BookDTO getBook(String id);
 
     /**
      * Creates the given book
@@ -21,7 +23,7 @@ public interface BookService
      * @param book the book object
      * @return the book
      */
-    Book createBook(Book book);
+    BookDTO createBook(BookDTO book);
 
     /**
      * Updates the book by the given id with the given book
@@ -30,7 +32,7 @@ public interface BookService
      * @param id the id of book that it will be updated
      * @return the book
      */
-    Book updateBook(String id, Book book);
+    BookDTO updateBook(String id, BookDTO book);
 
     /**
      * Deletes a book
@@ -45,7 +47,7 @@ public interface BookService
      * @param author to search books
      * @return a list of books
      */
-    List<Book> findBookEntitiesByAuthor(String author);
+    List<BookDTO> findBookEntitiesByAuthor(String author);
 
     /**
      * Sets the BookRepository interface {@link BookRepository}

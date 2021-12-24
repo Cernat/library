@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.internship.library.api.book.Book;
 import org.internship.library.api.book.BookRepository;
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
@@ -24,25 +23,23 @@ public class BookRepositoryImpl implements BookRepository
     private BookSpringProvidedRepository bookSpringProvidedRepository;
 
     @Override
-    public Book findBookById(String id)
+    public BookDTO findBookById(String id)
     {
         Optional<BookEntity> optionalBookEntity = bookSpringProvidedRepository.findById(id);
         return BookMapper.bookEntityToBookDTO(optionalBookEntity.orElseThrow(NoSuchElementException::new));
     }
 
     @Override
-    public Book createBook(Book book)
+    public BookDTO createBook(BookDTO book)
     {
-        BookDTO bookDTO = (BookDTO) book;
-        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(bookDTO);
+        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(book);
         return BookMapper.bookEntityToBookDTO(bookSpringProvidedRepository.save(bookEntity));
     }
 
     @Override
-    public Book updateBook(String id, Book book)
+    public BookDTO updateBook(String id, BookDTO book)
     {
-        BookDTO bookDTO = (BookDTO) book;
-        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(bookDTO);
+        BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(book);
         return BookMapper.bookEntityToBookDTO(bookSpringProvidedRepository.save(bookEntity));
     }
 
@@ -53,7 +50,7 @@ public class BookRepositoryImpl implements BookRepository
     }
 
     @Override
-    public List<Book> findBookEntitiesByAuthor(String authorName)
+    public List<BookDTO> findBookEntitiesByAuthor(String authorName)
     {
         List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
         List<BookDTO> bookDTOS = BookMapper.listOfBooksEntityToListOfBookDTO(bookEntities);
