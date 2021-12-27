@@ -24,6 +24,12 @@
         <docker.maven.plugin.version>0.38.1</docker.maven.plugin.version>
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <docker.postgres.version>14.1</docker.postgres.version>
+
+        <database.url>jdbc:postgresql://localhost:5432/db_library</database.url>
+        <database.username>db_library</database.username>
+        <database.password>admin</database.password>
+        <database.jpa.dialect>org.hibernate.dialect.PostgreSQL95Dialect</database.jpa.dialect>
+        <database.driver.name>org.postgresql.Driver</database.driver.name>
     </properties>
 
     <modules>
