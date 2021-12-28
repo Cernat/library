@@ -1,4 +1,4 @@
-package org.internship.library.app.jms;
+package org.internship.library.app.jms.producer;
 
 import org.internship.library.api.dto.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;

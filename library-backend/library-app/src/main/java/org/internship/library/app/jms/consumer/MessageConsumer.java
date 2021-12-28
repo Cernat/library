@@ -1,4 +1,4 @@
-package org.internship.library.app.jms;
+package org.internship.library.app.jms.consumer;
 
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.app.adapter.BookMapper;
