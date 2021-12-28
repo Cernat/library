@@ -1,8 +1,9 @@
 package org.internship.library.api.dto;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class BookDTO
+public class BookDTO implements Serializable
 {
 
     private String id;
