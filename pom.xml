@@ -30,6 +30,8 @@
         <database.password>admin</database.password>
         <database.jpa.dialect>org.hibernate.dialect.PostgreSQL95Dialect</database.jpa.dialect>
         <database.driver.name>org.postgresql.Driver</database.driver.name>
+
+        <spring.activemq.version>2.6.2</spring.activemq.version>
     </properties>
 
     <modules>
