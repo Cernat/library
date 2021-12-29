@@ -63,7 +63,7 @@ public class BookControllerIT extends LibraryAppConfigTest
         BookEntity testBook = new BookEntity();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
-        testBook.setAuthor(testBookAuthor);
+//        testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testBookNumberOfPages);
 
         HttpEntity<BookEntity> requestHeader =
@@ -75,7 +75,7 @@ public class BookControllerIT extends LibraryAppConfigTest
         if (foundBook != null)
         {
             assertEquals(testBook.getId(), foundBook.getId());
-            assertEquals(testBook.getAuthor(), foundBook.getAuthor());
+//            assertEquals(testBook.getAuthor(), foundBook.getAuthor());
             assertEquals(testBook.getTitle(), foundBook.getTitle());
             assertEquals(testBook.getNumberOfPages(), foundBook.getNumberOfPages());
         }
@@ -130,7 +130,7 @@ public class BookControllerIT extends LibraryAppConfigTest
         BookEntity bookBeforeUpdate = foundBookBeforeUpdate.getBody();
         if (bookBeforeUpdate != null)
         {
-            bookBeforeUpdate.setAuthor("Updated Author");
+//            bookBeforeUpdate.setAuthor("Updated Author");
         }
 
         HttpEntity<BookEntity> requestHeaderWithBody =
@@ -148,7 +148,7 @@ public class BookControllerIT extends LibraryAppConfigTest
         BookEntity bookAfterUpdate = responseEntity.getBody();
         if (bookBeforeUpdate != null && bookAfterUpdate != null)
         {
-            assertEquals(bookBeforeUpdate.getAuthor(), bookAfterUpdate.getAuthor());
+//            assertEquals(bookBeforeUpdate.getAuthor(), bookAfterUpdate.getAuthor());
         }
     }
 

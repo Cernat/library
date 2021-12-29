@@ -18,6 +18,7 @@ public class UserMapper
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
         userDTO.setUserRole(String.valueOf(user.getUserRole()));
+        userDTO.setLinkBorrow(LinkBorrowMapper.listOfLinkBorrowsEntityToListOfLinkBorrowDTO(user.getLinkBorrow()));
         return userDTO;
     }
 
@@ -34,6 +35,7 @@ public class UserMapper
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setPassword(userDTO.getPassword());
         userEntity.setUserRole(UserRole.valueOf(userDTO.getUserRole()));
+        userEntity.setLinkBorrow(LinkBorrowMapper.listOfLinkBorrowsDTOtoListOfLinkBorrowEntities(userDTO.getLinkBorrow()));
         return userEntity;
     }
 

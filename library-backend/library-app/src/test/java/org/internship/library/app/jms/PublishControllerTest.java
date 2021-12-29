@@ -34,7 +34,7 @@ class PublishControllerTest
         BookDTO testBook = new BookDTO();
         testBook.setId(testBookId);
         testBook.setTitle(testBookTitle);
-        testBook.setAuthor(testBookAuthor);
+//        testBook.setAuthor(testBookAuthor);
         testBook.setNumberOfPages(testBookNumberOfPages);
 
         publishController.publishMessage(testBook);
