@@ -1,22 +1,24 @@
 package org.internship.library.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import org.internship.library.api.dto.StockDTO;
 import org.internship.library.app.adapter.StockMapper;
 import org.internship.library.app.persistence.entity.StockEntity;
 import org.internship.library.app.persistence.repository.StockRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 @Service
-public class StockService {
+public class StockService
+{
 
     private final StockRepository stockRepository;
 
-    public StockService(StockRepository stockRepository) {
+    public StockService(StockRepository stockRepository)
+    {
         this.stockRepository = stockRepository;
     }
 
@@ -32,16 +34,17 @@ public class StockService {
         return StockMapper.stockEntityToStockDTO(optionalStockEntity.orElseThrow(NoSuchElementException::new));
     }
 
-    public StockDTO createStock(StockDTO author)
+    public StockDTO createStock(StockDTO stock)
     {
-        StockEntity newAuthor = StockMapper.stockDTOtoStockEntity(author);
-        return StockMapper.stockEntityToStockDTO(stockRepository.save(newAuthor));
+        StockEntity newStock = StockMapper.stockDTOtoStockEntity(stock);
+        return StockMapper.stockEntityToStockDTO(stockRepository.save(newStock));
     }
 
+    // TODO Use book id instead of stock id
     public StockDTO updateStock(Integer id, StockDTO stock)
     {
         Optional<StockEntity> updateStock =
-                Optional.of(stockRepository.findById(id).orElseThrow(NoSuchElementException::new));
+            Optional.of(stockRepository.findById(id).orElseThrow(NoSuchElementException::new));
         return StockMapper.stockEntityToStockDTO(stockRepository.save(StockMapper.stockDTOtoStockEntity(stock)));
     }
 

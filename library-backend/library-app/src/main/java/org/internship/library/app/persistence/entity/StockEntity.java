@@ -2,6 +2,7 @@ package org.internship.library.app.persistence.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,19 @@ public class StockEntity implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "number_of_books")
     private Integer numberOfBooks;
 
     @OneToOne
-    @JoinColumn(name = "book_ID")
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
     private BookEntity bookID;
 
     public StockEntity()
     {
+        this.bookID = new BookEntity();
     }
 
     public StockEntity(Integer id, Integer numberOfBooks, BookEntity bookID)
@@ -60,8 +65,19 @@ public class StockEntity implements Serializable
         return bookID;
     }
 
+    public String getBookIDasBookEntity()
+    {
+        return bookID.getId();
+    }
+
     public void setBookID(BookEntity bookID)
     {
         this.bookID = bookID;
     }
+
+    public void setBookID(String bookID)
+    {
+        this.bookID.setId(bookID);
+    }
+
 }

@@ -10,21 +10,18 @@ public class BorrowDTO
     private Date to_be_returned;
     private boolean returned_on_time;
     private boolean returned;
-    private LinkBorrowDTO linkBorrow;
 
     public BorrowDTO()
     {
     }
 
-    public BorrowDTO(Integer id, Date date_borrowed, Date to_be_returned, boolean returned_on_time, boolean returned,
-        LinkBorrowDTO linkBorrow)
+    public BorrowDTO(Integer id, Date date_borrowed, Date to_be_returned, boolean returned_on_time, boolean returned)
     {
         this.id = id;
         this.date_borrowed = date_borrowed;
         this.to_be_returned = to_be_returned;
         this.returned_on_time = returned_on_time;
         this.returned = returned;
-        this.linkBorrow = linkBorrow;
     }
 
     public Integer getId()
@@ -77,13 +74,4 @@ public class BorrowDTO
         this.returned = returned;
     }
 
-    public LinkBorrowDTO getLinkBorrow()
-    {
-        return linkBorrow;
-    }
-
-    public void setLinkBorrow(LinkBorrowDTO linkBorrow)
-    {
-        this.linkBorrow = linkBorrow;
-    }
 }

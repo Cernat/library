@@ -1,7 +1,6 @@
 package org.internship.library.app.persistence.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,8 +46,8 @@ public class UserEntity implements Serializable
     @ApiParam(value = "USER")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<LinkBorrowEntity> linkBorrow = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<LinkBorrowEntity> linkBorrow;
 
     public String getUserName()
     {
@@ -99,11 +99,13 @@ public class UserEntity implements Serializable
         this.email = email;
     }
 
-    public List<LinkBorrowEntity> getLinkBorrow() {
+    public List<LinkBorrowEntity> getLinkBorrow()
+    {
         return linkBorrow;
     }
 
-    public void setLinkBorrow(List<LinkBorrowEntity> linkBorrow) {
+    public void setLinkBorrow(List<LinkBorrowEntity> linkBorrow)
+    {
         this.linkBorrow = linkBorrow;
     }
 }

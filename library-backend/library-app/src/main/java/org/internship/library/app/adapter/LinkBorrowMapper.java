@@ -1,42 +1,45 @@
 package org.internship.library.app.adapter;
 
-import org.internship.library.api.dto.LinkBorrowDTO;
-import org.internship.library.api.dto.StockDTO;
-import org.internship.library.app.persistence.entity.LinkBorrowEntity;
-import org.internship.library.app.persistence.entity.StockEntity;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LinkBorrowMapper {
+import org.internship.library.api.dto.LinkBorrowDTO;
+import org.internship.library.app.persistence.entity.LinkBorrowEntity;
+
+public class LinkBorrowMapper
+{
 
     public static LinkBorrowDTO linkBorrowEntityToLinkBorrowDTO(LinkBorrowEntity linkBorrow)
     {
         LinkBorrowDTO linkBorrowDTO = new LinkBorrowDTO();
         linkBorrowDTO.setId(linkBorrow.getId());
-        linkBorrowDTO.setUser(UserMapper.userEntityToUserDTO(linkBorrow.getUser()));
-        linkBorrowDTO.setBook(BookMapper.bookEntityToBookDTO(linkBorrow.getBook()));
-        linkBorrowDTO.setBorrow(BorrowMapper.borrowEntityToBorrowDTO(linkBorrow.getBorrow()));
+        linkBorrowDTO.setUser(linkBorrow.getUserIDasUserEntity());
+        linkBorrowDTO.setBook(linkBorrow.getBookIDasBookEntity());
+        linkBorrowDTO.setBorrow(linkBorrow.getBorrowIDasBorrowEntity());
         return linkBorrowDTO;
     }
 
-    public static List<LinkBorrowDTO> listOfLinkBorrowsEntityToListOfLinkBorrowDTO(List<LinkBorrowEntity> linkBorrowEntities)
+    public static List<LinkBorrowDTO> listOfLinkBorrowsEntityToListOfLinkBorrowDTO(
+        List<LinkBorrowEntity> linkBorrowEntities)
     {
-        return linkBorrowEntities.stream().map(LinkBorrowMapper::linkBorrowEntityToLinkBorrowDTO).collect(Collectors.toList());
+        return linkBorrowEntities.stream().map(LinkBorrowMapper::linkBorrowEntityToLinkBorrowDTO)
+            .collect(Collectors.toList());
     }
 
     public static LinkBorrowEntity linkBorrowDTOtolinkBorrowEntity(LinkBorrowDTO linkBorrowDTO)
     {
         LinkBorrowEntity linkBorrowEntity = new LinkBorrowEntity();
         linkBorrowEntity.setId(linkBorrowDTO.getId());
-        linkBorrowEntity.setUser(UserMapper.userDTOtoUserEntity(linkBorrowDTO.getUser()));
-        linkBorrowEntity.setBook(BookMapper.bookDTOtoBookEntity(linkBorrowDTO.getBook()));
-        linkBorrowEntity.setBorrow(BorrowMapper.borrowDTOtoBorrowEntity(linkBorrowDTO.getBorrow()));
+        linkBorrowEntity.setUser(linkBorrowDTO.getUser());
+        linkBorrowEntity.setBook(linkBorrowDTO.getBook());
+        linkBorrowEntity.setBorrow(linkBorrowDTO.getBorrow());
         return linkBorrowEntity;
     }
 
-    public static List<LinkBorrowEntity> listOfLinkBorrowsDTOtoListOfLinkBorrowEntities(List<LinkBorrowDTO> linkBorrowDTOList)
+    public static List<LinkBorrowEntity> listOfLinkBorrowsDTOtoListOfLinkBorrowEntities(
+        List<LinkBorrowDTO> linkBorrowDTOList)
     {
-        return linkBorrowDTOList.stream().map(LinkBorrowMapper::linkBorrowDTOtolinkBorrowEntity).collect(Collectors.toList());
+        return linkBorrowDTOList.stream().map(LinkBorrowMapper::linkBorrowDTOtolinkBorrowEntity)
+            .collect(Collectors.toList());
     }
 }

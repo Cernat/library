@@ -2,6 +2,7 @@ package org.internship.library.app.persistence.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,28 +13,32 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "LINKBORROW")
+@Table(name = "link_borrow")
 public class LinkBorrowEntity implements Serializable
 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_ID")
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "book_ID")
+    @JoinColumn(name = "book_id")
     private BookEntity book;
 
     @OneToOne
-    @JoinColumn(name = "borrow_ID")
+    @JoinColumn(name = "borrow_id")
     private BorrowEntity borrow;
 
     public LinkBorrowEntity()
     {
+        this.user = new UserEntity();
+        this.book = new BookEntity();
+        this.borrow = new BorrowEntity();
     }
 
     public LinkBorrowEntity(Integer id, UserEntity user, BookEntity book, BorrowEntity borrow)
@@ -59,9 +64,19 @@ public class LinkBorrowEntity implements Serializable
         return user;
     }
 
+    public Integer getUserIDasUserEntity()
+    {
+        return user.getId();
+    }
+
     public void setUser(UserEntity user)
     {
         this.user = user;
+    }
+
+    public void setUser(Integer userID)
+    {
+        this.user.setId(userID);
     }
 
     public BookEntity getBook()
@@ -69,9 +84,19 @@ public class LinkBorrowEntity implements Serializable
         return book;
     }
 
+    public String getBookIDasBookEntity()
+    {
+        return book.getId();
+    }
+
     public void setBook(BookEntity book)
     {
         this.book = book;
+    }
+
+    public void setBook(String bookID)
+    {
+        this.book.setId(bookID);
     }
 
     public BorrowEntity getBorrow()
@@ -79,8 +104,19 @@ public class LinkBorrowEntity implements Serializable
         return borrow;
     }
 
+    public Integer getBorrowIDasBorrowEntity()
+    {
+        return borrow.getId();
+    }
+
     public void setBorrow(BorrowEntity borrow)
     {
         this.borrow = borrow;
     }
+
+    public void setBorrow(Integer borrowID)
+    {
+        this.borrow.setId(borrowID);
+    }
+
 }

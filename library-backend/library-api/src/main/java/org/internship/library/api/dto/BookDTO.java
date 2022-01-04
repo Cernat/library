@@ -1,8 +1,6 @@
 package org.internship.library.api.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class BookDTO implements Serializable
@@ -12,21 +10,18 @@ public class BookDTO implements Serializable
     private String title;
     private Integer numberOfPages;
     private AuthorDTO author;
-    private StockDTO stock;
-    private List<LinkBorrowDTO> linkBorrow = new ArrayList<>();
 
     public BookDTO()
     {
         this.id = UUID.randomUUID().toString();
     }
 
-    public BookDTO(String id, String title, Integer numberOfPages, AuthorDTO author, StockDTO stock, List<LinkBorrowDTO> linkBorrow) {
+    public BookDTO(String id, String title, Integer numberOfPages, AuthorDTO author)
+    {
         this.id = id;
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.author = author;
-        this.stock = stock;
-        this.linkBorrow = linkBorrow;
     }
 
     public String getId()
@@ -73,21 +68,4 @@ public class BookDTO implements Serializable
         this.author = author;
     }
 
-    public StockDTO getStock()
-    {
-        return stock;
-    }
-
-    public void setStock(StockDTO stock)
-    {
-        this.stock = stock;
-    }
-
-    public List<LinkBorrowDTO> getLinkBorrow() {
-        return linkBorrow;
-    }
-
-    public void setLinkBorrow(List<LinkBorrowDTO> linkBorrow) {
-        this.linkBorrow = linkBorrow;
-    }
 }

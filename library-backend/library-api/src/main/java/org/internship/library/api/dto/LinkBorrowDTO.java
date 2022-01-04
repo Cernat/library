@@ -4,15 +4,15 @@ public class LinkBorrowDTO
 {
 
     private Integer id;
-    private UserDTO user;
-    private BookDTO book;
-    private BorrowDTO borrow;
+    private Integer user;
+    private String book;
+    private Integer borrow;
 
     public LinkBorrowDTO()
     {
     }
 
-    public LinkBorrowDTO(Integer id, UserDTO user, BookDTO book, BorrowDTO borrow)
+    public LinkBorrowDTO(Integer id, Integer user, String book, Integer borrow)
     {
         this.id = id;
         this.user = user;
@@ -30,32 +30,32 @@ public class LinkBorrowDTO
         this.id = id;
     }
 
-    public UserDTO getUser()
+    public Integer getUser()
     {
         return user;
     }
 
-    public void setUser(UserDTO user)
+    public void setUser(Integer user)
     {
         this.user = user;
     }
 
-    public BookDTO getBook()
+    public String getBook()
     {
         return book;
     }
 
-    public void setBook(BookDTO book)
+    public void setBook(String book)
     {
         this.book = book;
     }
 
-    public BorrowDTO getBorrow()
+    public Integer getBorrow()
     {
         return borrow;
     }
 
-    public void setBorrow(BorrowDTO borrow)
+    public void setBorrow(Integer borrow)
     {
         this.borrow = borrow;
     }

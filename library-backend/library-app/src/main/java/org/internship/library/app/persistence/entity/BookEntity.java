@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.internship.library.api.dto.BookDTO;
 
@@ -23,18 +24,20 @@ public class BookEntity implements Serializable
 {
 
     @Id
+    @Column(name = "id")
     private String id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "number_of_pages")
     private Integer numberOfPages;
 
     @ManyToOne
-    @JoinColumn(name = "author_ID")
+    @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
-    @JoinColumn(name = "stock_ID")
-    private StockEntity stock;
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<LinkBorrowEntity> linkBorrow = new ArrayList<>();
 
     public BookEntity()
@@ -42,12 +45,13 @@ public class BookEntity implements Serializable
         this.id = UUID.randomUUID().toString();
     }
 
-    public BookEntity(String id, String title, Integer numberOfPages, AuthorEntity author, StockEntity stock, List<LinkBorrowEntity> linkBorrow) {
+    public BookEntity(String id, String title, Integer numberOfPages, AuthorEntity author,
+        List<LinkBorrowEntity> linkBorrow)
+    {
         this.id = id;
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.author = author;
-        this.stock = stock;
         this.linkBorrow = linkBorrow;
     }
 
@@ -91,21 +95,13 @@ public class BookEntity implements Serializable
         this.author = author;
     }
 
-    public StockEntity getStock()
+    public List<LinkBorrowEntity> getLinkBorrow()
     {
-        return stock;
-    }
-
-    public void setStock(StockEntity stock)
-    {
-        this.stock = stock;
-    }
-
-    public List<LinkBorrowEntity> getLinkBorrow() {
         return linkBorrow;
     }
 
-    public void setLinkBorrow(List<LinkBorrowEntity> linkBorrow) {
+    public void setLinkBorrow(List<LinkBorrowEntity> linkBorrow)
+    {
         this.linkBorrow = linkBorrow;
     }
 }
