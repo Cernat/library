@@ -26,9 +26,9 @@ public class BorrowService {
         return new ArrayList<>(BorrowMapper.listOfBorrowsEntityToListOfBorrowDTO(allBorrows));
     }
 
-    public BorrowDTO findById(Integer id)
+    public BorrowDTO findById(Integer borrowId)
     {
-        Optional<BorrowEntity> optionalBorrowEntity = borrowRepository.findById(id);
+        Optional<BorrowEntity> optionalBorrowEntity = borrowRepository.findById(borrowId);
         return BorrowMapper.borrowEntityToBorrowDTO(optionalBorrowEntity.orElseThrow(NoSuchElementException::new));
     }
 
@@ -38,15 +38,15 @@ public class BorrowService {
         return BorrowMapper.borrowEntityToBorrowDTO(borrowRepository.save(newBorrow));
     }
 
-    public BorrowDTO updateBorrow(Integer id, BorrowDTO borrow)
+    public BorrowDTO updateBorrow(Integer borrowId, BorrowDTO borrow)
     {
         Optional<BorrowEntity> updateBorrow =
-                Optional.of(borrowRepository.findById(id).orElseThrow(NoSuchElementException::new));
+                Optional.of(borrowRepository.findById(borrowId).orElseThrow(NoSuchElementException::new));
         return BorrowMapper.borrowEntityToBorrowDTO(borrowRepository.save(BorrowMapper.borrowDTOtoBorrowEntity(borrow)));
     }
 
-    public void deleteBorrow(Integer id)
+    public void deleteBorrow(Integer borrowId)
     {
-        borrowRepository.deleteById(id);
+        borrowRepository.deleteById(borrowId);
     }
 }

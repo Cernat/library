@@ -26,9 +26,9 @@ public class LinkBorrowService {
         return new ArrayList<>(LinkBorrowMapper.listOfLinkBorrowsEntityToListOfLinkBorrowDTO(allLinkBorrows));
     }
 
-    public LinkBorrowDTO findById(Integer id)
+    public LinkBorrowDTO findById(Integer linkBorrowId)
     {
-        Optional<LinkBorrowEntity> optionalLinkBorrowEntity = linkBorrowRepository.findById(id);
+        Optional<LinkBorrowEntity> optionalLinkBorrowEntity = linkBorrowRepository.findById(linkBorrowId);
         return LinkBorrowMapper.linkBorrowEntityToLinkBorrowDTO(optionalLinkBorrowEntity.orElseThrow(NoSuchElementException::new));
     }
 
@@ -38,15 +38,15 @@ public class LinkBorrowService {
         return LinkBorrowMapper.linkBorrowEntityToLinkBorrowDTO(linkBorrowRepository.save(newLinkBorrow));
     }
 
-    public LinkBorrowDTO updateLinkBorrow(Integer id, LinkBorrowDTO linkBorrow)
+    public LinkBorrowDTO updateLinkBorrow(Integer linkBorrowId, LinkBorrowDTO linkBorrow)
     {
         Optional<LinkBorrowEntity> updateLinkBorrow =
-                Optional.of(linkBorrowRepository.findById(id).orElseThrow(NoSuchElementException::new));
+                Optional.of(linkBorrowRepository.findById(linkBorrowId).orElseThrow(NoSuchElementException::new));
         return LinkBorrowMapper.linkBorrowEntityToLinkBorrowDTO(linkBorrowRepository.save(LinkBorrowMapper.linkBorrowDTOtolinkBorrowEntity(linkBorrow)));
     }
 
-    public void deleteLinkBorrow(Integer id)
+    public void deleteLinkBorrow(Integer linkBorrowId)
     {
-        linkBorrowRepository.deleteById(id);
+        linkBorrowRepository.deleteById(linkBorrowId);
     }
 }

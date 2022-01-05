@@ -29,9 +29,9 @@ public class AuthorService {
         return new ArrayList<>(AuthorMapper.listOfAuthorsEntityToListOfAuthorDTO(allAuthors));
     }
 
-    public AuthorDTO findById(Integer id)
+    public AuthorDTO findById(Integer authorId)
     {
-        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findById(id);
+        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findById(authorId);
         return AuthorMapper.authorEntityToAuthorDTO(optionalAuthorEntity.orElseThrow(NoSuchElementException::new));
     }
 
@@ -41,15 +41,15 @@ public class AuthorService {
         return AuthorMapper.authorEntityToAuthorDTO(authorRepository.save(newAuthor));
     }
 
-    public AuthorDTO updateAuthor(Integer id, AuthorDTO author)
+    public AuthorDTO updateAuthor(Integer authorId, AuthorDTO author)
     {
         Optional<AuthorEntity> updateAuthor =
-                Optional.of(authorRepository.findById(id).orElseThrow(NoSuchElementException::new));
+                Optional.of(authorRepository.findById(authorId).orElseThrow(NoSuchElementException::new));
         return AuthorMapper.authorEntityToAuthorDTO(authorRepository.save(AuthorMapper.authorDTOtoAuthorEntity(author)));
     }
 
-    public void deleteAuthor(Integer id)
+    public void deleteAuthor(Integer authorId)
     {
-        authorRepository.deleteById(id);
+        authorRepository.deleteById(authorId);
     }
 }

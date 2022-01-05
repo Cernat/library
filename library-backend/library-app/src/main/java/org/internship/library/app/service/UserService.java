@@ -31,9 +31,9 @@ public class UserService
         return new ArrayList<>(UserMapper.listOfUsersEntityToListOfUsersDTO(allUsers));
     }
 
-    public UserDTO findById(Integer id)
+    public UserDTO findById(Integer userId)
     {
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(userId);
         return UserMapper.userEntityToUserDTO(optionalUserEntity.orElseThrow(NoSuchElementException::new));
     }
 
@@ -45,16 +45,16 @@ public class UserService
         return UserMapper.userEntityToUserDTO(userRepository.save(newUser));
     }
 
-    public UserDTO updateUser(Integer id, UserDTO user)
+    public UserDTO updateUser(Integer userId, UserDTO user)
     {
         Optional<UserEntity> updateUser =
-            Optional.of(userRepository.findById(id).orElseThrow(NoSuchElementException::new));
+            Optional.of(userRepository.findById(userId).orElseThrow(NoSuchElementException::new));
         user.setPassword(updateUser.get().getPassword());
         return UserMapper.userEntityToUserDTO(userRepository.save(UserMapper.userDTOtoUserEntity(user)));
     }
 
-    public void deleteUser(Integer id)
+    public void deleteUser(Integer userId)
     {
-        userRepository.deleteById(id);
+        userRepository.deleteById(userId);
     }
 }

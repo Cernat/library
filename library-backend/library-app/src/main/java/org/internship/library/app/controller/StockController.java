@@ -63,7 +63,7 @@ public class StockController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StockDTO> updateStock(@PathVariable Integer id, @RequestBody StockDTO stockDTO)
+    public ResponseEntity<StockDTO> updateStock(@PathVariable String id, @RequestBody StockDTO stockDTO)
     {
         logger.info("Updating stock with id: " + stockDTO.getId());
 
