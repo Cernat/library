@@ -18,9 +18,15 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       use-new-id-generator-mappings: false
     show-sql: true
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://localhost:61616
+    packages:
+      trust-all: true
 library:
   book:
     client:
@@ -28,3 +34,15 @@ library:
   user:
     client:
       url: http://localhost:7777/library/api/v1/user
+  author:
+    client:
+      url: http://localhost:7777/library/author
+  borrow:
+    client:
+      url: http://localhost:7777/library/borrow
+  linkBorrow:
+    client:
+      url: http://localhost:7777/library/linkBorrow
+  stock:
+    client:
+      url: http://localhost:7777/library/stock

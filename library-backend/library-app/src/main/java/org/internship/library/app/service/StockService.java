@@ -8,10 +8,8 @@ import java.util.Optional;
 import org.internship.library.api.dto.BookDTO;
 import org.internship.library.api.dto.StockDTO;
 import org.internship.library.app.adapter.StockMapper;
-import org.internship.library.app.persistence.entity.BookEntity;
 import org.internship.library.app.persistence.entity.StockEntity;
 import org.internship.library.app.persistence.repository.BookRepositoryImpl;
-import org.internship.library.app.persistence.repository.BookSpringProvidedRepository;
 import org.internship.library.app.persistence.repository.StockRepository;
 import org.springframework.stereotype.Service;
 

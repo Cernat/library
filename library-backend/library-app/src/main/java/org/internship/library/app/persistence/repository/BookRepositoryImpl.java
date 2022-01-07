@@ -56,7 +56,7 @@ public class BookRepositoryImpl implements BookRepository
     @Override
     public List<BookDTO> findBookEntitiesByAuthor(String authorName)
     {
-        List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
+        List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByTitle(authorName);
         List<BookDTO> bookDTOS = BookMapper.listOfBooksEntityToListOfBookDTO(bookEntities);
         return new ArrayList<>(bookDTOS);
     }

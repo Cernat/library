@@ -2,6 +2,7 @@ package org.internship.library.app.persistence.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,8 @@ public class StockEntity implements Serializable
     @Column(name = "number_of_books")
     private Integer numberOfBooks;
 
-    @OneToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "book_id", referencedColumnName = "id", unique = true)
     private BookEntity bookID;
 
     public StockEntity()

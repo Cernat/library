@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.internship.library.api.dto.BookDTO;
 
@@ -37,7 +38,7 @@ public class BookEntity implements Serializable
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<LinkBorrowEntity> linkBorrow = new ArrayList<>();
 
     public BookEntity()

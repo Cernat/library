@@ -1,18 +1,15 @@
 package org.internship.library.app.service;
 
-import org.internship.library.api.dto.AuthorDTO;
-import org.internship.library.api.dto.AuthorDTO;
-import org.internship.library.app.adapter.AuthorMapper;
-import org.internship.library.app.adapter.UserMapper;
-import org.internship.library.app.persistence.entity.AuthorEntity;
-import org.internship.library.app.persistence.entity.UserEntity;
-import org.internship.library.app.persistence.repository.AuthorRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import org.internship.library.api.dto.AuthorDTO;
+import org.internship.library.app.adapter.AuthorMapper;
+import org.internship.library.app.persistence.entity.AuthorEntity;
+import org.internship.library.app.persistence.repository.AuthorRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorService {

@@ -46,7 +46,7 @@ public class UserEntity implements Serializable
     @ApiParam(value = "USER")
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<LinkBorrowEntity> linkBorrow;
 
     public String getUserName()

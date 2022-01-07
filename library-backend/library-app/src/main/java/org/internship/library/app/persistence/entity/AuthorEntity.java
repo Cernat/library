@@ -29,7 +29,7 @@ public class AuthorEntity implements Serializable
     @Column(name = "last_name")
     private String last_name;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<BookEntity> books = new ArrayList<>();
 
     public AuthorEntity()

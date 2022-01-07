@@ -2,6 +2,7 @@ package org.internship.library.app.persistence.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,8 +31,8 @@ public class LinkBorrowEntity implements Serializable
     @JoinColumn(name = "book_id")
     private BookEntity book;
 
-    @OneToOne
-    @JoinColumn(name = "borrow_id")
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "borrow_id", unique = true)
     private BorrowEntity borrow;
 
     public LinkBorrowEntity()
