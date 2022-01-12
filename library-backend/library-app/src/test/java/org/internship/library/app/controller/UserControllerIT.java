@@ -4,18 +4,12 @@ import static org.internship.library.app.controller.BookControllerIT.createHeade
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.NoSuchElementException;
-
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.LibraryAppConfigTest;
-import org.internship.library.app.persistence.entity.UserEntity;
-import org.internship.library.app.persistence.repository.UserRepository;
-import org.internship.library.app.security.UserRole;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
@@ -31,13 +25,9 @@ class UserControllerIT extends LibraryAppConfigTest
 {
 
     TestRestTemplate testRestTemplate = new TestRestTemplate();
-    @Autowired
-    UserRepository userRepository;
     @Value("${library.user.client.url}")
     String url;
-    private static final String testUsername = "userTest";
-    private static final String testPassword = "userTest123!";
-    private static final String testEmail = "userTest@gmail.com";
+    UserDTO foundUser;
 
     /**
      * Verify if post request persist an user in the database
@@ -46,19 +36,23 @@ class UserControllerIT extends LibraryAppConfigTest
     @Order(1)
     void createUserTest()
     {
-        UserEntity userTest = new UserEntity();
-        userTest.setUserName(testUsername);
-        userTest.setPassword(testPassword);
-        userTest.setEmail(testEmail);
-        userTest.setUserRole(UserRole.USER);
+        UserDTO user = new UserDTO();
+        user.setUserName(testUserName + "Unique");
+        user.setEmail(testUserEmail);
+        user.setPassword(testUserPassword);
+        user.setUserRole(testUserRole);
 
-        HttpEntity<UserEntity> requestHeader =
-            new HttpEntity<>(userTest, createHeaders(testUserName, testUserPassword));
-        ResponseEntity<UserEntity> responseEntity =
-            testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, UserEntity.class);
-        assertNotNull(responseEntity);
-        assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+        HttpEntity<UserDTO> requestHeader =
+            new HttpEntity<>(user, createHeaders(testUserName, testUserPassword));
+        ResponseEntity<UserDTO> responseEntity =
+            testRestTemplate.exchange(url + "/", HttpMethod.POST, requestHeader, UserDTO.class);
 
+        this.foundUser = responseEntity.getBody();
+        if (foundUser != null)
+        {
+            assertEquals(user.getEmail(), foundUser.getEmail());
+            assertEquals(user.getUserRole(), foundUser.getUserRole());
+        }
     }
 
     /**
@@ -68,16 +62,16 @@ class UserControllerIT extends LibraryAppConfigTest
     @Order(2)
     void shouldGetUser()
     {
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        UserEntity userToFind = userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
-
-        ResponseEntity<UserEntity> responseEntity =
-            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
-                UserEntity.class, userToFind.getId());
-        UserEntity foundUser = responseEntity.getBody();
-        if (foundUser != null)
+        HttpEntity<UserDTO> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
+        ResponseEntity<UserDTO> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserDTO.class, foundUser.getId());
+        UserDTO user = responseEntity.getBody();
+        if (user != null)
         {
-            assertEquals(userToFind.getUserName(), foundUser.getUserName());
+            assertEquals(user.getId(), foundUser.getId());
+            assertEquals(user.getEmail(), foundUser.getEmail());
+            assertEquals(user.getPassword(), foundUser.getPassword());
+            assertEquals(user.getUserRole(), foundUser.getUserRole());
         }
         assertNotNull(responseEntity);
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
@@ -90,7 +84,7 @@ class UserControllerIT extends LibraryAppConfigTest
     @Order(3)
     void getAllUsers()
     {
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
+        HttpEntity<UserDTO> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
         ResponseEntity<UserDTO[]> responseEntity =
             testRestTemplate.exchange(url + "/", HttpMethod.GET, requestHeader, UserDTO[].class);
         assertNotNull(responseEntity);
@@ -104,27 +98,25 @@ class UserControllerIT extends LibraryAppConfigTest
     @Order(4)
     void updateUser()
     {
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        UserEntity foundUserBeforeUpdate =
-            userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
-        foundUserBeforeUpdate.setEmail("Updated Email");
+        foundUser.setUserName("New Updated Username");
 
-        HttpEntity<UserEntity> requestHeaderWithBody =
-            new HttpEntity<>(foundUserBeforeUpdate, createHeaders(testUserName, testUserPassword));
-        ResponseEntity<UserEntity> responseEntity =
+        HttpEntity<UserDTO> requestHeaderWithBody =
+            new HttpEntity<>(foundUser, createHeaders(testUserName, testUserPassword));
+
+        ResponseEntity<UserDTO> responseEntity =
             testRestTemplate.exchange(url + "/{id}", HttpMethod.PUT, requestHeaderWithBody,
-                UserEntity.class, foundUserBeforeUpdate.getId());
-        assertNotNull(responseEntity);
+                UserDTO.class, foundUser.getId());
+
         assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 
-        ResponseEntity<UserEntity> foundBookAfterUpdate =
-            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
-                UserEntity.class, foundUserBeforeUpdate.getId());
-        assertNotNull(foundBookAfterUpdate);
-        UserEntity userAfterUpdate = foundBookAfterUpdate.getBody();
-        if (userAfterUpdate != null)
+        UserDTO newUpdatedUser = responseEntity.getBody();
+
+        if (newUpdatedUser != null)
         {
-            assertEquals(foundUserBeforeUpdate.getEmail(), userAfterUpdate.getEmail());
+            assertEquals(newUpdatedUser.getId(), foundUser.getId());
+            assertEquals(newUpdatedUser.getEmail(), foundUser.getEmail());
+            assertEquals(newUpdatedUser.getPassword(), foundUser.getPassword());
+            assertEquals(newUpdatedUser.getUserRole(), foundUser.getUserRole());
         }
     }
 
@@ -135,17 +127,11 @@ class UserControllerIT extends LibraryAppConfigTest
     @Order(5)
     void deleteUser()
     {
-        HttpEntity<UserEntity> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
-        UserEntity userToFind = userRepository.findByUserName(testUsername).orElseThrow(NoSuchElementException::new);
 
-        ResponseEntity<UserEntity> responseEntity =
-            testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader,
-                UserEntity.class, userToFind.getId());
-        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
-
-        ResponseEntity<UserEntity> responseEntity2 =
-            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader,
-                UserEntity.class, userToFind.getId());
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity2.getStatusCode());
+        HttpEntity<UserDTO> requestHeader = new HttpEntity<>(createHeaders(testUserName, testUserPassword));
+        testRestTemplate.exchange(url + "/{id}", HttpMethod.DELETE, requestHeader, UserDTO.class, foundUser.getId());
+        ResponseEntity<UserDTO> responseEntity =
+            testRestTemplate.exchange(url + "/{id}", HttpMethod.GET, requestHeader, UserDTO.class, foundUser.getId());
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
 }

@@ -8,20 +8,20 @@ public class BookDTO implements Serializable
 
     private String id;
     private String title;
-    private String author;
     private Integer numberOfPages;
+    private AuthorDTO author;
 
     public BookDTO()
     {
         this.id = UUID.randomUUID().toString();
     }
 
-    public BookDTO(String id, String title, String author, Integer numberOfPages)
+    public BookDTO(String id, String title, Integer numberOfPages, AuthorDTO author)
     {
         this.id = id;
         this.title = title;
-        this.author = author;
         this.numberOfPages = numberOfPages;
+        this.author = author;
     }
 
     public String getId()
@@ -47,18 +47,6 @@ public class BookDTO implements Serializable
         this.title = title;
     }
 
-    public String getAuthor()
-    {
-
-        return author;
-    }
-
-    public void setAuthor(String author)
-    {
-
-        this.author = author;
-    }
-
     public Integer getNumberOfPages()
     {
 
@@ -69,4 +57,15 @@ public class BookDTO implements Serializable
     {
         this.numberOfPages = numberOfPages;
     }
+
+    public AuthorDTO getAuthor()
+    {
+        return author;
+    }
+
+    public void setAuthor(AuthorDTO author)
+    {
+        this.author = author;
+    }
+
 }

@@ -1,11 +1,11 @@
 package org.internship.library.app.adapter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.internship.library.api.dto.UserDTO;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.security.UserRole;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserMapper
 {

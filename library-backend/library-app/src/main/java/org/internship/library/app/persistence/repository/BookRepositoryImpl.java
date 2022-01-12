@@ -7,7 +7,9 @@ import java.util.Optional;
 
 import org.internship.library.api.book.BookRepository;
 import org.internship.library.api.dto.BookDTO;
+import org.internship.library.app.adapter.AuthorMapper;
 import org.internship.library.app.adapter.BookMapper;
+import org.internship.library.app.persistence.entity.AuthorEntity;
 import org.internship.library.app.persistence.entity.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,8 @@ public class BookRepositoryImpl implements BookRepository
     public BookDTO createBook(BookDTO book)
     {
         BookEntity bookEntity = BookMapper.bookDTOtoBookEntity(book);
+        AuthorEntity author = AuthorMapper.authorDTOtoAuthorEntity(book.getAuthor());
+        bookEntity.setAuthor(author);
         return BookMapper.bookEntityToBookDTO(bookSpringProvidedRepository.save(bookEntity));
     }
 
@@ -52,7 +56,7 @@ public class BookRepositoryImpl implements BookRepository
     @Override
     public List<BookDTO> findBookEntitiesByAuthor(String authorName)
     {
-        List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByAuthor(authorName);
+        List<BookEntity> bookEntities = bookSpringProvidedRepository.findBookEntitiesByTitle(authorName);
         List<BookDTO> bookDTOS = BookMapper.listOfBooksEntityToListOfBookDTO(bookEntities);
         return new ArrayList<>(bookDTOS);
     }

@@ -1,5 +1,9 @@
 package org.internship.library.app.controller;
 
+import java.security.Principal;
+
+import org.internship.library.api.dto.UserDTO;
+import org.internship.library.app.adapter.UserMapper;
 import org.internship.library.app.persistence.entity.UserEntity;
 import org.internship.library.app.service.RegistrationService;
 import org.springframework.http.HttpStatus;
@@ -8,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/registration")
@@ -30,10 +32,10 @@ public class RegistrationController
      * @return the user
      */
     @PostMapping
-    public ResponseEntity<UserEntity> registerUser(@RequestBody UserEntity user)
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO user)
     {
-        UserEntity newUser = registrationService.register(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        UserEntity newUser = registrationService.register(UserMapper.userDTOtoUserEntity(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.userEntityToUserDTO(newUser));
     }
 
     @RequestMapping("/login")

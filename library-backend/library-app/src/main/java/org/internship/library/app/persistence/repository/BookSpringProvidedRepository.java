@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookSpringProvidedRepository extends PagingAndSortingRepository<BookEntity, String>
 {
-    List<BookEntity> findBookEntitiesByAuthor(String authorName);
+    List<BookEntity> findBookEntitiesByTitle(String authorName);
 }

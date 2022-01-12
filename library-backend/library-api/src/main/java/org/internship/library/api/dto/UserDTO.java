@@ -9,15 +9,6 @@ public class UserDTO
     private String email;
     private String userRole;
 
-    public UserDTO(Integer id, String userName, String password, String email, String userRole)
-    {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.userRole = userRole;
-    }
-
     public UserDTO()
     {
     }
@@ -71,4 +62,5 @@ public class UserDTO
     {
         this.userRole = userRole;
     }
+
 }
